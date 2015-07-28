@@ -48,7 +48,6 @@ class NormalizerChain implements DenormalizerInterface
         $normalizer->addNormalizer(new PrimitivesItemsNormalizer());
         $normalizer->addNormalizer(new HeaderNormalizer());
         $normalizer->addNormalizer(new ResponseNormalizer());
-        $normalizer->addNormalizer(new JsonReferenceNormalizer());
         $normalizer->addNormalizer(new OperationNormalizer());
         $normalizer->addNormalizer(new PathItemNormalizer());
         $normalizer->addNormalizer(new BodyParameterNormalizer());

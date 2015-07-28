@@ -91,14 +91,7 @@ class OperationNormalizer implements DenormalizerInterface
 
             foreach ($data->{'responses'} as $key => $value) {
                 if (preg_match('/^([0-9]{3})$|^(default)$/', $key)) {
-                    if (is_object($value)) {
-                        $values[$key] = $this->normalizerChain->denormalize($value, 'Joli\Jane\Swagger\Model\Response', 'json', $context);
-                    }
-
-                    if (is_object($value)) {
-                        $values[$key] = $this->normalizerChain->denormalize($value, 'Joli\Jane\Swagger\Model\JsonReference', 'json', $context);
-                    }
-
+                    $values[$key] = $this->normalizerChain->denormalize($value, 'Joli\Jane\Swagger\Model\Response', 'json', $context);
                     continue;
                 }
 

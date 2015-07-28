@@ -44,7 +44,7 @@ class PathItem
     protected $patch;
 
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|array[]|\Joli\Jane\Swagger\Parameters[]
+     * @var \Joli\Jane\Swagger\Parameters[]|array[]
      */
     protected $parameters;
 
@@ -177,7 +177,7 @@ class PathItem
     }
 
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|array[]|\Joli\Jane\Swagger\Parameters[]
+     * @return \Joli\Jane\Swagger\Parameters[]|array[]
      */
     public function getParameters()
     {
@@ -185,7 +185,7 @@ class PathItem
     }
 
     /**
-     * @param Parameters[] $parameters
+     * @param Parameters[]|array[] $parameters
      */
     public function setParameters($parameters)
     {

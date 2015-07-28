@@ -339,14 +339,7 @@
             }
         },
         "responseValue": {
-            "oneOf": [
-                {
-                    "$ref": "#/definitions/response"
-                },
-                {
-                    "$ref": "#/definitions/jsonReference"
-                }
-            ]
+            "$ref": "#/definitions/response"
         },
         "response": {
             "type": "object",
@@ -1400,14 +1393,7 @@
             "description": "The parameters needed to send a valid API call.",
             "additionalItems": false,
             "items": {
-                "oneOf": [
-                    {
-                        "$ref": "#/definitions/parameter"
-                    },
-                    {
-                        "$ref": "#/definitions/jsonReference"
-                    }
-                ]
+                "$ref": "#/definitions/parameter"
             },
             "uniqueItems": true
         },
@@ -1490,15 +1476,6 @@
         },
         "enum": {
             "$ref": "http://json-schema.org/draft-04/schema#/properties/enum"
-        },
-        "jsonReference": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "$ref": {
-                    "type": "string"
-                }
-            }
         }
     }
 }

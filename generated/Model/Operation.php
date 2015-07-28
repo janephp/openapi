@@ -39,12 +39,12 @@ class Operation
     protected $consumes;
 
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|array[]|\Joli\Jane\Swagger\Parameters[]
+     * @var \Joli\Jane\Swagger\Parameters[]|array[]
      */
     protected $parameters;
 
     /**
-     * @var \Joli\Jane\Swagger\Responses[]|\Joli\Jane\Swagger\Responses[]|mixed[]
+     * @var \Joli\Jane\Swagger\Responses[]|mixed[]
      */
     protected $responses;
 
@@ -176,7 +176,7 @@ class Operation
     }
 
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|array[]|\Joli\Jane\Swagger\Parameters[]
+     * @return \Joli\Jane\Swagger\Parameters[]|array[]
      */
     public function getParameters()
     {
@@ -184,7 +184,7 @@ class Operation
     }
 
     /**
-     * @param Parameters[] $parameters
+     * @param Parameters[]|array[] $parameters
      */
     public function setParameters($parameters)
     {
@@ -192,7 +192,7 @@ class Operation
     }
 
     /**
-     * @return \Joli\Jane\Swagger\Responses[]|\Joli\Jane\Swagger\Responses[]|mixed[]
+     * @return \Joli\Jane\Swagger\Responses[]|mixed[]
      */
     public function getResponses()
     {

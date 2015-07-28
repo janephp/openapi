@@ -1,0 +1,1844 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Docker Remote API",
+        "description": "The API for each docker installation.",
+        "termsOfService": "http://example.com/tos/",
+        "version": "v1.16"
+    },
+    "host": "api.example.com",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "paths": {
+        "/auth": {
+            "post": {
+                "summary": "Check auth configuration",
+                "description": "Check auth configuration",
+                "operationId": "check-auth-configuration",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/build": {
+            "post": {
+                "summary": "Build an image from Dockerfile via stdin",
+                "description": "Build an image from Dockerfile via stdin",
+                "operationId": "build-an-image-from-dockerfile-via-stdin",
+                "parameters": [
+                    {
+                        "name": "Content-type",
+                        "in": "query",
+                        "description": "should be set to application/tar.",
+                        "type": "string"
+                    },
+                    {
+                        "name": "forcerm",
+                        "in": "query",
+                        "description": "always remove intermediate containers (includes rm)Request Headers:",
+                        "type": "string"
+                    },
+                    {
+                        "name": "nocache",
+                        "in": "query",
+                        "description": "do not use the cache when building the image",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pull",
+                        "in": "query",
+                        "description": "attempt to pull the image even if an older image exists locally",
+                        "type": "string"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "suppress verbose build output",
+                        "type": "string"
+                    },
+                    {
+                        "name": "rm",
+                        "in": "query",
+                        "description": "remove intermediate containers after a successful build (default behavior)",
+                        "type": "string"
+                    },
+                    {
+                        "name": "t",
+                        "in": "query",
+                        "description": "repository name (and optionally a tag) to be applied to        the resulting image in case of success",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-Registry-Config",
+                        "in": "query",
+                        "description": "base64-encoded ConfigFile objec",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/commit": {
+            "post": {
+                "summary": "Create a new image from a container's changes",
+                "description": "Create a new image from a container's changes",
+                "operationId": "create-a-new-image-from-a-containers-changes",
+                "parameters": [
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "author (e.g., John Hannibal Smith    &lt;hannibal@a-team.com&gt;)",
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "query",
+                        "description": "commit message",
+                        "type": "string"
+                    },
+                    {
+                        "name": "container",
+                        "in": "query",
+                        "description": "source container",
+                        "type": "string"
+                    },
+                    {
+                        "name": "repo",
+                        "in": "query",
+                        "description": "repository",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "tag",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/create": {
+            "post": {
+                "summary": "Create a container",
+                "description": "Create a container",
+                "operationId": "create-a-container",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Assign the specified name to the container. Must    match /?[a-zA-Z0-9_-]+.",
+                        "schema": {
+                            "$ref": "#/definitions/holder"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/json": {
+            "get": {
+                "summary": "List containers",
+                "description": "List containers",
+                "operationId": "list-containers",
+                "parameters": [
+                    {
+                        "name": "all",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, Show all containers.        Only running containers are shown by default (i.e., this defaults to false)",
+                        "type": "string"
+                    },
+                    {
+                        "name": "before",
+                        "in": "query",
+                        "description": "Show only containers created before Id, include        non-running ones.",
+                        "type": "string"
+                    },
+                    {
+                        "name": "exited",
+                        "in": "query",
+                        "description": "&lt;int&gt; -- containers with exit code of &lt;int&gt;",
+                        "type": "string"
+                    },
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "description": "a json encoded value of the filters (a map[string][]string) to process on the containers list. Available filters:",
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Show limit last created        containers, include non-running ones.",
+                        "type": "string"
+                    },
+                    {
+                        "name": "since",
+                        "in": "query",
+                        "description": "Show only containers created since Id, include        non-running ones.",
+                        "type": "string"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, Show the containers        sizes",
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "(restarting|running|paused|exited)",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}": {
+            "delete": {
+                "summary": "Remove a container",
+                "description": "Remove a container",
+                "operationId": "remove-a-container",
+                "parameters": [
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, Kill then remove the container.        Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "v",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, Remove the volumes        associated to the container. Default false",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/attach": {
+            "post": {
+                "summary": "Attach to a container",
+                "description": "Attach to a container",
+                "operationId": "attach-to-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "logs",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, return logs. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stderr",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, if logs=true, return        stderr log, if stream=true, attach to stderr. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stdin",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, if stream=true, attach        to stdin. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stdout",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, if logs=true, return        stdout log, if stream=true, attach to stdout. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stream",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, return stream.        Default false",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server errornStream details:nWhen using the TTY setting is enabled innPOST /containers/createn,nthe stream is the raw data from the process PTY and client's stdin.nWhen the TTY is disabled, then the stream is multiplexed to separatenstdout and stderr.nThe format is a Header and a Payload (frame).nHEADERnThe header will contain the information on which stream write thenstream (stdout or stderr). It also contain the size of thenassociated frame encoded on the last 4 bytes (uint32).nIt is encoded on the first 8 bytes like this:nheader := [8]byte{STREAM_TYPE, 0, 0, 0, SIZE1, SIZE2, SIZE3, SIZE4}nnSTREAM_TYPE can be:"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/changes": {
+            "get": {
+                "summary": "Inspect changes on a container's filesystem",
+                "description": "Inspect changes on a container's filesystem",
+                "operationId": "inspect-changes-on-a-containers-filesystem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/copy": {
+            "post": {
+                "summary": "Copy files or folders from a container",
+                "description": "Copy files or folders from a container",
+                "operationId": "copy-files-or-folders-from-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/exec": {
+            "post": {
+                "summary": "Image tarball format",
+                "description": "Image tarball format",
+                "operationId": "image-tarball-format",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/export": {
+            "get": {
+                "summary": "Export a container",
+                "description": "Export a container",
+                "operationId": "export-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/json": {
+            "get": {
+                "summary": "Inspect a container",
+                "description": "Inspect a container",
+                "operationId": "inspect-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/kill": {
+            "post": {
+                "summary": "Kill a container",
+                "description": "Kill a container",
+                "operationId": "kill-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/logs": {
+            "get": {
+                "summary": "Get container logs",
+                "description": "Get container logs",
+                "operationId": "get-container-logs",
+                "parameters": [
+                    {
+                        "name": "follow",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, return stream. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stderr",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, show stderr log. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "stdout",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, show stdout log. Default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tail",
+                        "in": "query",
+                        "description": "Output specified number of lines at the end of logs: all or &lt;number&gt;. Default all",
+                        "type": "string"
+                    },
+                    {
+                        "name": "timestamps",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, print timestamps for        every log line. Default false",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/pause": {
+            "post": {
+                "summary": "Pause a container",
+                "description": "Pause a container",
+                "operationId": "pause-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/resize?h=&lt;height&gt;&amp;w=&lt;width&gt;": {
+            "post": {
+                "summary": "Resize a container TTY",
+                "description": "Resize a container TTY",
+                "operationId": "resize-a-container-tty",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "No such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "Cannot resize container"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/restart": {
+            "post": {
+                "summary": "Restart a container",
+                "description": "Restart a container",
+                "operationId": "restart-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "t",
+                        "in": "query",
+                        "description": "number of seconds to wait before killing the container",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/start": {
+            "post": {
+                "summary": "Start a container",
+                "description": "Start a container",
+                "operationId": "start-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already started"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/stop": {
+            "post": {
+                "summary": "Stop a container",
+                "description": "Stop a container",
+                "operationId": "stop-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "t",
+                        "in": "query",
+                        "description": "number of seconds to wait before killing the container",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/top": {
+            "get": {
+                "summary": "List processes running inside a container",
+                "description": "List processes running inside a container",
+                "operationId": "list-processes-running-inside-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "ps_args",
+                        "in": "query",
+                        "description": "ps arguments to use (e.g., aux)",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/unpause": {
+            "post": {
+                "summary": "Unpause a container",
+                "description": "Unpause a container",
+                "operationId": "unpause-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/containers/{id}/wait": {
+            "post": {
+                "summary": "Wait a container",
+                "description": "Wait a container",
+                "operationId": "wait-a-container",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/events": {
+            "get": {
+                "summary": "Monitor Docker's events",
+                "description": "Monitor Docker's events",
+                "operationId": "monitor-dockers-events",
+                "parameters": [
+                    {
+                        "name": "container",
+                        "in": "query",
+                        "description": "&lt;string&gt; -- container to filter",
+                        "type": "string"
+                    },
+                    {
+                        "name": "event",
+                        "in": "query",
+                        "description": "&lt;string&gt; -- event to filter",
+                        "type": "string"
+                    },
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "description": "a json encoded value of the filters (a map[string][]string) to process on the event list. Available filters:",
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "&lt;string&gt; -- image to filter",
+                        "type": "string"
+                    },
+                    {
+                        "name": "since",
+                        "in": "query",
+                        "description": "timestamp used for polling",
+                        "type": "string"
+                    },
+                    {
+                        "name": "until",
+                        "in": "query",
+                        "description": "timestamp used for polling",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such container"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/exec/{id}/json": {
+            "get": {
+                "summary": "Exec Inspect",
+                "description": "Exec Inspect",
+                "operationId": "exec-inspect",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instance"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/exec/{id}/resize": {
+            "post": {
+                "summary": "Exec Resize",
+                "description": "Exec Resize",
+                "operationId": "exec-resize",
+                "parameters": [
+                    {
+                        "name": "h",
+                        "in": "query",
+                        "description": "height of tty session",
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "w",
+                        "in": "query",
+                        "description": "width",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instance"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/exec/{id}/start": {
+            "post": {
+                "summary": "Exec Start",
+                "description": "Exec Start",
+                "operationId": "exec-start",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instancenStream details:nSimilar to the stream behavior of POST /container/(id)/attach API"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/create": {
+            "post": {
+                "summary": "Create an image",
+                "description": "Create an image",
+                "operationId": "create-an-image",
+                "parameters": [
+                    {
+                        "name": "fromImage",
+                        "in": "query",
+                        "description": "name of the image to pull",
+                        "type": "string"
+                    },
+                    {
+                        "name": "fromSrc",
+                        "in": "query",
+                        "description": "source to import.  The value may be a URL from which the image        can be retrieved or - to read the image from the request body.",
+                        "type": "string"
+                    },
+                    {
+                        "name": "registry",
+                        "in": "query",
+                        "description": "the registry to pull fromRequest Headers:",
+                        "type": "string"
+                    },
+                    {
+                        "name": "repo",
+                        "in": "query",
+                        "description": "repository",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "tag",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-Registry-Auth",
+                        "in": "query",
+                        "description": "base64-encoded AuthConfig object",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instancenStream details:nSimilar to the stream behavior of POST /container/(id)/attach API"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/get": {
+            "get": {
+                "summary": "Get a tarball containing all images.",
+                "description": "Get a tarball containing all images.",
+                "operationId": "get-a-tarball-containing-all-images",
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instancenStream details:nSimilar to the stream behavior of POST /container/(id)/attach API"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/json": {
+            "get": {
+                "summary": "List Images",
+                "description": "List Images",
+                "operationId": "list-images",
+                "parameters": [
+                    {
+                        "name": "all",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "dangling",
+                        "in": "query",
+                        "description": "true",
+                        "type": "string"
+                    },
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "description": "a json encoded value of the filters (a map[string][]string) to process on the images list. Available filters:",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "no error"
+                    },
+                    "404": {
+                        "description": "no such exec instancenStream details:nSimilar to the stream behavior of POST /container/(id)/attach API"
+                    },
+                    "406": {
+                        "description": "impossible to attach (container not running)"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    },
+                    "204": {
+                        "description": "no error"
+                    },
+                    "304": {
+                        "description": "container already stopped"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/load": {
+            "post": {
+                "summary": "Load a tarball with a set of images and tags into docker",
+                "description": "Load a tarball with a set of images and tags into docker",
+                "operationId": "load-a-tarball-with-a-set-of-images-and-tags-into-docker",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/search": {
+            "get": {
+                "summary": "Search images",
+                "description": "Search images",
+                "operationId": "search-images",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "description": "term to search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}": {
+            "delete": {
+                "summary": "Remove an image",
+                "description": "Remove an image",
+                "operationId": "remove-an-image",
+                "parameters": [
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "noprune",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, default false",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}/get": {
+            "get": {
+                "summary": "Get a tarball containing all images in a repository",
+                "description": "Get a tarball containing all images in a repository",
+                "operationId": "get-a-tarball-containing-all-images-in-a-repository",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}/history": {
+            "get": {
+                "summary": "Get the history of an image",
+                "description": "Get the history of an image",
+                "operationId": "get-the-history-of-an-image",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}/json": {
+            "get": {
+                "summary": "Inspect an image",
+                "description": "Inspect an image",
+                "operationId": "inspect-an-image",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}/push": {
+            "post": {
+                "summary": "Push an image on the registry",
+                "description": "Push an image on the registry",
+                "operationId": "push-an-image-on-the-registry",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "the tag to associate with the image on the registry, optional",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/images/{name}/tag": {
+            "post": {
+                "summary": "Tag an image into a repository",
+                "description": "Tag an image into a repository",
+                "operationId": "tag-an-image-into-a-repository",
+                "parameters": [
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "description": "1/True/true or 0/False/false, default false",
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    },
+                    {
+                        "name": "repo",
+                        "in": "query",
+                        "description": "The repository to tag in",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "The new tag name",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    },
+                    "201": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/info": {
+            "get": {
+                "summary": "Display system-wide information",
+                "description": "Display system-wide information",
+                "operationId": "display-systemwide-information",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    },
+                    "201": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/version": {
+            "get": {
+                "summary": "Show the docker version information",
+                "description": "Show the docker version information",
+                "operationId": "show-the-docker-version-information",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    },
+                    "201": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        },
+        "/_ping": {
+            "get": {
+                "summary": "Ping the docker server",
+                "description": "Ping the docker server",
+                "operationId": "ping-the-docker-server",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "server error"
+                    },
+                    "404": {
+                        "description": "no such image"
+                    },
+                    "409": {
+                        "description": "conflict"
+                    },
+                    "201": {
+                        "description": "no error"
+                    },
+                    "400": {
+                        "description": "bad parameter"
+                    }
+                },
+                "tags": [
+                    ""
+                ]
+            }
+        }
+    },
+    "definitions": {
+    }
+}
