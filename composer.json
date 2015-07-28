@@ -11,7 +11,8 @@
         }
     },
     "require": {
-        "jane/jane": "dev-master"
+        "jane/jane": "dev-master",
+        "zendframework/zend-diactoros": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7"
