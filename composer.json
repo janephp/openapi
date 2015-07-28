@@ -2,6 +2,14 @@
     "name": "jane/swagger",
     "description": "Generate a PHP Client API (PSR7 compatible) given a Swagger specification",
     "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Joli\\Jane\\Swagger\\Model\\": "generated/Model/",
+            "Joli\\Jane\\Swagger\\Normalizer\\": "generated/Normalizer/",
+            "Joli\\Jane\\Swagger\\": "src/",
+            "Joli\\Jane\\Swagger\\Tests\\": "tests/"
+        }
+    },
     "require": {
         "jane/jane": "dev-master"
     },
