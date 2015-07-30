@@ -11,13 +11,22 @@ class OperationCollection extends \ArrayObject
      */
     public function addOperation(Operation $operation)
     {
-        $id = $operation->getMethod().$operation->getPath();
+        $id    = $operation->getMethod().$operation->getPath();
+        $group = 0;
 
         if ($operation->getOperation()->getOperationId()) {
             $id = $operation->getOperation()->getOperationId();
         }
 
-        $this[$id] = $operation;
+        if ($operation->getOperation()->getTags() !== null && count($operation->getOperation()->getTags()) > 0) {
+            $group = $operation->getOperation()->getTags()[0];
+        }
+
+        if (!isset($this[$group])) {
+            $this[$group] = [];
+        }
+
+        $this[$group][$id] = $operation;
 
         return $this;
     }
@@ -32,15 +41,16 @@ class OperationCollection extends \ArrayObject
 
     /**
      * @param $id
+     * @param $group
      *
      * @return Operation|null
      */
-    public function getOperation($id)
+    public function getOperation($id, $group = 0)
     {
-        if (!isset($this[$id])) {
+        if (!isset($this[$group][$id])) {
             return null;
         }
 
-        return $this[$id];
+        return $this[$group][$id];
     }
 } 

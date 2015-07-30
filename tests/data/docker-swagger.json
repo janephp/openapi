@@ -5,12 +5,14 @@
         "title": "Docker Remote API",
         "description": "The API for each docker installation.",
         "termsOfService": "http://example.com/tos/",
-        "version": "v1.16"
+        "version": "v1.19"
     },
-    "host": "api.example.com",
+    "host": "unix:///var/run/docker.sock",
     "basePath": "/",
     "schemes": [
-        "http"
+        "unix",
+        "http",
+        "https"
     ],
     "produces": [
         "application/json"
@@ -19,41 +21,6 @@
         "application/json"
     ],
     "paths": {
-        "/auth": {
-            "post": {
-                "summary": "Check auth configuration",
-                "description": "Check auth configuration",
-                "operationId": "checkAuthentication",
-                "parameters": [{
-                    "name": "Authentication",
-                    "in": "body",
-                    "required": true,
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "username": { "type": "string" },
-                            "password": { "type": "string" },
-                            "email": { "type": "string" },
-                            "serveraddress": { "type": "string" }
-                        }
-                    }
-                }],
-                "responses": {
-                    "200": {
-                        "description": "no error"
-                    },
-                    "204": {
-                        "description": "no error"
-                    },
-                    "500": {
-                        "description": "server error"
-                    }
-                },
-                "tags": [
-                    ""
-                ]
-            }
-        },
         "/build": {
             "post": {
                 "summary": "Build an image from Dockerfile via stdin",
@@ -61,45 +28,69 @@
                 "operationId": "build",
                 "parameters": [
                     {
+                        "name": "inputStream",
+                        "in": "body",
+                        "description": "The input stream must be a tar archive compressed with one of the following algorithms: identity (no compression), gzip, bzip2, xz.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "dockerfile",
+                        "in": "query",
+                        "description": "Path within the build context to the Dockerfile. This is ignored if remote is specified and points to an individual filename.",
+                        "type": "string"
+                    },
+                    {
                         "name": "t",
                         "in": "query",
-                        "description": "repository name (and optionally a tag) to be applied to        the resulting image in case of success",
+                        "description": "A repository name (and optionally a tag) to apply to the resulting image in case of success.",
                         "type": "string"
                     },
                     {
-                        "name": "forcerm",
+                        "name": "remote",
                         "in": "query",
-                        "description": "always remove intermediate containers (includes rm)Request Headers:",
-                        "type": "string"
-                    },
-                    {
-                        "name": "nocache",
-                        "in": "query",
-                        "description": "do not use the cache when building the image",
-                        "type": "string"
-                    },
-                    {
-                        "name": "pull",
-                        "in": "query",
-                        "description": "attempt to pull the image even if an older image exists locally",
+                        "description": "A Git repository URI or HTTP/HTTPS URI build source. If the URI specifies a filename, the file’s contents are placed into a file called Dockerfile.",
                         "type": "string"
                     },
                     {
                         "name": "q",
                         "in": "query",
-                        "description": "suppress verbose build output",
+                        "description": "Suppress verbose build output.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "nocache",
+                        "in": "query",
+                        "description": "Do not use the cache when building the image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "pull",
+                        "in": "query",
+                        "description": "Attempt to pull the image even if an older image exists locally",
                         "type": "string"
                     },
                     {
                         "name": "rm",
                         "in": "query",
-                        "description": "remove intermediate containers after a successful build (default behavior)",
-                        "type": "string"
+                        "description": "Remove intermediate containers after a successful build (default behavior).",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    {
+                        "name": "forcerm",
+                        "in": "query",
+                        "description": "always remove intermediate containers (includes rm)Request Headers:",
+                        "type": "boolean",
+                        "default": false
                     },
                     {
                         "name": "Content-type",
                         "in": "header",
-                        "description": "should be set to application/tar.",
+                        "description": " Set to 'application/tar'.",
                         "type": "string",
                         "enum": ["application/tar"],
                         "default": "application/tar"
@@ -115,19 +106,14 @@
                     "200": {
                         "description": "no error"
                     },
-                    "204": {
-                        "description": "no error"
-                    },
                     "500": {
                         "description": "server error"
                     }
                 },
                 "tags": [
-                    ""
+                    "Image"
                 ]
             }
         }
-    },
-    "definitions": {
     }
 }

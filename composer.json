@@ -13,7 +13,8 @@
     "require": {
         "jane/jane": "dev-master",
         "zendframework/zend-diactoros": "^1.1",
-        "nikic/php-parser": "^1.4"
+        "nikic/php-parser": "^1.4",
+        "doctrine/inflector": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7"
