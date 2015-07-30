@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Swagger
@@ -7,77 +8,62 @@ class Swagger
      * @var string
      */
     protected $swagger;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Info
+     * @var Info
      */
     protected $info;
-
     /**
      * @var string
      */
     protected $host;
-
     /**
      * @var string
      */
     protected $basePath;
-
     /**
      * @var string[]
      */
     protected $schemes;
-
     /**
      * @var string[]
      */
     protected $consumes;
-
     /**
      * @var string[]
      */
     protected $produces;
-
     /**
-     * @var mixed[]|\Joli\Jane\Swagger\Model\PathItem[]
+     * @var mixed[]|PathItem[]
      */
     protected $paths;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Schema[]
+     * @var Schema[]
      */
     protected $definitions;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\BodyParameter[]|array[]
+     * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     protected $parameters;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Response[]
+     * @var Response[]
      */
     protected $responses;
-
     /**
      * @var string[][][]
      */
     protected $security;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\BasicAuthenticationSecurity[]|\Joli\Jane\Swagger\Model\ApiKeySecurity[]|\Joli\Jane\Swagger\Model\Oauth2ImplicitSecurity[]|\Joli\Jane\Swagger\Model\Oauth2PasswordSecurity[]|\Joli\Jane\Swagger\Model\Oauth2ApplicationSecurity[]|\Joli\Jane\Swagger\Model\Oauth2AccessCodeSecurity[]
+     * @var BasicAuthenticationSecurity[]|ApiKeySecurity[]|Oauth2ImplicitSecurity[]|Oauth2PasswordSecurity[]|Oauth2ApplicationSecurity[]|Oauth2AccessCodeSecurity[]
      */
     protected $securityDefinitions;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Tag[]
+     * @var Tag[]
      */
     protected $tags;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\ExternalDocs
+     * @var ExternalDocs
      */
     protected $externalDocs;
-
     /**
      * @return string
      */
@@ -85,31 +71,35 @@ class Swagger
     {
         return $this->swagger;
     }
-
     /**
      * @param string $swagger
+     *
+     * @return self
      */
-    public function setSwagger($swagger)
+    public function setSwagger($swagger = null)
     {
         $this->swagger = $swagger;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Info
+     * @return Info
      */
     public function getInfo()
     {
         return $this->info;
     }
-
     /**
      * @param Info $info
+     *
+     * @return self
      */
-    public function setInfo(Info $info)
+    public function setInfo($info = null)
     {
         $this->info = $info;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -117,15 +107,17 @@ class Swagger
     {
         return $this->host;
     }
-
     /**
      * @param string $host
+     *
+     * @return self
      */
-    public function setHost($host)
+    public function setHost($host = null)
     {
         $this->host = $host;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -133,15 +125,17 @@ class Swagger
     {
         return $this->basePath;
     }
-
     /**
      * @param string $basePath
+     *
+     * @return self
      */
-    public function setBasePath($basePath)
+    public function setBasePath($basePath = null)
     {
         $this->basePath = $basePath;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -149,15 +143,17 @@ class Swagger
     {
         return $this->schemes;
     }
-
     /**
      * @param string[] $schemes
+     *
+     * @return self
      */
-    public function setSchemes($schemes)
+    public function setSchemes($schemes = null)
     {
         $this->schemes = $schemes;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -165,15 +161,17 @@ class Swagger
     {
         return $this->consumes;
     }
-
     /**
      * @param string[] $consumes
+     *
+     * @return self
      */
-    public function setConsumes($consumes)
+    public function setConsumes($consumes = null)
     {
         $this->consumes = $consumes;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -181,79 +179,89 @@ class Swagger
     {
         return $this->produces;
     }
-
     /**
      * @param string[] $produces
+     *
+     * @return self
      */
-    public function setProduces($produces)
+    public function setProduces($produces = null)
     {
         $this->produces = $produces;
-    }
 
+        return $this;
+    }
     /**
-     * @return mixed[]|\Joli\Jane\Swagger\Model\PathItem[]
+     * @return mixed[]|PathItem[]
      */
     public function getPaths()
     {
         return $this->paths;
     }
-
     /**
-     * @param PathItem[] $paths
+     * @param mixed[]|PathItem[] $paths
+     *
+     * @return self
      */
-    public function setPaths($paths)
+    public function setPaths($paths = null)
     {
         $this->paths = $paths;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Schema[]
+     * @return Schema[]
      */
     public function getDefinitions()
     {
         return $this->definitions;
     }
-
     /**
      * @param Schema[] $definitions
+     *
+     * @return self
      */
-    public function setDefinitions($definitions)
+    public function setDefinitions($definitions = null)
     {
         $this->definitions = $definitions;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\BodyParameter[]|array[]
+     * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
-
     /**
-     * @param BodyParameter[]|array[] $parameters
+     * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[] $parameters
+     *
+     * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters($parameters = null)
     {
         $this->parameters = $parameters;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Response[]
+     * @return Response[]
      */
     public function getResponses()
     {
         return $this->responses;
     }
-
     /**
      * @param Response[] $responses
+     *
+     * @return self
      */
-    public function setResponses($responses)
+    public function setResponses($responses = null)
     {
         $this->responses = $responses;
-    }
 
+        return $this;
+    }
     /**
      * @return string[][][]
      */
@@ -261,60 +269,69 @@ class Swagger
     {
         return $this->security;
     }
-
     /**
      * @param string[][][] $security
+     *
+     * @return self
      */
-    public function setSecurity($security)
+    public function setSecurity($security = null)
     {
         $this->security = $security;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\BasicAuthenticationSecurity[]|\Joli\Jane\Swagger\Model\ApiKeySecurity[]|\Joli\Jane\Swagger\Model\Oauth2ImplicitSecurity[]|\Joli\Jane\Swagger\Model\Oauth2PasswordSecurity[]|\Joli\Jane\Swagger\Model\Oauth2ApplicationSecurity[]|\Joli\Jane\Swagger\Model\Oauth2AccessCodeSecurity[]
+     * @return BasicAuthenticationSecurity[]|ApiKeySecurity[]|Oauth2ImplicitSecurity[]|Oauth2PasswordSecurity[]|Oauth2ApplicationSecurity[]|Oauth2AccessCodeSecurity[]
      */
     public function getSecurityDefinitions()
     {
         return $this->securityDefinitions;
     }
-
     /**
-     * @param Oauth2AccessCodeSecurity[] $securityDefinitions
+     * @param BasicAuthenticationSecurity[]|ApiKeySecurity[]|Oauth2ImplicitSecurity[]|Oauth2PasswordSecurity[]|Oauth2ApplicationSecurity[]|Oauth2AccessCodeSecurity[] $securityDefinitions
+     *
+     * @return self
      */
-    public function setSecurityDefinitions($securityDefinitions)
+    public function setSecurityDefinitions($securityDefinitions = null)
     {
         $this->securityDefinitions = $securityDefinitions;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Tag[]
+     * @return Tag[]
      */
     public function getTags()
     {
         return $this->tags;
     }
-
     /**
      * @param Tag[] $tags
+     *
+     * @return self
      */
-    public function setTags($tags)
+    public function setTags($tags = null)
     {
         $this->tags = $tags;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\ExternalDocs
+     * @return ExternalDocs
      */
     public function getExternalDocs()
     {
         return $this->externalDocs;
     }
-
     /**
      * @param ExternalDocs $externalDocs
+     *
+     * @return self
      */
-    public function setExternalDocs(ExternalDocs $externalDocs)
+    public function setExternalDocs($externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
+
+        return $this;
     }
 }

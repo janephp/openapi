@@ -1,18 +1,17 @@
 <?php
+
 namespace Joli\Jane\Swagger\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class NormalizerChain implements DenormalizerInterface
 {
-    private $normalizers = [];
-
+    private $normalizers = array();
     public function addNormalizer($normalizer)
     {
         $normalizer->setNormalizerChain($this);
         $this->normalizers[] = $normalizer;
     }
-
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         foreach ($this->normalizers as $normalizer) {
@@ -23,7 +22,6 @@ class NormalizerChain implements DenormalizerInterface
 
         return null;
     }
-
     public function supportsDenormalization($data, $type, $format = null)
     {
         foreach ($this->normalizers as $normalizer) {
@@ -34,29 +32,32 @@ class NormalizerChain implements DenormalizerInterface
 
         return false;
     }
-
     public static function build()
     {
         $normalizer = new self();
-
         $normalizer->addNormalizer(new ContactNormalizer());
         $normalizer->addNormalizer(new LicenseNormalizer());
         $normalizer->addNormalizer(new InfoNormalizer());
         $normalizer->addNormalizer(new ExternalDocsNormalizer());
         $normalizer->addNormalizer(new XmlNormalizer());
         $normalizer->addNormalizer(new SchemaNormalizer());
+        $normalizer->addNormalizer(new BodyParameterNormalizer());
         $normalizer->addNormalizer(new PrimitivesItemsNormalizer());
+        $normalizer->addNormalizer(new HeaderParameterSubSchemaNormalizer());
+        $normalizer->addNormalizer(new FormDataParameterSubSchemaNormalizer());
+        $normalizer->addNormalizer(new QueryParameterSubSchemaNormalizer());
+        $normalizer->addNormalizer(new PathParameterSubSchemaNormalizer());
         $normalizer->addNormalizer(new HeaderNormalizer());
         $normalizer->addNormalizer(new ResponseNormalizer());
         $normalizer->addNormalizer(new OperationNormalizer());
         $normalizer->addNormalizer(new PathItemNormalizer());
-        $normalizer->addNormalizer(new BodyParameterNormalizer());
         $normalizer->addNormalizer(new BasicAuthenticationSecurityNormalizer());
         $normalizer->addNormalizer(new ApiKeySecurityNormalizer());
         $normalizer->addNormalizer(new Oauth2ImplicitSecurityNormalizer());
         $normalizer->addNormalizer(new Oauth2PasswordSecurityNormalizer());
         $normalizer->addNormalizer(new Oauth2ApplicationSecurityNormalizer());
         $normalizer->addNormalizer(new Oauth2AccessCodeSecurityNormalizer());
+        $normalizer->addNormalizer(new TagNormalizer());
         $normalizer->addNormalizer(new SwaggerNormalizer());
 
         return $normalizer;

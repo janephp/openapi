@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Operation
@@ -7,62 +8,50 @@ class Operation
      * @var string[]
      */
     protected $tags;
-
     /**
      * @var string
      */
     protected $summary;
-
     /**
      * @var string
      */
     protected $description;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\ExternalDocs
+     * @var ExternalDocs
      */
     protected $externalDocs;
-
     /**
      * @var string
      */
     protected $operationId;
-
     /**
      * @var string[]
      */
     protected $produces;
-
     /**
      * @var string[]
      */
     protected $consumes;
-
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|array[]
+     * @var \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
      */
     protected $parameters;
-
     /**
      * @var \Joli\Jane\Swagger\Responses[]|mixed[]
      */
     protected $responses;
-
     /**
      * @var string[]
      */
     protected $schemes;
-
     /**
      * @var bool
      */
     protected $deprecated;
-
     /**
      * @var string[][][]
      */
     protected $security;
-
     /**
      * @return string[]
      */
@@ -70,15 +59,17 @@ class Operation
     {
         return $this->tags;
     }
-
     /**
      * @param string[] $tags
+     *
+     * @return self
      */
-    public function setTags($tags)
+    public function setTags($tags = null)
     {
         $this->tags = $tags;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -86,15 +77,17 @@ class Operation
     {
         return $this->summary;
     }
-
     /**
      * @param string $summary
+     *
+     * @return self
      */
-    public function setSummary($summary)
+    public function setSummary($summary = null)
     {
         $this->summary = $summary;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -102,31 +95,35 @@ class Operation
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\ExternalDocs
+     * @return ExternalDocs
      */
     public function getExternalDocs()
     {
         return $this->externalDocs;
     }
-
     /**
      * @param ExternalDocs $externalDocs
+     *
+     * @return self
      */
-    public function setExternalDocs(ExternalDocs $externalDocs)
+    public function setExternalDocs($externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -134,15 +131,17 @@ class Operation
     {
         return $this->operationId;
     }
-
     /**
      * @param string $operationId
+     *
+     * @return self
      */
-    public function setOperationId($operationId)
+    public function setOperationId($operationId = null)
     {
         $this->operationId = $operationId;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -150,15 +149,17 @@ class Operation
     {
         return $this->produces;
     }
-
     /**
      * @param string[] $produces
+     *
+     * @return self
      */
-    public function setProduces($produces)
+    public function setProduces($produces = null)
     {
         $this->produces = $produces;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -166,31 +167,35 @@ class Operation
     {
         return $this->consumes;
     }
-
     /**
      * @param string[] $consumes
+     *
+     * @return self
      */
-    public function setConsumes($consumes)
+    public function setConsumes($consumes = null)
     {
         $this->consumes = $consumes;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|array[]
+     * @return \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
-
     /**
-     * @param Parameters[]|array[] $parameters
+     * @param \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[] $parameters
+     *
+     * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters($parameters = null)
     {
         $this->parameters = $parameters;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Responses[]|mixed[]
      */
@@ -198,15 +203,17 @@ class Operation
     {
         return $this->responses;
     }
-
     /**
-     * @param Responses[]|mixed[] $responses
+     * @param \Joli\Jane\Swagger\Responses[]|mixed[] $responses
+     *
+     * @return self
      */
-    public function setResponses($responses)
+    public function setResponses($responses = null)
     {
         $this->responses = $responses;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -214,15 +221,17 @@ class Operation
     {
         return $this->schemes;
     }
-
     /**
      * @param string[] $schemes
+     *
+     * @return self
      */
-    public function setSchemes($schemes)
+    public function setSchemes($schemes = null)
     {
         $this->schemes = $schemes;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -230,15 +239,17 @@ class Operation
     {
         return $this->deprecated;
     }
-
     /**
      * @param bool $deprecated
+     *
+     * @return self
      */
-    public function setDeprecated($deprecated)
+    public function setDeprecated($deprecated = null)
     {
         $this->deprecated = $deprecated;
-    }
 
+        return $this;
+    }
     /**
      * @return string[][][]
      */
@@ -246,12 +257,15 @@ class Operation
     {
         return $this->security;
     }
-
     /**
      * @param string[][][] $security
+     *
+     * @return self
      */
-    public function setSecurity($security)
+    public function setSecurity($security = null)
     {
         $this->security = $security;
+
+        return $this;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Info
@@ -7,32 +8,26 @@ class Info
      * @var string
      */
     protected $title;
-
     /**
      * @var string
      */
     protected $version;
-
     /**
      * @var string
      */
     protected $description;
-
     /**
      * @var string
      */
     protected $termsOfService;
-
     /**
      * @var \Joli\Jane\Swagger\Contact
      */
     protected $contact;
-
     /**
      * @var \Joli\Jane\Swagger\License
      */
     protected $license;
-
     /**
      * @return string
      */
@@ -40,15 +35,17 @@ class Info
     {
         return $this->title;
     }
-
     /**
      * @param string $title
+     *
+     * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title = null)
     {
         $this->title = $title;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -56,15 +53,17 @@ class Info
     {
         return $this->version;
     }
-
     /**
      * @param string $version
+     *
+     * @return self
      */
-    public function setVersion($version)
+    public function setVersion($version = null)
     {
         $this->version = $version;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -72,15 +71,17 @@ class Info
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -88,15 +89,17 @@ class Info
     {
         return $this->termsOfService;
     }
-
     /**
      * @param string $termsOfService
+     *
+     * @return self
      */
-    public function setTermsOfService($termsOfService)
+    public function setTermsOfService($termsOfService = null)
     {
         $this->termsOfService = $termsOfService;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Contact
      */
@@ -104,15 +107,17 @@ class Info
     {
         return $this->contact;
     }
-
     /**
-     * @param Contact $contact
+     * @param \Joli\Jane\Swagger\Contact $contact
+     *
+     * @return self
      */
-    public function setContact(Contact $contact)
+    public function setContact($contact = null)
     {
         $this->contact = $contact;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\License
      */
@@ -120,12 +125,15 @@ class Info
     {
         return $this->license;
     }
-
     /**
-     * @param License $license
+     * @param \Joli\Jane\Swagger\License $license
+     *
+     * @return self
      */
-    public function setLicense(License $license)
+    public function setLicense($license = null)
     {
         $this->license = $license;
+
+        return $this;
     }
 }

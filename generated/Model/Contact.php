@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Contact
@@ -7,17 +8,14 @@ class Contact
      * @var string
      */
     protected $name;
-
     /**
      * @var string
      */
     protected $url;
-
     /**
      * @var string
      */
     protected $email;
-
     /**
      * @return string
      */
@@ -25,15 +23,17 @@ class Contact
     {
         return $this->name;
     }
-
     /**
      * @param string $name
+     *
+     * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -41,15 +41,17 @@ class Contact
     {
         return $this->url;
     }
-
     /**
      * @param string $url
+     *
+     * @return self
      */
-    public function setUrl($url)
+    public function setUrl($url = null)
     {
         $this->url = $url;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -57,12 +59,15 @@ class Contact
     {
         return $this->email;
     }
-
     /**
      * @param string $email
+     *
+     * @return self
      */
-    public function setEmail($email)
+    public function setEmail($email = null)
     {
         $this->email = $email;
+
+        return $this;
     }
 }

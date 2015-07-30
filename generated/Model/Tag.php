@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Tag
@@ -7,17 +8,14 @@ class Tag
      * @var string
      */
     protected $name;
-
     /**
      * @var string
      */
     protected $description;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\ExternalDocs
+     * @var ExternalDocs
      */
     protected $externalDocs;
-
     /**
      * @return string
      */
@@ -25,15 +23,17 @@ class Tag
     {
         return $this->name;
     }
-
     /**
      * @param string $name
+     *
+     * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -41,28 +41,33 @@ class Tag
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\ExternalDocs
+     * @return ExternalDocs
      */
     public function getExternalDocs()
     {
         return $this->externalDocs;
     }
-
     /**
      * @param ExternalDocs $externalDocs
+     *
+     * @return self
      */
-    public function setExternalDocs(ExternalDocs $externalDocs)
+    public function setExternalDocs($externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
+
+        return $this;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class PathItem
@@ -7,47 +8,38 @@ class PathItem
      * @var string
      */
     protected $dollarRef;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $get;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $put;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $post;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $delete;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $options;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $head;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var Operation
      */
     protected $patch;
-
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|array[]
+     * @var \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
      */
     protected $parameters;
-
     /**
      * @return string
      */
@@ -55,140 +47,159 @@ class PathItem
     {
         return $this->dollarRef;
     }
-
     /**
      * @param string $dollarRef
+     *
+     * @return self
      */
-    public function setDollarRef($dollarRef)
+    public function setDollarRef($dollarRef = null)
     {
         $this->dollarRef = $dollarRef;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getGet()
     {
         return $this->get;
     }
-
     /**
      * @param Operation $get
+     *
+     * @return self
      */
-    public function setGet(Operation $get)
+    public function setGet($get = null)
     {
         $this->get = $get;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getPut()
     {
         return $this->put;
     }
-
     /**
      * @param Operation $put
+     *
+     * @return self
      */
-    public function setPut(Operation $put)
+    public function setPut($put = null)
     {
         $this->put = $put;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getPost()
     {
         return $this->post;
     }
-
     /**
      * @param Operation $post
+     *
+     * @return self
      */
-    public function setPost(Operation $post)
+    public function setPost($post = null)
     {
         $this->post = $post;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getDelete()
     {
         return $this->delete;
     }
-
     /**
      * @param Operation $delete
+     *
+     * @return self
      */
-    public function setDelete(Operation $delete)
+    public function setDelete($delete = null)
     {
         $this->delete = $delete;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getOptions()
     {
         return $this->options;
     }
-
     /**
      * @param Operation $options
+     *
+     * @return self
      */
-    public function setOptions(Operation $options)
+    public function setOptions($options = null)
     {
         $this->options = $options;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getHead()
     {
         return $this->head;
     }
-
     /**
      * @param Operation $head
+     *
+     * @return self
      */
-    public function setHead(Operation $head)
+    public function setHead($head = null)
     {
         $this->head = $head;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return Operation
      */
     public function getPatch()
     {
         return $this->patch;
     }
-
     /**
      * @param Operation $patch
+     *
+     * @return self
      */
-    public function setPatch(Operation $patch)
+    public function setPatch($patch = null)
     {
         $this->patch = $patch;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|array[]
+     * @return \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
-
     /**
-     * @param Parameters[]|array[] $parameters
+     * @param \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[] $parameters
+     *
+     * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters($parameters = null)
     {
         $this->parameters = $parameters;
+
+        return $this;
     }
 }

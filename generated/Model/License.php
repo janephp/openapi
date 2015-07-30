@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class License
@@ -7,12 +8,10 @@ class License
      * @var string
      */
     protected $name;
-
     /**
      * @var string
      */
     protected $url;
-
     /**
      * @return string
      */
@@ -20,15 +19,17 @@ class License
     {
         return $this->name;
     }
-
     /**
      * @param string $name
+     *
+     * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -36,12 +37,15 @@ class License
     {
         return $this->url;
     }
-
     /**
      * @param string $url
+     *
+     * @return self
      */
-    public function setUrl($url)
+    public function setUrl($url = null)
     {
         $this->url = $url;
+
+        return $this;
     }
 }

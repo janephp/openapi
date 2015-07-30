@@ -483,6 +483,12 @@
             "additionalProperties": false
         },
         "headerParameterSubSchema": {
+            "type": "object",
+            "required": [
+                "name",
+                "in",
+                "type"
+            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -571,6 +577,12 @@
             }
         },
         "queryParameterSubSchema": {
+            "type": "object",
+            "required": [
+                "name",
+                "in",
+                "type"
+            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -664,6 +676,12 @@
             }
         },
         "formDataParameterSubSchema": {
+            "type": "object",
+            "required": [
+                "name",
+                "in",
+                "type"
+            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -758,6 +776,12 @@
             }
         },
         "pathParameterSubSchema": {
+            "type": "object",
+            "required": [
+                "name",
+                "in",
+                "type"
+            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -848,12 +872,6 @@
             }
         },
         "nonBodyParameter": {
-            "type": "object",
-            "required": [
-                "name",
-                "in",
-                "type"
-            ],
             "oneOf": [
                 {
                     "$ref": "#/definitions/headerParameterSubSchema"

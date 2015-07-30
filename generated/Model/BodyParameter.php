@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class BodyParameter
@@ -7,27 +8,22 @@ class BodyParameter
      * @var string
      */
     protected $description;
-
     /**
      * @var string
      */
     protected $name;
-
     /**
      * @var string
      */
     protected $in;
-
     /**
      * @var bool
      */
     protected $required;
-
     /**
      * @var \Joli\Jane\Swagger\Schema
      */
     protected $schema;
-
     /**
      * @return string
      */
@@ -35,15 +31,17 @@ class BodyParameter
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -51,15 +49,17 @@ class BodyParameter
     {
         return $this->name;
     }
-
     /**
      * @param string $name
+     *
+     * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -67,15 +67,17 @@ class BodyParameter
     {
         return $this->in;
     }
-
     /**
      * @param string $in
+     *
+     * @return self
      */
-    public function setIn($in)
+    public function setIn($in = null)
     {
         $this->in = $in;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -83,15 +85,17 @@ class BodyParameter
     {
         return $this->required;
     }
-
     /**
      * @param bool $required
+     *
+     * @return self
      */
-    public function setRequired($required)
+    public function setRequired($required = null)
     {
         $this->required = $required;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Schema
      */
@@ -99,12 +103,15 @@ class BodyParameter
     {
         return $this->schema;
     }
-
     /**
-     * @param Schema $schema
+     * @param \Joli\Jane\Swagger\Schema $schema
+     *
+     * @return self
      */
-    public function setSchema(Schema $schema)
+    public function setSchema($schema = null)
     {
         $this->schema = $schema;
+
+        return $this;
     }
 }

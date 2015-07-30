@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class BasicAuthenticationSecurity
@@ -7,12 +8,10 @@ class BasicAuthenticationSecurity
      * @var string
      */
     protected $type;
-
     /**
      * @var string
      */
     protected $description;
-
     /**
      * @return string
      */
@@ -20,15 +19,17 @@ class BasicAuthenticationSecurity
     {
         return $this->type;
     }
-
     /**
      * @param string $type
+     *
+     * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -36,12 +37,15 @@ class BasicAuthenticationSecurity
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
+
+        return $this;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Response
@@ -7,22 +8,18 @@ class Response
      * @var string
      */
     protected $description;
-
     /**
      * @var \Joli\Jane\Swagger\Schema
      */
     protected $schema;
-
     /**
      * @var \Joli\Jane\Swagger\Headers[]
      */
     protected $headers;
-
     /**
      * @var mixed[]
      */
     protected $examples;
-
     /**
      * @return string
      */
@@ -30,15 +27,17 @@ class Response
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Schema
      */
@@ -46,15 +45,17 @@ class Response
     {
         return $this->schema;
     }
-
     /**
-     * @param Schema $schema
+     * @param \Joli\Jane\Swagger\Schema $schema
+     *
+     * @return self
      */
-    public function setSchema(Schema $schema)
+    public function setSchema($schema = null)
     {
         $this->schema = $schema;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Headers[]
      */
@@ -62,15 +63,17 @@ class Response
     {
         return $this->headers;
     }
-
     /**
-     * @param Headers[] $headers
+     * @param \Joli\Jane\Swagger\Headers[] $headers
+     *
+     * @return self
      */
-    public function setHeaders($headers)
+    public function setHeaders($headers = null)
     {
         $this->headers = $headers;
-    }
 
+        return $this;
+    }
     /**
      * @return mixed[]
      */
@@ -78,12 +81,15 @@ class Response
     {
         return $this->examples;
     }
-
     /**
      * @param mixed[] $examples
+     *
+     * @return self
      */
-    public function setExamples($examples)
+    public function setExamples($examples = null)
     {
         $this->examples = $examples;
+
+        return $this;
     }
 }

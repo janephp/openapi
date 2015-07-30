@@ -1,4 +1,5 @@
 <?php
+
 namespace Joli\Jane\Swagger\Model;
 
 class Schema
@@ -7,152 +8,122 @@ class Schema
      * @var string
      */
     protected $dollarRef;
-
     /**
      * @var string
      */
     protected $format;
-
     /**
      * @var string
      */
     protected $title;
-
     /**
      * @var string
      */
     protected $description;
-
     /**
      * @var mixed
      */
     protected $default;
-
     /**
      * @var float
      */
     protected $multipleOf;
-
     /**
      * @var float
      */
     protected $maximum;
-
     /**
      * @var bool
      */
     protected $exclusiveMaximum;
-
     /**
      * @var float
      */
     protected $minimum;
-
     /**
      * @var bool
      */
     protected $exclusiveMinimum;
-
     /**
      * @var int
      */
     protected $maxLength;
-
     /**
      * @var int|mixed
      */
     protected $minLength;
-
     /**
      * @var string
      */
     protected $pattern;
-
     /**
      * @var int
      */
     protected $maxItems;
-
     /**
      * @var int|mixed
      */
     protected $minItems;
-
     /**
      * @var bool
      */
     protected $uniqueItems;
-
     /**
      * @var int
      */
     protected $maxProperties;
-
     /**
      * @var int|mixed
      */
     protected $minProperties;
-
     /**
      * @var string[]
      */
     protected $required;
-
     /**
      * @var array
      */
     protected $enum;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Schema|bool
+     * @var Schema|bool
      */
     protected $additionalProperties;
-
     /**
      * @var mixed|mixed[]
      */
     protected $type;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Schema|\Joli\Jane\Swagger\Model\Schema[]
+     * @var Schema|Schema[]
      */
     protected $items;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Schema[]
+     * @var Schema[]
      */
     protected $allOf;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\Schema[]
+     * @var Schema[]
      */
     protected $properties;
-
     /**
      * @var string
      */
     protected $discriminator;
-
     /**
      * @var bool
      */
     protected $readOnly;
-
     /**
      * @var \Joli\Jane\Swagger\Xml
      */
     protected $xml;
-
     /**
-     * @var \Joli\Jane\Swagger\Model\ExternalDocs
+     * @var ExternalDocs
      */
     protected $externalDocs;
-
     /**
      * @var mixed
      */
     protected $example;
-
     /**
      * @return string
      */
@@ -160,15 +131,17 @@ class Schema
     {
         return $this->dollarRef;
     }
-
     /**
      * @param string $dollarRef
+     *
+     * @return self
      */
-    public function setDollarRef($dollarRef)
+    public function setDollarRef($dollarRef = null)
     {
         $this->dollarRef = $dollarRef;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -176,15 +149,17 @@ class Schema
     {
         return $this->format;
     }
-
     /**
      * @param string $format
+     *
+     * @return self
      */
-    public function setFormat($format)
+    public function setFormat($format = null)
     {
         $this->format = $format;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -192,15 +167,17 @@ class Schema
     {
         return $this->title;
     }
-
     /**
      * @param string $title
+     *
+     * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title = null)
     {
         $this->title = $title;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -208,15 +185,17 @@ class Schema
     {
         return $this->description;
     }
-
     /**
      * @param string $description
+     *
+     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -224,15 +203,17 @@ class Schema
     {
         return $this->default;
     }
-
     /**
      * @param mixed $default
+     *
+     * @return self
      */
-    public function setDefault($default)
+    public function setDefault($default = null)
     {
         $this->default = $default;
-    }
 
+        return $this;
+    }
     /**
      * @return float
      */
@@ -240,15 +221,17 @@ class Schema
     {
         return $this->multipleOf;
     }
-
     /**
      * @param float $multipleOf
+     *
+     * @return self
      */
-    public function setMultipleOf($multipleOf)
+    public function setMultipleOf($multipleOf = null)
     {
         $this->multipleOf = $multipleOf;
-    }
 
+        return $this;
+    }
     /**
      * @return float
      */
@@ -256,15 +239,17 @@ class Schema
     {
         return $this->maximum;
     }
-
     /**
      * @param float $maximum
+     *
+     * @return self
      */
-    public function setMaximum($maximum)
+    public function setMaximum($maximum = null)
     {
         $this->maximum = $maximum;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -272,15 +257,17 @@ class Schema
     {
         return $this->exclusiveMaximum;
     }
-
     /**
      * @param bool $exclusiveMaximum
+     *
+     * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum)
+    public function setExclusiveMaximum($exclusiveMaximum = null)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
-    }
 
+        return $this;
+    }
     /**
      * @return float
      */
@@ -288,15 +275,17 @@ class Schema
     {
         return $this->minimum;
     }
-
     /**
      * @param float $minimum
+     *
+     * @return self
      */
-    public function setMinimum($minimum)
+    public function setMinimum($minimum = null)
     {
         $this->minimum = $minimum;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -304,15 +293,17 @@ class Schema
     {
         return $this->exclusiveMinimum;
     }
-
     /**
      * @param bool $exclusiveMinimum
+     *
+     * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum)
+    public function setExclusiveMinimum($exclusiveMinimum = null)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
-    }
 
+        return $this;
+    }
     /**
      * @return int
      */
@@ -320,15 +311,17 @@ class Schema
     {
         return $this->maxLength;
     }
-
     /**
      * @param int $maxLength
+     *
+     * @return self
      */
-    public function setMaxLength($maxLength)
+    public function setMaxLength($maxLength = null)
     {
         $this->maxLength = $maxLength;
-    }
 
+        return $this;
+    }
     /**
      * @return int|mixed
      */
@@ -336,15 +329,17 @@ class Schema
     {
         return $this->minLength;
     }
-
     /**
      * @param int|mixed $minLength
+     *
+     * @return self
      */
-    public function setMinLength($minLength)
+    public function setMinLength($minLength = null)
     {
         $this->minLength = $minLength;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -352,15 +347,17 @@ class Schema
     {
         return $this->pattern;
     }
-
     /**
      * @param string $pattern
+     *
+     * @return self
      */
-    public function setPattern($pattern)
+    public function setPattern($pattern = null)
     {
         $this->pattern = $pattern;
-    }
 
+        return $this;
+    }
     /**
      * @return int
      */
@@ -368,15 +365,17 @@ class Schema
     {
         return $this->maxItems;
     }
-
     /**
      * @param int $maxItems
+     *
+     * @return self
      */
-    public function setMaxItems($maxItems)
+    public function setMaxItems($maxItems = null)
     {
         $this->maxItems = $maxItems;
-    }
 
+        return $this;
+    }
     /**
      * @return int|mixed
      */
@@ -384,15 +383,17 @@ class Schema
     {
         return $this->minItems;
     }
-
     /**
      * @param int|mixed $minItems
+     *
+     * @return self
      */
-    public function setMinItems($minItems)
+    public function setMinItems($minItems = null)
     {
         $this->minItems = $minItems;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -400,15 +401,17 @@ class Schema
     {
         return $this->uniqueItems;
     }
-
     /**
      * @param bool $uniqueItems
+     *
+     * @return self
      */
-    public function setUniqueItems($uniqueItems)
+    public function setUniqueItems($uniqueItems = null)
     {
         $this->uniqueItems = $uniqueItems;
-    }
 
+        return $this;
+    }
     /**
      * @return int
      */
@@ -416,15 +419,17 @@ class Schema
     {
         return $this->maxProperties;
     }
-
     /**
      * @param int $maxProperties
+     *
+     * @return self
      */
-    public function setMaxProperties($maxProperties)
+    public function setMaxProperties($maxProperties = null)
     {
         $this->maxProperties = $maxProperties;
-    }
 
+        return $this;
+    }
     /**
      * @return int|mixed
      */
@@ -432,15 +437,17 @@ class Schema
     {
         return $this->minProperties;
     }
-
     /**
      * @param int|mixed $minProperties
+     *
+     * @return self
      */
-    public function setMinProperties($minProperties)
+    public function setMinProperties($minProperties = null)
     {
         $this->minProperties = $minProperties;
-    }
 
+        return $this;
+    }
     /**
      * @return string[]
      */
@@ -448,15 +455,17 @@ class Schema
     {
         return $this->required;
     }
-
     /**
      * @param string[] $required
+     *
+     * @return self
      */
-    public function setRequired($required)
+    public function setRequired($required = null)
     {
         $this->required = $required;
-    }
 
+        return $this;
+    }
     /**
      * @return array
      */
@@ -464,31 +473,35 @@ class Schema
     {
         return $this->enum;
     }
-
     /**
      * @param array $enum
+     *
+     * @return self
      */
-    public function setEnum(array $enum)
+    public function setEnum($enum = null)
     {
         $this->enum = $enum;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Schema|bool
+     * @return Schema|bool
      */
     public function getAdditionalProperties()
     {
         return $this->additionalProperties;
     }
-
     /**
      * @param Schema|bool $additionalProperties
+     *
+     * @return self
      */
-    public function setAdditionalProperties($additionalProperties)
+    public function setAdditionalProperties($additionalProperties = null)
     {
         $this->additionalProperties = $additionalProperties;
-    }
 
+        return $this;
+    }
     /**
      * @return mixed|mixed[]
      */
@@ -496,63 +509,71 @@ class Schema
     {
         return $this->type;
     }
-
     /**
      * @param mixed|mixed[] $type
+     *
+     * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Schema|\Joli\Jane\Swagger\Model\Schema[]
+     * @return Schema|Schema[]
      */
     public function getItems()
     {
         return $this->items;
     }
-
     /**
-     * @param Schema[] $items
+     * @param Schema|Schema[] $items
+     *
+     * @return self
      */
-    public function setItems($items)
+    public function setItems($items = null)
     {
         $this->items = $items;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Schema[]
+     * @return Schema[]
      */
     public function getAllOf()
     {
         return $this->allOf;
     }
-
     /**
      * @param Schema[] $allOf
+     *
+     * @return self
      */
-    public function setAllOf($allOf)
+    public function setAllOf($allOf = null)
     {
         $this->allOf = $allOf;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\Schema[]
+     * @return Schema[]
      */
     public function getProperties()
     {
         return $this->properties;
     }
-
     /**
      * @param Schema[] $properties
+     *
+     * @return self
      */
-    public function setProperties($properties)
+    public function setProperties($properties = null)
     {
         $this->properties = $properties;
-    }
 
+        return $this;
+    }
     /**
      * @return string
      */
@@ -560,15 +581,17 @@ class Schema
     {
         return $this->discriminator;
     }
-
     /**
      * @param string $discriminator
+     *
+     * @return self
      */
-    public function setDiscriminator($discriminator)
+    public function setDiscriminator($discriminator = null)
     {
         $this->discriminator = $discriminator;
-    }
 
+        return $this;
+    }
     /**
      * @return bool
      */
@@ -576,15 +599,17 @@ class Schema
     {
         return $this->readOnly;
     }
-
     /**
      * @param bool $readOnly
+     *
+     * @return self
      */
-    public function setReadOnly($readOnly)
+    public function setReadOnly($readOnly = null)
     {
         $this->readOnly = $readOnly;
-    }
 
+        return $this;
+    }
     /**
      * @return \Joli\Jane\Swagger\Xml
      */
@@ -592,31 +617,35 @@ class Schema
     {
         return $this->xml;
     }
-
     /**
-     * @param Xml $xml
+     * @param \Joli\Jane\Swagger\Xml $xml
+     *
+     * @return self
      */
-    public function setXml(Xml $xml)
+    public function setXml($xml = null)
     {
         $this->xml = $xml;
-    }
 
+        return $this;
+    }
     /**
-     * @return \Joli\Jane\Swagger\Model\ExternalDocs
+     * @return ExternalDocs
      */
     public function getExternalDocs()
     {
         return $this->externalDocs;
     }
-
     /**
      * @param ExternalDocs $externalDocs
+     *
+     * @return self
      */
-    public function setExternalDocs(ExternalDocs $externalDocs)
+    public function setExternalDocs($externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
-    }
 
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -624,12 +653,15 @@ class Schema
     {
         return $this->example;
     }
-
     /**
      * @param mixed $example
+     *
+     * @return self
      */
-    public function setExample($example)
+    public function setExample($example = null)
     {
         $this->example = $example;
+
+        return $this;
     }
 }

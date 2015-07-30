@@ -2,8 +2,28 @@
 
 namespace Joli\Jane\Swagger\Model;
 
-class PrimitivesItems
+class FormDataParameterSubSchema
 {
+    /**
+     * @var bool
+     */
+    protected $required;
+    /**
+     * @var string
+     */
+    protected $in;
+    /**
+     * @var string
+     */
+    protected $description;
+    /**
+     * @var string
+     */
+    protected $name;
+    /**
+     * @var bool
+     */
+    protected $allowEmptyValue;
     /**
      * @var string
      */
@@ -13,7 +33,7 @@ class PrimitivesItems
      */
     protected $format;
     /**
-     * @var PrimitivesItems
+     * @var \Joli\Jane\Swagger\Items
      */
     protected $items;
     /**
@@ -73,6 +93,96 @@ class PrimitivesItems
      */
     protected $multipleOf;
     /**
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+    /**
+     * @param bool $required
+     *
+     * @return self
+     */
+    public function setRequired($required = null)
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getIn()
+    {
+        return $this->in;
+    }
+    /**
+     * @param string $in
+     *
+     * @return self
+     */
+    public function setIn($in = null)
+    {
+        $this->in = $in;
+
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription($description = null)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * @param string $name
+     *
+     * @return self
+     */
+    public function setName($name = null)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getAllowEmptyValue()
+    {
+        return $this->allowEmptyValue;
+    }
+    /**
+     * @param bool $allowEmptyValue
+     *
+     * @return self
+     */
+    public function setAllowEmptyValue($allowEmptyValue = null)
+    {
+        $this->allowEmptyValue = $allowEmptyValue;
+
+        return $this;
+    }
+    /**
      * @return string
      */
     public function getType()
@@ -109,14 +219,14 @@ class PrimitivesItems
         return $this;
     }
     /**
-     * @return PrimitivesItems
+     * @return \Joli\Jane\Swagger\Items
      */
     public function getItems()
     {
         return $this->items;
     }
     /**
-     * @param PrimitivesItems $items
+     * @param \Joli\Jane\Swagger\Items $items
      *
      * @return self
      */
