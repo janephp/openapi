@@ -14,8 +14,12 @@ use Joli\Jane\Swagger\Model\PathParameterSubSchema;
 use Joli\Jane\Swagger\Model\QueryParameterSubSchema;
 use Joli\Jane\Swagger\Operation\Operation;
 
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Scalar;
+use PhpParser\Comment;
 
 class OperationGenerator
 {
@@ -64,32 +68,73 @@ class OperationGenerator
     public function generate($name, Operation $operation)
     {
         $methodParameters = [];
+        $documentation    = ['/**'];
+        $bodyParameter    = null;
+        $headerParameters = [];
 
-        foreach ($operation->getOperation()->getParameters() as $parameter) {
-            if ($parameter instanceof BodyParameter) {
-                $methodParameters[] = $this->bodyParameterGenerator->generateMethodParameter($parameter);
-            }
+        if ($operation->getOperation()->getDescription()) {
+            $documentation[] = sprintf(" * %s", $operation->getOperation()->getDescription());
+        }
 
-            if ($parameter instanceof FormDataParameterSubSchema) {
-                $methodParameters[] = $this->formDataParameterGenerator->generateMethodParameter($parameter);
-            }
+        if ($operation->getOperation()->getParameters()) {
+            $documentation[] = " * ";
 
-            if ($parameter instanceof HeaderParameterSubSchema) {
-                $methodParameters[] = $this->headerParameterGenerator->generateMethodParameter($parameter);
-            }
+            foreach ($operation->getOperation()->getParameters() as $parameter) {
+                if ($parameter instanceof BodyParameter) {
+                    $methodParameters[] = $this->bodyParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]    = sprintf(' * @param %s', $this->bodyParameterGenerator->generateDocParameter($parameter));
+                    $bodyParameter      = $parameter;
+                }
 
-            if ($parameter instanceof PathParameterSubSchema) {
-                $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter);
-            }
+                if ($parameter instanceof FormDataParameterSubSchema) {
+                    $methodParameters[] = $this->formDataParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]    = sprintf(' * @param %s', $this->formDataParameterGenerator->generateDocParameter($parameter));
+                }
 
-            if ($parameter instanceof QueryParameterSubSchema) {
-                $methodParameters[] = $this->queryParameterGenerator->generateMethodParameter($parameter);
+                if ($parameter instanceof HeaderParameterSubSchema) {
+                    $methodParameters[] = $this->headerParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]    = sprintf(' * @param %s', $this->headerParameterGenerator->generateDocParameter($parameter));
+                    $headerParameters[] = $parameter;
+                }
+
+                if ($parameter instanceof PathParameterSubSchema) {
+                    $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]    = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
+                }
+
+                if ($parameter instanceof QueryParameterSubSchema) {
+                    $methodParameters[] = $this->queryParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]    = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
+                }
             }
         }
 
+        $documentation[] = " * ";
+        $documentation[] = " * @return \\Psr\\Http\\Message\\ResponseInterface";
+        $documentation[] = " */";
+        $methodBody = [
+            new Stmt\Return_(new Expr\MethodCall(new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'), 'sendRequest', [
+                new Arg(
+                    new Expr\MethodCall(
+                        new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
+                        'createRequest', [
+                            new Arg(new Scalar\String_($operation->getPath())),
+                            new Arg(new Scalar\String_($operation->getMethod())),
+                            new Arg(new Expr\ClassConstFetch(new Name('RequestInterface'), 'PROTOCOL_VERSION_1_1')),
+                            new Arg(new Expr\Array_()),
+                            new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
+                        ]
+                    )
+                )
+            ]))
+        ];
+
         return new Stmt\ClassMethod($name, [
-            'type' => Stmt\Class_::MODIFIER_PUBLIC,
-            'params' => $methodParameters
+            'type'     => Stmt\Class_::MODIFIER_PUBLIC,
+            'params'   => $methodParameters,
+            'stmts'    => $methodBody
+        ], [
+            'comments' => [new Comment\Doc(implode("\n", $documentation))]
         ]);
     }
 } 

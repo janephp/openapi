@@ -55,12 +55,16 @@ class ClientGenerator
         $factory    = new BuilderFactory();
         $name       = $group === 0 ? '' : $group;
         $class      = $factory->class(Inflector::classify($name . $suffix));
+        $class->extend('Resource');
 
         foreach ($operations as $id => $operation) {
             $class->addStmt($this->operationGenerator->generate($id, $operation));
         }
 
         return $factory->namespace($namespace)
+            ->addStmt($factory->use('Joli\Jane\Swagger\Client\Resource'))
+            ->addStmt($factory->use('Ivory\HttpAdapter\Message\RequestInterface'))
+            ->addStmt($factory->use('Zend\Diactoros\Request'))
             ->addStmt($class)
             ->getNode();
     }

@@ -1,3 +1,5 @@
 /vendor/
 composer.lock
 debug.php
+debug-client.php
+stub/

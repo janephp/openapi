@@ -25,4 +25,12 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
 
         return $methodParameter;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function generateDocParameter($parameter)
+    {
+        return sprintf('%s $%s %s', 'mixed', Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+    }
 } 

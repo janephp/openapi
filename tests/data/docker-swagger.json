@@ -21,6 +21,24 @@
         "application/json"
     ],
     "paths": {
+        "/version": {
+            "get": {
+                "summary": "Show the docker version information",
+                "description": "Show the docker version information",
+                "operationId": "getVersion",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                },
+                "tags": [
+                    "Misc"
+                ]
+            }
+        },
         "/build": {
             "post": {
                 "summary": "Build an image from Dockerfile via stdin",
@@ -104,7 +122,19 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "no error"
+                        "description": "no error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Version": { "type": "string" },
+                                "Os": { "type": "string" },
+                                "KernelVersion": { "type": "string" },
+                                "GoVersion": { "type": "string" },
+                                "GitCommit": { "type": "string" },
+                                "Arch": { "type": "string" },
+                                "ApiVersion": { "type": "string" }
+                            }
+                        }
                     },
                     "500": {
                         "description": "server error"

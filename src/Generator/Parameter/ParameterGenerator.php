@@ -23,4 +23,11 @@ abstract class ParameterGenerator
      * @return Node\Param
      */
     abstract public function generateMethodParameter($parameter);
+
+    /**
+     * @param $parameter
+     *
+     * @return string
+     */
+    abstract public function generateDocParameter($parameter);
 } 
