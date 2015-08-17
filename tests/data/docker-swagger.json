@@ -20,6 +20,20 @@
     "consumes": [
         "application/json"
     ],
+    "definitions": {
+        "version": {
+            "type": "object",
+            "properties": {
+                "Version": { "type": "string" },
+                "Os": { "type": "string" },
+                "KernelVersion": { "type": "string" },
+                "GoVersion": { "type": "string" },
+                "GitCommit": { "type": "string" },
+                "Arch": { "type": "string" },
+                "ApiVersion": { "type": "string" }
+            }
+        }
+    },
     "paths": {
         "/version": {
             "get": {
@@ -28,7 +42,8 @@
                 "operationId": "getVersion",
                 "responses": {
                     "200": {
-                        "description": "no error"
+                        "description": "no error",
+                        "schema": { "$ref": "#/definitions/version" }
                     },
                     "500": {
                         "description": "server error"
@@ -122,19 +137,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "no error",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "Version": { "type": "string" },
-                                "Os": { "type": "string" },
-                                "KernelVersion": { "type": "string" },
-                                "GoVersion": { "type": "string" },
-                                "GitCommit": { "type": "string" },
-                                "Arch": { "type": "string" },
-                                "ApiVersion": { "type": "string" }
-                            }
-                        }
+                        "description": "no error"
                     },
                     "500": {
                         "description": "server error"

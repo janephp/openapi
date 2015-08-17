@@ -61,7 +61,7 @@ class ClientGenerator
             $class->addStmt($this->operationGenerator->generate($id, $operation));
         }
 
-        return $factory->namespace($namespace)
+        return $factory->namespace($namespace . "\\Resource")
             ->addStmt($factory->use('Joli\Jane\Swagger\Client\Resource'))
             ->addStmt($factory->use('Ivory\HttpAdapter\Message\RequestInterface'))
             ->addStmt($factory->use('Zend\Diactoros\Request'))
