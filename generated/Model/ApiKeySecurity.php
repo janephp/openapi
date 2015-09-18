@@ -32,7 +32,7 @@ class ApiKeySecurity
      *
      * @return self
      */
-    public function setType($type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -50,7 +50,7 @@ class ApiKeySecurity
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -68,7 +68,7 @@ class ApiKeySecurity
      *
      * @return self
      */
-    public function setIn($in = null)
+    public function setIn($in)
     {
         $this->in = $in;
 
@@ -86,7 +86,7 @@ class ApiKeySecurity
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 

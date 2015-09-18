@@ -36,7 +36,7 @@ class Oauth2ImplicitSecurity
      *
      * @return self
      */
-    public function setType($type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -54,7 +54,7 @@ class Oauth2ImplicitSecurity
      *
      * @return self
      */
-    public function setFlow($flow = null)
+    public function setFlow($flow)
     {
         $this->flow = $flow;
 
@@ -72,7 +72,7 @@ class Oauth2ImplicitSecurity
      *
      * @return self
      */
-    public function setScopes($scopes = null)
+    public function setScopes($scopes)
     {
         $this->scopes = $scopes;
 
@@ -90,7 +90,7 @@ class Oauth2ImplicitSecurity
      *
      * @return self
      */
-    public function setAuthorizationUrl($authorizationUrl = null)
+    public function setAuthorizationUrl($authorizationUrl)
     {
         $this->authorizationUrl = $authorizationUrl;
 
@@ -108,7 +108,7 @@ class Oauth2ImplicitSecurity
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 

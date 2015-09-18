@@ -37,7 +37,7 @@ class PathItem
      */
     protected $patch;
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
+     * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     protected $parameters;
     /**
@@ -52,7 +52,7 @@ class PathItem
      *
      * @return self
      */
-    public function setDollarRef($dollarRef = null)
+    public function setDollarRef($dollarRef)
     {
         $this->dollarRef = $dollarRef;
 
@@ -70,7 +70,7 @@ class PathItem
      *
      * @return self
      */
-    public function setGet($get = null)
+    public function setGet($get)
     {
         $this->get = $get;
 
@@ -88,7 +88,7 @@ class PathItem
      *
      * @return self
      */
-    public function setPut($put = null)
+    public function setPut($put)
     {
         $this->put = $put;
 
@@ -106,7 +106,7 @@ class PathItem
      *
      * @return self
      */
-    public function setPost($post = null)
+    public function setPost($post)
     {
         $this->post = $post;
 
@@ -124,7 +124,7 @@ class PathItem
      *
      * @return self
      */
-    public function setDelete($delete = null)
+    public function setDelete($delete)
     {
         $this->delete = $delete;
 
@@ -142,7 +142,7 @@ class PathItem
      *
      * @return self
      */
-    public function setOptions($options = null)
+    public function setOptions($options)
     {
         $this->options = $options;
 
@@ -160,7 +160,7 @@ class PathItem
      *
      * @return self
      */
-    public function setHead($head = null)
+    public function setHead($head)
     {
         $this->head = $head;
 
@@ -178,25 +178,25 @@ class PathItem
      *
      * @return self
      */
-    public function setPatch($patch = null)
+    public function setPatch($patch)
     {
         $this->patch = $patch;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
+     * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
     /**
-     * @param \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[] $parameters
+     * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[] $parameters
      *
      * @return self
      */
-    public function setParameters($parameters = null)
+    public function setParameters($parameters)
     {
         $this->parameters = $parameters;
 

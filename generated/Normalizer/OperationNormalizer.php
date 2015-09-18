@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class OperationNormalizer implements DenormalizerInterface
+class OperationNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\Operation') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -36,11 +29,11 @@ class OperationNormalizer implements DenormalizerInterface
             $context['rootSchema'] = $object;
         }
         if (isset($data->{'tags'})) {
-            $values_6 = array();
-            foreach ($data->{'tags'} as $value_7) {
-                $values_6[] = $value_7;
+            $values_29 = array();
+            foreach ($data->{'tags'} as $value_30) {
+                $values_29[] = $value_30;
             }
-            $object->setTags($values_6);
+            $object->setTags($values_29);
         }
         if (isset($data->{'summary'})) {
             $object->setSummary($data->{'summary'});
@@ -49,86 +42,86 @@ class OperationNormalizer implements DenormalizerInterface
             $object->setDescription($data->{'description'});
         }
         if (isset($data->{'externalDocs'})) {
-            $object->setExternalDocs($this->normalizerChain->denormalize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'json', $context));
+            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'raw', $context));
         }
         if (isset($data->{'operationId'})) {
             $object->setOperationId($data->{'operationId'});
         }
         if (isset($data->{'produces'})) {
-            $values_8 = array();
-            foreach ($data->{'produces'} as $value_9) {
-                $values_8[] = $value_9;
+            $values_31 = array();
+            foreach ($data->{'produces'} as $value_32) {
+                $values_31[] = $value_32;
             }
-            $object->setProduces($values_8);
+            $object->setProduces($values_31);
         }
         if (isset($data->{'consumes'})) {
-            $values_10 = array();
-            foreach ($data->{'consumes'} as $value_11) {
-                $values_10[] = $value_11;
+            $values_33 = array();
+            foreach ($data->{'consumes'} as $value_34) {
+                $values_33[] = $value_34;
             }
-            $object->setConsumes($values_10);
+            $object->setConsumes($values_33);
         }
         if (isset($data->{'parameters'})) {
-            $values_12 = array();
-            foreach ($data->{'parameters'} as $value_13) {
-                $value_14 = $value_13;
-                if (is_object($value_13) and $value_13->{'in'} == 'body') {
-                    $value_14 = $this->normalizerChain->denormalize($value_13, 'Joli\\Jane\\Swagger\\Model\\BodyParameter', 'json', $context);
-                } elseif (isset($value_13)) {
-                    $value_32 = $value_13;
-                    if (is_object($value_13) and $value_13->{'in'} == 'header' and ($value_13->{'type'} == 'string' or $value_13->{'type'} == 'number' or $value_13->{'type'} == 'boolean' or $value_13->{'type'} == 'integer' or $value_13->{'type'} == 'array')) {
-                        $value_32 = $this->normalizerChain->denormalize($value_13, 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema', 'json', $context);
-                    } elseif (is_object($value_13) and $value_13->{'in'} == 'formData' and ($value_13->{'type'} == 'string' or $value_13->{'type'} == 'number' or $value_13->{'type'} == 'boolean' or $value_13->{'type'} == 'integer' or $value_13->{'type'} == 'array' or $value_13->{'type'} == 'file')) {
-                        $value_32 = $this->normalizerChain->denormalize($value_13, 'Joli\\Jane\\Swagger\\Model\\FormDataParameterSubSchema', 'json', $context);
-                    } elseif (is_object($value_13) and $value_13->{'in'} == 'query' and ($value_13->{'type'} == 'string' or $value_13->{'type'} == 'number' or $value_13->{'type'} == 'boolean' or $value_13->{'type'} == 'integer' or $value_13->{'type'} == 'array')) {
-                        $value_32 = $this->normalizerChain->denormalize($value_13, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'json', $context);
-                    } elseif (is_object($value_13) and $value_13->{'in'} == 'path' and ($value_13->{'type'} == 'string' or $value_13->{'type'} == 'number' or $value_13->{'type'} == 'boolean' or $value_13->{'type'} == 'integer' or $value_13->{'type'} == 'array')) {
-                        $value_32 = $this->normalizerChain->denormalize($value_13, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'json', $context);
-                    }
-                    $value_14 = $value_32;
+            $values_35 = array();
+            foreach ($data->{'parameters'} as $value_36) {
+                $value_37 = $value_36;
+                if (is_object($value_36) and isset($value_36->{'name'}) and (isset($value_36->{'in'}) and $value_36->{'in'} == 'body') and isset($value_36->{'schema'})) {
+                    $value_37 = $this->serializer->deserialize($value_36, 'Joli\\Jane\\Swagger\\Model\\BodyParameter', 'raw', $context);
                 }
-                $values_12[] = $value_14;
+                if (is_object($value_36) and (isset($value_36->{'in'}) and $value_36->{'in'} == 'header') and isset($value_36->{'name'}) and (isset($value_36->{'type'}) and ($value_36->{'type'} == 'string' or $value_36->{'type'} == 'number' or $value_36->{'type'} == 'boolean' or $value_36->{'type'} == 'integer' or $value_36->{'type'} == 'array'))) {
+                    $value_37 = $this->serializer->deserialize($value_36, 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema', 'raw', $context);
+                }
+                if (is_object($value_36) and (isset($value_36->{'in'}) and $value_36->{'in'} == 'formData') and isset($value_36->{'name'}) and (isset($value_36->{'type'}) and ($value_36->{'type'} == 'string' or $value_36->{'type'} == 'number' or $value_36->{'type'} == 'boolean' or $value_36->{'type'} == 'integer' or $value_36->{'type'} == 'array' or $value_36->{'type'} == 'file'))) {
+                    $value_37 = $this->serializer->deserialize($value_36, 'Joli\\Jane\\Swagger\\Model\\FormDataParameterSubSchema', 'raw', $context);
+                }
+                if (is_object($value_36) and (isset($value_36->{'in'}) and $value_36->{'in'} == 'query') and isset($value_36->{'name'}) and (isset($value_36->{'type'}) and ($value_36->{'type'} == 'string' or $value_36->{'type'} == 'number' or $value_36->{'type'} == 'boolean' or $value_36->{'type'} == 'integer' or $value_36->{'type'} == 'array'))) {
+                    $value_37 = $this->serializer->deserialize($value_36, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'raw', $context);
+                }
+                if (is_object($value_36) and (isset($value_36->{'in'}) and $value_36->{'in'} == 'path') and isset($value_36->{'name'}) and (isset($value_36->{'type'}) and ($value_36->{'type'} == 'string' or $value_36->{'type'} == 'number' or $value_36->{'type'} == 'boolean' or $value_36->{'type'} == 'integer' or $value_36->{'type'} == 'array'))) {
+                    $value_37 = $this->serializer->deserialize($value_36, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'raw', $context);
+                }
+                $values_35[] = $value_37;
             }
-            $object->setParameters($values_12);
+            $object->setParameters($values_35);
         }
         if (isset($data->{'responses'})) {
-            $values_43 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'responses'} as $key_44 => $value_45) {
-                if (preg_match('/^([0-9]{3})$|^(default)$/', $key_44)) {
-                    $values_43[$key_44] = $this->normalizerChain->denormalize($value_45, 'Joli\\Jane\\Swagger\\Model\\Response', 'json', $context);
+            $values_38 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'responses'} as $key_40 => $value_39) {
+                if (preg_match('/^([0-9]{3})$|^(default)$/', $key_40) && (is_object($value_39) and isset($value_39->{'description'}))) {
+                    $values_38[$key_40] = $this->serializer->deserialize($value_39, 'Joli\\Jane\\Swagger\\Model\\Response', 'raw', $context);
                     continue;
                 }
-                if (preg_match('/^x-/', $key_44)) {
-                    $values_43[$key_44] = $value_45;
+                if (preg_match('/^x-/', $key_40) && isset($value_39)) {
+                    $values_38[$key_40] = $value_39;
                     continue;
                 }
             }
-            $object->setResponses($values_43);
+            $object->setResponses($values_38);
         }
         if (isset($data->{'schemes'})) {
-            $values_54 = array();
-            foreach ($data->{'schemes'} as $value_55) {
-                $values_54[] = $value_55;
+            $values_41 = array();
+            foreach ($data->{'schemes'} as $value_42) {
+                $values_41[] = $value_42;
             }
-            $object->setSchemes($values_54);
+            $object->setSchemes($values_41);
         }
         if (isset($data->{'deprecated'})) {
             $object->setDeprecated($data->{'deprecated'});
         }
         if (isset($data->{'security'})) {
-            $values_56 = array();
-            foreach ($data->{'security'} as $value_57) {
-                $values_58 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-                foreach ($value_57 as $key_59 => $value_60) {
-                    $values_61 = array();
-                    foreach ($value_60 as $value_62) {
-                        $values_61[] = $value_62;
+            $values_43 = array();
+            foreach ($data->{'security'} as $value_44) {
+                $values_45 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+                foreach ($value_44 as $key_47 => $value_46) {
+                    $values_48 = array();
+                    foreach ($value_46 as $value_49) {
+                        $values_48[] = $value_49;
                     }
-                    $values_58[$key_59] = $values_61;
+                    $values_45[$key_47] = $values_48;
                 }
-                $values_56[] = $values_58;
+                $values_43[] = $values_45;
             }
-            $object->setSecurity($values_56);
+            $object->setSecurity($values_43);
         }
 
         return $object;

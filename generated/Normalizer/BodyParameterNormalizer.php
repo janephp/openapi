@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class BodyParameterNormalizer implements DenormalizerInterface
+class BodyParameterNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\BodyParameter') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -48,7 +41,7 @@ class BodyParameterNormalizer implements DenormalizerInterface
             $object->setRequired($data->{'required'});
         }
         if (isset($data->{'schema'})) {
-            $object->setSchema($this->normalizerChain->denormalize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context));
+            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context));
         }
 
         return $object;

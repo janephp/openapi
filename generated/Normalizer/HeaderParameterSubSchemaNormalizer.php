@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class HeaderParameterSubSchemaNormalizer implements DenormalizerInterface
+class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -54,7 +47,7 @@ class HeaderParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setFormat($data->{'format'});
         }
         if (isset($data->{'items'})) {
-            $object->setItems($this->normalizerChain->denormalize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'json', $context));
+            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'raw', $context));
         }
         if (isset($data->{'collectionFormat'})) {
             $object->setCollectionFormat($data->{'collectionFormat'});
@@ -78,13 +71,7 @@ class HeaderParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setMaxLength($data->{'maxLength'});
         }
         if (isset($data->{'minLength'})) {
-            $value_35 = $data->{'minLength'};
-            if (is_int($data->{'minLength'})) {
-                $value_35 = $data->{'minLength'};
-            } elseif (isset($data->{'minLength'})) {
-                $value_35 = $data->{'minLength'};
-            }
-            $object->setMinLength($value_35);
+            $object->setMinLength($data->{'minLength'});
         }
         if (isset($data->{'pattern'})) {
             $object->setPattern($data->{'pattern'});
@@ -93,19 +80,17 @@ class HeaderParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setMaxItems($data->{'maxItems'});
         }
         if (isset($data->{'minItems'})) {
-            $value_36 = $data->{'minItems'};
-            if (is_int($data->{'minItems'})) {
-                $value_36 = $data->{'minItems'};
-            } elseif (isset($data->{'minItems'})) {
-                $value_36 = $data->{'minItems'};
-            }
-            $object->setMinItems($value_36);
+            $object->setMinItems($data->{'minItems'});
         }
         if (isset($data->{'uniqueItems'})) {
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $object->setEnum($data->{'enum'});
+            $values_61 = array();
+            foreach ($data->{'enum'} as $value_62) {
+                $values_61[] = $value_62;
+            }
+            $object->setEnum($values_61);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});

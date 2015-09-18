@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class Oauth2ImplicitSecurityNormalizer implements DenormalizerInterface
+class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\Oauth2ImplicitSecurity') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -42,11 +35,11 @@ class Oauth2ImplicitSecurityNormalizer implements DenormalizerInterface
             $object->setFlow($data->{'flow'});
         }
         if (isset($data->{'scopes'})) {
-            $values_89 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'scopes'} as $key_90 => $value_91) {
-                $values_89[$key_90] = $value_91;
+            $values_87 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'scopes'} as $key_89 => $value_88) {
+                $values_87[$key_89] = $value_88;
             }
-            $object->setScopes($values_89);
+            $object->setScopes($values_87);
         }
         if (isset($data->{'authorizationUrl'})) {
             $object->setAuthorizationUrl($data->{'authorizationUrl'});

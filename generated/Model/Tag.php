@@ -28,7 +28,7 @@ class Tag
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -46,7 +46,7 @@ class Tag
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -64,7 +64,7 @@ class Tag
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs = null)
+    public function setExternalDocs($externalDocs)
     {
         $this->externalDocs = $externalDocs;
 

@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class SchemaNormalizer implements DenormalizerInterface
+class SchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\Schema') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -69,13 +62,7 @@ class SchemaNormalizer implements DenormalizerInterface
             $object->setMaxLength($data->{'maxLength'});
         }
         if (isset($data->{'minLength'})) {
-            $value_15 = $data->{'minLength'};
-            if (is_int($data->{'minLength'})) {
-                $value_15 = $data->{'minLength'};
-            } elseif (isset($data->{'minLength'})) {
-                $value_15 = $data->{'minLength'};
-            }
-            $object->setMinLength($value_15);
+            $object->setMinLength($data->{'minLength'});
         }
         if (isset($data->{'pattern'})) {
             $object->setPattern($data->{'pattern'});
@@ -84,13 +71,7 @@ class SchemaNormalizer implements DenormalizerInterface
             $object->setMaxItems($data->{'maxItems'});
         }
         if (isset($data->{'minItems'})) {
-            $value_16 = $data->{'minItems'};
-            if (is_int($data->{'minItems'})) {
-                $value_16 = $data->{'minItems'};
-            } elseif (isset($data->{'minItems'})) {
-                $value_16 = $data->{'minItems'};
-            }
-            $object->setMinItems($value_16);
+            $object->setMinItems($data->{'minItems'});
         }
         if (isset($data->{'uniqueItems'})) {
             $object->setUniqueItems($data->{'uniqueItems'});
@@ -99,72 +80,73 @@ class SchemaNormalizer implements DenormalizerInterface
             $object->setMaxProperties($data->{'maxProperties'});
         }
         if (isset($data->{'minProperties'})) {
-            $value_17 = $data->{'minProperties'};
-            if (is_int($data->{'minProperties'})) {
-                $value_17 = $data->{'minProperties'};
-            } elseif (isset($data->{'minProperties'})) {
-                $value_17 = $data->{'minProperties'};
-            }
-            $object->setMinProperties($value_17);
+            $object->setMinProperties($data->{'minProperties'});
         }
         if (isset($data->{'required'})) {
-            $values_18 = array();
-            foreach ($data->{'required'} as $value_19) {
-                $values_18[] = $value_19;
+            $values_69 = array();
+            foreach ($data->{'required'} as $value_70) {
+                $values_69[] = $value_70;
             }
-            $object->setRequired($values_18);
+            $object->setRequired($values_69);
         }
         if (isset($data->{'enum'})) {
-            $object->setEnum($data->{'enum'});
+            $values_71 = array();
+            foreach ($data->{'enum'} as $value_72) {
+                $values_71[] = $value_72;
+            }
+            $object->setEnum($values_71);
         }
         if (isset($data->{'additionalProperties'})) {
-            $value_20 = $data->{'additionalProperties'};
+            $value_73 = $data->{'additionalProperties'};
             if (is_object($data->{'additionalProperties'})) {
-                $value_20 = $this->normalizerChain->denormalize($data->{'additionalProperties'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context);
-            } elseif (is_bool($data->{'additionalProperties'})) {
-                $value_20 = $data->{'additionalProperties'};
+                $value_73 = $this->serializer->deserialize($data->{'additionalProperties'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setAdditionalProperties($value_20);
+            if (is_bool($data->{'additionalProperties'})) {
+                $value_73 = $data->{'additionalProperties'};
+            }
+            $object->setAdditionalProperties($value_73);
         }
         if (isset($data->{'type'})) {
-            $value_21 = $data->{'type'};
+            $value_74 = $data->{'type'};
             if (isset($data->{'type'})) {
-                $value_21 = $data->{'type'};
-            } elseif (is_array($data->{'type'})) {
-                $values_22 = array();
-                foreach ($data->{'type'} as $value_23) {
-                    $values_22[] = $value_23;
-                }
-                $value_21 = $values_22;
+                $value_74 = $data->{'type'};
             }
-            $object->setType($value_21);
+            if (is_array($data->{'type'})) {
+                $values_75 = array();
+                foreach ($data->{'type'} as $value_76) {
+                    $values_75[] = $value_76;
+                }
+                $value_74 = $values_75;
+            }
+            $object->setType($value_74);
         }
         if (isset($data->{'items'})) {
-            $value_24 = $data->{'items'};
+            $value_77 = $data->{'items'};
             if (is_object($data->{'items'})) {
-                $value_24 = $this->normalizerChain->denormalize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context);
-            } elseif (is_array($data->{'items'})) {
-                $values_25 = array();
-                foreach ($data->{'items'} as $value_26) {
-                    $values_25[] = $this->normalizerChain->denormalize($value_26, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context);
-                }
-                $value_24 = $values_25;
+                $value_77 = $this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setItems($value_24);
+            if (is_array($data->{'items'})) {
+                $values_78 = array();
+                foreach ($data->{'items'} as $value_79) {
+                    $values_78[] = $this->serializer->deserialize($value_79, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                }
+                $value_77 = $values_78;
+            }
+            $object->setItems($value_77);
         }
         if (isset($data->{'allOf'})) {
-            $values_27 = array();
-            foreach ($data->{'allOf'} as $value_28) {
-                $values_27[] = $this->normalizerChain->denormalize($value_28, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context);
+            $values_80 = array();
+            foreach ($data->{'allOf'} as $value_81) {
+                $values_80[] = $this->serializer->deserialize($value_81, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setAllOf($values_27);
+            $object->setAllOf($values_80);
         }
         if (isset($data->{'properties'})) {
-            $values_29 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'properties'} as $key_30 => $value_31) {
-                $values_29[$key_30] = $this->normalizerChain->denormalize($value_31, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context);
+            $values_82 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'properties'} as $key_84 => $value_83) {
+                $values_82[$key_84] = $this->serializer->deserialize($value_83, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setProperties($values_29);
+            $object->setProperties($values_82);
         }
         if (isset($data->{'discriminator'})) {
             $object->setDiscriminator($data->{'discriminator'});
@@ -173,10 +155,10 @@ class SchemaNormalizer implements DenormalizerInterface
             $object->setReadOnly($data->{'readOnly'});
         }
         if (isset($data->{'xml'})) {
-            $object->setXml($this->normalizerChain->denormalize($data->{'xml'}, 'Joli\\Jane\\Swagger\\Model\\Xml', 'json', $context));
+            $object->setXml($this->serializer->deserialize($data->{'xml'}, 'Joli\\Jane\\Swagger\\Model\\Xml', 'raw', $context));
         }
         if (isset($data->{'externalDocs'})) {
-            $object->setExternalDocs($this->normalizerChain->denormalize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'json', $context));
+            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'raw', $context));
         }
         if (isset($data->{'example'})) {
             $object->setExample($data->{'example'});

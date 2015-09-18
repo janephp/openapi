@@ -21,7 +21,7 @@ class BodyParameter
      */
     protected $required;
     /**
-     * @var \Joli\Jane\Swagger\Schema
+     * @var Schema
      */
     protected $schema;
     /**
@@ -36,7 +36,7 @@ class BodyParameter
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -54,7 +54,7 @@ class BodyParameter
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -72,7 +72,7 @@ class BodyParameter
      *
      * @return self
      */
-    public function setIn($in = null)
+    public function setIn($in)
     {
         $this->in = $in;
 
@@ -90,25 +90,25 @@ class BodyParameter
      *
      * @return self
      */
-    public function setRequired($required = null)
+    public function setRequired($required)
     {
         $this->required = $required;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Schema
+     * @return Schema
      */
     public function getSchema()
     {
         return $this->schema;
     }
     /**
-     * @param \Joli\Jane\Swagger\Schema $schema
+     * @param Schema $schema
      *
      * @return self
      */
-    public function setSchema($schema = null)
+    public function setSchema($schema)
     {
         $this->schema = $schema;
 

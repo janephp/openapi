@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class QueryParameterSubSchemaNormalizer implements DenormalizerInterface
+class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -57,7 +50,7 @@ class QueryParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setFormat($data->{'format'});
         }
         if (isset($data->{'items'})) {
-            $object->setItems($this->normalizerChain->denormalize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'json', $context));
+            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'raw', $context));
         }
         if (isset($data->{'collectionFormat'})) {
             $object->setCollectionFormat($data->{'collectionFormat'});
@@ -81,13 +74,7 @@ class QueryParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setMaxLength($data->{'maxLength'});
         }
         if (isset($data->{'minLength'})) {
-            $value_39 = $data->{'minLength'};
-            if (is_int($data->{'minLength'})) {
-                $value_39 = $data->{'minLength'};
-            } elseif (isset($data->{'minLength'})) {
-                $value_39 = $data->{'minLength'};
-            }
-            $object->setMinLength($value_39);
+            $object->setMinLength($data->{'minLength'});
         }
         if (isset($data->{'pattern'})) {
             $object->setPattern($data->{'pattern'});
@@ -96,19 +83,17 @@ class QueryParameterSubSchemaNormalizer implements DenormalizerInterface
             $object->setMaxItems($data->{'maxItems'});
         }
         if (isset($data->{'minItems'})) {
-            $value_40 = $data->{'minItems'};
-            if (is_int($data->{'minItems'})) {
-                $value_40 = $data->{'minItems'};
-            } elseif (isset($data->{'minItems'})) {
-                $value_40 = $data->{'minItems'};
-            }
-            $object->setMinItems($value_40);
+            $object->setMinItems($data->{'minItems'});
         }
         if (isset($data->{'uniqueItems'})) {
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $object->setEnum($data->{'enum'});
+            $values_63 = array();
+            foreach ($data->{'enum'} as $value_64) {
+                $values_63[] = $value_64;
+            }
+            $object->setEnum($values_63);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});

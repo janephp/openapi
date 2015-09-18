@@ -24,7 +24,7 @@ class ExternalDocs
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -42,7 +42,7 @@ class ExternalDocs
      *
      * @return self
      */
-    public function setUrl($url = null)
+    public function setUrl($url)
     {
         $this->url = $url;
 

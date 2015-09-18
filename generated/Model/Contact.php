@@ -28,7 +28,7 @@ class Contact
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -46,7 +46,7 @@ class Contact
      *
      * @return self
      */
-    public function setUrl($url = null)
+    public function setUrl($url)
     {
         $this->url = $url;
 
@@ -64,7 +64,7 @@ class Contact
      *
      * @return self
      */
-    public function setEmail($email = null)
+    public function setEmail($email)
     {
         $this->email = $email;
 

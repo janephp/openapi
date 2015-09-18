@@ -33,11 +33,11 @@ class Operation
      */
     protected $consumes;
     /**
-     * @var \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
+     * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     protected $parameters;
     /**
-     * @var \Joli\Jane\Swagger\Responses[]|mixed[]
+     * @var Response[]|mixed[]
      */
     protected $responses;
     /**
@@ -64,7 +64,7 @@ class Operation
      *
      * @return self
      */
-    public function setTags($tags = null)
+    public function setTags($tags)
     {
         $this->tags = $tags;
 
@@ -82,7 +82,7 @@ class Operation
      *
      * @return self
      */
-    public function setSummary($summary = null)
+    public function setSummary($summary)
     {
         $this->summary = $summary;
 
@@ -100,7 +100,7 @@ class Operation
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -118,7 +118,7 @@ class Operation
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs = null)
+    public function setExternalDocs($externalDocs)
     {
         $this->externalDocs = $externalDocs;
 
@@ -136,7 +136,7 @@ class Operation
      *
      * @return self
      */
-    public function setOperationId($operationId = null)
+    public function setOperationId($operationId)
     {
         $this->operationId = $operationId;
 
@@ -154,7 +154,7 @@ class Operation
      *
      * @return self
      */
-    public function setProduces($produces = null)
+    public function setProduces($produces)
     {
         $this->produces = $produces;
 
@@ -172,43 +172,43 @@ class Operation
      *
      * @return self
      */
-    public function setConsumes($consumes = null)
+    public function setConsumes($consumes)
     {
         $this->consumes = $consumes;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]
+     * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
     /**
-     * @param \Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[]|\Joli\Jane\Swagger\Parameters[] $parameters
+     * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[] $parameters
      *
      * @return self
      */
-    public function setParameters($parameters = null)
+    public function setParameters($parameters)
     {
         $this->parameters = $parameters;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Responses[]|mixed[]
+     * @return Response[]|mixed[]
      */
     public function getResponses()
     {
         return $this->responses;
     }
     /**
-     * @param \Joli\Jane\Swagger\Responses[]|mixed[] $responses
+     * @param Response[]|mixed[] $responses
      *
      * @return self
      */
-    public function setResponses($responses = null)
+    public function setResponses($responses)
     {
         $this->responses = $responses;
 
@@ -226,7 +226,7 @@ class Operation
      *
      * @return self
      */
-    public function setSchemes($schemes = null)
+    public function setSchemes($schemes)
     {
         $this->schemes = $schemes;
 
@@ -244,7 +244,7 @@ class Operation
      *
      * @return self
      */
-    public function setDeprecated($deprecated = null)
+    public function setDeprecated($deprecated)
     {
         $this->deprecated = $deprecated;
 
@@ -262,7 +262,7 @@ class Operation
      *
      * @return self
      */
-    public function setSecurity($security = null)
+    public function setSecurity($security)
     {
         $this->security = $security;
 

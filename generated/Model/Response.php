@@ -9,11 +9,11 @@ class Response
      */
     protected $description;
     /**
-     * @var \Joli\Jane\Swagger\Schema
+     * @var Schema
      */
     protected $schema;
     /**
-     * @var \Joli\Jane\Swagger\Headers[]
+     * @var Header[]
      */
     protected $headers;
     /**
@@ -32,43 +32,43 @@ class Response
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Schema
+     * @return Schema
      */
     public function getSchema()
     {
         return $this->schema;
     }
     /**
-     * @param \Joli\Jane\Swagger\Schema $schema
+     * @param Schema $schema
      *
      * @return self
      */
-    public function setSchema($schema = null)
+    public function setSchema($schema)
     {
         $this->schema = $schema;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Headers[]
+     * @return Header[]
      */
     public function getHeaders()
     {
         return $this->headers;
     }
     /**
-     * @param \Joli\Jane\Swagger\Headers[] $headers
+     * @param Header[] $headers
      *
      * @return self
      */
-    public function setHeaders($headers = null)
+    public function setHeaders($headers)
     {
         $this->headers = $headers;
 
@@ -86,7 +86,7 @@ class Response
      *
      * @return self
      */
-    public function setExamples($examples = null)
+    public function setExamples($examples)
     {
         $this->examples = $examples;
 

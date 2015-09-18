@@ -33,7 +33,7 @@ class FormDataParameterSubSchema
      */
     protected $format;
     /**
-     * @var \Joli\Jane\Swagger\Items
+     * @var PrimitivesItems
      */
     protected $items;
     /**
@@ -65,7 +65,7 @@ class FormDataParameterSubSchema
      */
     protected $maxLength;
     /**
-     * @var int|mixed
+     * @var int
      */
     protected $minLength;
     /**
@@ -77,7 +77,7 @@ class FormDataParameterSubSchema
      */
     protected $maxItems;
     /**
-     * @var int|mixed
+     * @var int
      */
     protected $minItems;
     /**
@@ -85,7 +85,7 @@ class FormDataParameterSubSchema
      */
     protected $uniqueItems;
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $enum;
     /**
@@ -104,7 +104,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setRequired($required = null)
+    public function setRequired($required)
     {
         $this->required = $required;
 
@@ -122,7 +122,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setIn($in = null)
+    public function setIn($in)
     {
         $this->in = $in;
 
@@ -140,7 +140,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setDescription($description = null)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -158,7 +158,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -176,7 +176,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setAllowEmptyValue($allowEmptyValue = null)
+    public function setAllowEmptyValue($allowEmptyValue)
     {
         $this->allowEmptyValue = $allowEmptyValue;
 
@@ -194,7 +194,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setType($type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -212,25 +212,25 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setFormat($format = null)
+    public function setFormat($format)
     {
         $this->format = $format;
 
         return $this;
     }
     /**
-     * @return \Joli\Jane\Swagger\Items
+     * @return PrimitivesItems
      */
     public function getItems()
     {
         return $this->items;
     }
     /**
-     * @param \Joli\Jane\Swagger\Items $items
+     * @param PrimitivesItems $items
      *
      * @return self
      */
-    public function setItems($items = null)
+    public function setItems($items)
     {
         $this->items = $items;
 
@@ -248,7 +248,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setCollectionFormat($collectionFormat = null)
+    public function setCollectionFormat($collectionFormat)
     {
         $this->collectionFormat = $collectionFormat;
 
@@ -266,7 +266,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setDefault($default = null)
+    public function setDefault($default)
     {
         $this->default = $default;
 
@@ -284,7 +284,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setMaximum($maximum = null)
+    public function setMaximum($maximum)
     {
         $this->maximum = $maximum;
 
@@ -302,7 +302,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum = null)
+    public function setExclusiveMaximum($exclusiveMaximum)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
 
@@ -320,7 +320,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setMinimum($minimum = null)
+    public function setMinimum($minimum)
     {
         $this->minimum = $minimum;
 
@@ -338,7 +338,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum = null)
+    public function setExclusiveMinimum($exclusiveMinimum)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
 
@@ -356,25 +356,25 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setMaxLength($maxLength = null)
+    public function setMaxLength($maxLength)
     {
         $this->maxLength = $maxLength;
 
         return $this;
     }
     /**
-     * @return int|mixed
+     * @return int
      */
     public function getMinLength()
     {
         return $this->minLength;
     }
     /**
-     * @param int|mixed $minLength
+     * @param int $minLength
      *
      * @return self
      */
-    public function setMinLength($minLength = null)
+    public function setMinLength($minLength)
     {
         $this->minLength = $minLength;
 
@@ -392,7 +392,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setPattern($pattern = null)
+    public function setPattern($pattern)
     {
         $this->pattern = $pattern;
 
@@ -410,25 +410,25 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setMaxItems($maxItems = null)
+    public function setMaxItems($maxItems)
     {
         $this->maxItems = $maxItems;
 
         return $this;
     }
     /**
-     * @return int|mixed
+     * @return int
      */
     public function getMinItems()
     {
         return $this->minItems;
     }
     /**
-     * @param int|mixed $minItems
+     * @param int $minItems
      *
      * @return self
      */
-    public function setMinItems($minItems = null)
+    public function setMinItems($minItems)
     {
         $this->minItems = $minItems;
 
@@ -446,25 +446,25 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setUniqueItems($uniqueItems = null)
+    public function setUniqueItems($uniqueItems)
     {
         $this->uniqueItems = $uniqueItems;
 
         return $this;
     }
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getEnum()
     {
         return $this->enum;
     }
     /**
-     * @param array $enum
+     * @param mixed[] $enum
      *
      * @return self
      */
-    public function setEnum($enum = null)
+    public function setEnum($enum)
     {
         $this->enum = $enum;
 
@@ -482,7 +482,7 @@ class FormDataParameterSubSchema
      *
      * @return self
      */
-    public function setMultipleOf($multipleOf = null)
+    public function setMultipleOf($multipleOf)
     {
         $this->multipleOf = $multipleOf;
 

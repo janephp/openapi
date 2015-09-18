@@ -76,7 +76,7 @@ class Swagger
      *
      * @return self
      */
-    public function setSwagger($swagger = null)
+    public function setSwagger($swagger)
     {
         $this->swagger = $swagger;
 
@@ -94,7 +94,7 @@ class Swagger
      *
      * @return self
      */
-    public function setInfo($info = null)
+    public function setInfo($info)
     {
         $this->info = $info;
 
@@ -112,7 +112,7 @@ class Swagger
      *
      * @return self
      */
-    public function setHost($host = null)
+    public function setHost($host)
     {
         $this->host = $host;
 
@@ -130,7 +130,7 @@ class Swagger
      *
      * @return self
      */
-    public function setBasePath($basePath = null)
+    public function setBasePath($basePath)
     {
         $this->basePath = $basePath;
 
@@ -148,7 +148,7 @@ class Swagger
      *
      * @return self
      */
-    public function setSchemes($schemes = null)
+    public function setSchemes($schemes)
     {
         $this->schemes = $schemes;
 
@@ -166,7 +166,7 @@ class Swagger
      *
      * @return self
      */
-    public function setConsumes($consumes = null)
+    public function setConsumes($consumes)
     {
         $this->consumes = $consumes;
 
@@ -184,7 +184,7 @@ class Swagger
      *
      * @return self
      */
-    public function setProduces($produces = null)
+    public function setProduces($produces)
     {
         $this->produces = $produces;
 
@@ -202,7 +202,7 @@ class Swagger
      *
      * @return self
      */
-    public function setPaths($paths = null)
+    public function setPaths($paths)
     {
         $this->paths = $paths;
 
@@ -220,7 +220,7 @@ class Swagger
      *
      * @return self
      */
-    public function setDefinitions($definitions = null)
+    public function setDefinitions($definitions)
     {
         $this->definitions = $definitions;
 
@@ -238,7 +238,7 @@ class Swagger
      *
      * @return self
      */
-    public function setParameters($parameters = null)
+    public function setParameters($parameters)
     {
         $this->parameters = $parameters;
 
@@ -256,7 +256,7 @@ class Swagger
      *
      * @return self
      */
-    public function setResponses($responses = null)
+    public function setResponses($responses)
     {
         $this->responses = $responses;
 
@@ -274,7 +274,7 @@ class Swagger
      *
      * @return self
      */
-    public function setSecurity($security = null)
+    public function setSecurity($security)
     {
         $this->security = $security;
 
@@ -292,7 +292,7 @@ class Swagger
      *
      * @return self
      */
-    public function setSecurityDefinitions($securityDefinitions = null)
+    public function setSecurityDefinitions($securityDefinitions)
     {
         $this->securityDefinitions = $securityDefinitions;
 
@@ -310,7 +310,7 @@ class Swagger
      *
      * @return self
      */
-    public function setTags($tags = null)
+    public function setTags($tags)
     {
         $this->tags = $tags;
 
@@ -328,7 +328,7 @@ class Swagger
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs = null)
+    public function setExternalDocs($externalDocs)
     {
         $this->externalDocs = $externalDocs;
 

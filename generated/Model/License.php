@@ -24,7 +24,7 @@ class License
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -42,7 +42,7 @@ class License
      *
      * @return self
      */
-    public function setUrl($url = null)
+    public function setUrl($url)
     {
         $this->url = $url;
 

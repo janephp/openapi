@@ -4,20 +4,13 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class ResponseNormalizer implements DenormalizerInterface
+class ResponseNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
 {
-    public $normalizerChain;
-    public function setNormalizerChain(NormalizerChain $normalizerChain)
-    {
-        $this->normalizerChain = $normalizerChain;
-    }
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\Swagger\\Model\\Response') {
-            return false;
-        }
-        if ($format !== 'json') {
             return false;
         }
 
@@ -39,24 +32,24 @@ class ResponseNormalizer implements DenormalizerInterface
             $object->setDescription($data->{'description'});
         }
         if (isset($data->{'schema'})) {
-            $object->setSchema($this->normalizerChain->denormalize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'json', $context));
+            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context));
         }
         if (isset($data->{'headers'})) {
-            $values_46 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'headers'} as $key_47 => $value_48) {
-                $values_46[$key_47] = $this->normalizerChain->denormalize($value_48, 'Joli\\Jane\\Swagger\\Model\\Header', 'json', $context);
+            $values_53 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'headers'} as $key_55 => $value_54) {
+                $values_53[$key_55] = $this->serializer->deserialize($value_54, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
             }
-            $object->setHeaders($values_46);
+            $object->setHeaders($values_53);
         }
         if (isset($data->{'examples'})) {
-            $values_51 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'examples'} as $key_52 => $value_53) {
-                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_52)) {
-                    $values_51[$key_52] = $value_53;
+            $values_56 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'examples'} as $key_58 => $value_57) {
+                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_58) && isset($value_57)) {
+                    $values_56[$key_58] = $value_57;
                     continue;
                 }
             }
-            $object->setExamples($values_51);
+            $object->setExamples($values_56);
         }
 
         return $object;

@@ -45,7 +45,7 @@ class PrimitivesItems
      */
     protected $maxLength;
     /**
-     * @var int|mixed
+     * @var int
      */
     protected $minLength;
     /**
@@ -57,7 +57,7 @@ class PrimitivesItems
      */
     protected $maxItems;
     /**
-     * @var int|mixed
+     * @var int
      */
     protected $minItems;
     /**
@@ -65,7 +65,7 @@ class PrimitivesItems
      */
     protected $uniqueItems;
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $enum;
     /**
@@ -84,7 +84,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setType($type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -102,7 +102,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setFormat($format = null)
+    public function setFormat($format)
     {
         $this->format = $format;
 
@@ -120,7 +120,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setItems($items = null)
+    public function setItems($items)
     {
         $this->items = $items;
 
@@ -138,7 +138,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setCollectionFormat($collectionFormat = null)
+    public function setCollectionFormat($collectionFormat)
     {
         $this->collectionFormat = $collectionFormat;
 
@@ -156,7 +156,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setDefault($default = null)
+    public function setDefault($default)
     {
         $this->default = $default;
 
@@ -174,7 +174,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setMaximum($maximum = null)
+    public function setMaximum($maximum)
     {
         $this->maximum = $maximum;
 
@@ -192,7 +192,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum = null)
+    public function setExclusiveMaximum($exclusiveMaximum)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
 
@@ -210,7 +210,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setMinimum($minimum = null)
+    public function setMinimum($minimum)
     {
         $this->minimum = $minimum;
 
@@ -228,7 +228,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum = null)
+    public function setExclusiveMinimum($exclusiveMinimum)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
 
@@ -246,25 +246,25 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setMaxLength($maxLength = null)
+    public function setMaxLength($maxLength)
     {
         $this->maxLength = $maxLength;
 
         return $this;
     }
     /**
-     * @return int|mixed
+     * @return int
      */
     public function getMinLength()
     {
         return $this->minLength;
     }
     /**
-     * @param int|mixed $minLength
+     * @param int $minLength
      *
      * @return self
      */
-    public function setMinLength($minLength = null)
+    public function setMinLength($minLength)
     {
         $this->minLength = $minLength;
 
@@ -282,7 +282,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setPattern($pattern = null)
+    public function setPattern($pattern)
     {
         $this->pattern = $pattern;
 
@@ -300,25 +300,25 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setMaxItems($maxItems = null)
+    public function setMaxItems($maxItems)
     {
         $this->maxItems = $maxItems;
 
         return $this;
     }
     /**
-     * @return int|mixed
+     * @return int
      */
     public function getMinItems()
     {
         return $this->minItems;
     }
     /**
-     * @param int|mixed $minItems
+     * @param int $minItems
      *
      * @return self
      */
-    public function setMinItems($minItems = null)
+    public function setMinItems($minItems)
     {
         $this->minItems = $minItems;
 
@@ -336,25 +336,25 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setUniqueItems($uniqueItems = null)
+    public function setUniqueItems($uniqueItems)
     {
         $this->uniqueItems = $uniqueItems;
 
         return $this;
     }
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getEnum()
     {
         return $this->enum;
     }
     /**
-     * @param array $enum
+     * @param mixed[] $enum
      *
      * @return self
      */
-    public function setEnum($enum = null)
+    public function setEnum($enum)
     {
         $this->enum = $enum;
 
@@ -372,7 +372,7 @@ class PrimitivesItems
      *
      * @return self
      */
-    public function setMultipleOf($multipleOf = null)
+    public function setMultipleOf($multipleOf)
     {
         $this->multipleOf = $multipleOf;
 

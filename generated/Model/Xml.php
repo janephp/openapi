@@ -36,7 +36,7 @@ class Xml
      *
      * @return self
      */
-    public function setName($name = null)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -54,7 +54,7 @@ class Xml
      *
      * @return self
      */
-    public function setNamespace($namespace = null)
+    public function setNamespace($namespace)
     {
         $this->namespace = $namespace;
 
@@ -72,7 +72,7 @@ class Xml
      *
      * @return self
      */
-    public function setPrefix($prefix = null)
+    public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
 
@@ -90,7 +90,7 @@ class Xml
      *
      * @return self
      */
-    public function setAttribute($attribute = null)
+    public function setAttribute($attribute)
     {
         $this->attribute = $attribute;
 
@@ -108,7 +108,7 @@ class Xml
      *
      * @return self
      */
-    public function setWrapped($wrapped = null)
+    public function setWrapped($wrapped)
     {
         $this->wrapped = $wrapped;
 
