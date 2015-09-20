@@ -98,11 +98,11 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_124 = array();
-            foreach ($data->{'enum'} as $value_125) {
-                $values_124[] = $value_125;
+            $values_133 = array();
+            foreach ($data->{'enum'} as $value_134) {
+                $values_133[] = $value_134;
             }
-            $object->setEnum($values_124);
+            $object->setEnum($values_133);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
@@ -174,11 +174,11 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_126 = array();
-            foreach ($object->getEnum() as $value_127) {
-                $values_126[] = $value_127;
+            $values_135 = array();
+            foreach ($object->getEnum() as $value_136) {
+                $values_135[] = $value_136;
             }
-            $data->{'enum'} = $values_126;
+            $data->{'enum'} = $values_135;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();

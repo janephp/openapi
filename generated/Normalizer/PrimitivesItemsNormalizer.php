@@ -83,11 +83,11 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_164 = array();
-            foreach ($data->{'enum'} as $value_165) {
-                $values_164[] = $value_165;
+            $values_173 = array();
+            foreach ($data->{'enum'} as $value_174) {
+                $values_173[] = $value_174;
             }
-            $object->setEnum($values_164);
+            $object->setEnum($values_173);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
@@ -144,11 +144,11 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_166 = array();
-            foreach ($object->getEnum() as $value_167) {
-                $values_166[] = $value_167;
+            $values_175 = array();
+            foreach ($object->getEnum() as $value_176) {
+                $values_175[] = $value_176;
             }
-            $data->{'enum'} = $values_166;
+            $data->{'enum'} = $values_175;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();

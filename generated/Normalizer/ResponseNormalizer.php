@@ -44,21 +44,21 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context));
         }
         if (isset($data->{'headers'})) {
-            $values_103 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'headers'} as $key_105 => $value_104) {
-                $values_103[$key_105] = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
+            $values_109 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'headers'} as $key_111 => $value_110) {
+                $values_109[$key_111] = $this->serializer->deserialize($value_110, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
             }
-            $object->setHeaders($values_103);
+            $object->setHeaders($values_109);
         }
         if (isset($data->{'examples'})) {
-            $values_106 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'examples'} as $key_108 => $value_107) {
-                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_108) && isset($value_107)) {
-                    $values_106[$key_108] = $value_107;
+            $values_112 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'examples'} as $key_114 => $value_113) {
+                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_114) && isset($value_113)) {
+                    $values_112[$key_114] = $value_113;
                     continue;
                 }
             }
-            $object->setExamples($values_106);
+            $object->setExamples($values_112);
         }
 
         return $object;
@@ -73,14 +73,21 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'schema'} = $this->serializer->serialize($object->getSchema(), 'raw', $context);
         }
         if (null !== $object->getHeaders()) {
-            $values_109 = new \stdClass();
-            foreach ($object->getHeaders() as $key_111 => $value_110) {
-                $values_109->{$key_111} = $this->serializer->serialize($value_110, 'raw', $context);
+            $values_115 = new \stdClass();
+            foreach ($object->getHeaders() as $key_117 => $value_116) {
+                $values_115->{$key_117} = $this->serializer->serialize($value_116, 'raw', $context);
             }
-            $data->{'headers'} = $values_109;
+            $data->{'headers'} = $values_115;
         }
         if (null !== $object->getExamples()) {
-            $data->{'examples'} = $object->getExamples();
+            $values_118 = new \stdClass();
+            foreach ($object->getExamples() as $key_120 => $value_119) {
+                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_120) && !is_null($value_119)) {
+                    $values_118->{$key_120} = $value_119;
+                    continue;
+                }
+            }
+            $data->{'examples'} = $values_118;
         }
 
         return $data;

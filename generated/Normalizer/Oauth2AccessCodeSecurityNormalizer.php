@@ -44,11 +44,11 @@ class Oauth2AccessCodeSecurityNormalizer extends SerializerAwareNormalizer imple
             $object->setFlow($data->{'flow'});
         }
         if (isset($data->{'scopes'})) {
-            $values_186 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'scopes'} as $key_188 => $value_187) {
-                $values_186[$key_188] = $value_187;
+            $values_195 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'scopes'} as $key_197 => $value_196) {
+                $values_195[$key_197] = $value_196;
             }
-            $object->setScopes($values_186);
+            $object->setScopes($values_195);
         }
         if (isset($data->{'authorizationUrl'})) {
             $object->setAuthorizationUrl($data->{'authorizationUrl'});
@@ -72,11 +72,11 @@ class Oauth2AccessCodeSecurityNormalizer extends SerializerAwareNormalizer imple
             $data->{'flow'} = $object->getFlow();
         }
         if (null !== $object->getScopes()) {
-            $values_189 = new \stdClass();
-            foreach ($object->getScopes() as $key_191 => $value_190) {
-                $values_189->{$key_191} = $value_190;
+            $values_198 = new \stdClass();
+            foreach ($object->getScopes() as $key_200 => $value_199) {
+                $values_198->{$key_200} = $value_199;
             }
-            $data->{'scopes'} = $values_189;
+            $data->{'scopes'} = $values_198;
         }
         if (null !== $object->getAuthorizationUrl()) {
             $data->{'authorizationUrl'} = $object->getAuthorizationUrl();

@@ -95,11 +95,11 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_116 = array();
-            foreach ($data->{'enum'} as $value_117) {
-                $values_116[] = $value_117;
+            $values_125 = array();
+            foreach ($data->{'enum'} as $value_126) {
+                $values_125[] = $value_126;
             }
-            $object->setEnum($values_116);
+            $object->setEnum($values_125);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
@@ -168,11 +168,11 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_118 = array();
-            foreach ($object->getEnum() as $value_119) {
-                $values_118[] = $value_119;
+            $values_127 = array();
+            foreach ($object->getEnum() as $value_128) {
+                $values_127[] = $value_128;
             }
-            $data->{'enum'} = $values_118;
+            $data->{'enum'} = $values_127;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();
