@@ -2,16 +2,20 @@
 
 namespace Joli\Jane\Swagger;
 
+use Joli\Jane\Encoder\RawEncoder;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Generator\File;
 use Joli\Jane\Generator\ModelGenerator;
+use Joli\Jane\Generator\Naming;
 use Joli\Jane\Generator\NormalizerGenerator;
 use Joli\Jane\Generator\TypeDecisionManager;
 use Joli\Jane\Swagger\Generator\ClientGenerator;
 use Joli\Jane\Swagger\Generator\GeneratorFactory;
+use Joli\Jane\Swagger\Guesser\ChainGuesser;
+use Joli\Jane\Swagger\Guesser\SwaggerSchema\GuesserFactory;
 use Joli\Jane\Swagger\Model\Swagger;
-use Joli\Jane\Swagger\Normalizer\NormalizerChain;
 
+use Joli\Jane\Swagger\Normalizer\NormalizerFactory;
 use PhpParser\PrettyPrinterAbstract;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -46,51 +50,83 @@ class JaneSwagger
      */
     private $normalizerGenerator;
 
-    public function __construct(SerializerInterface $serializer, ModelGenerator $modelGenerator, NormalizerGenerator $normalizerGenerator, ClientGenerator $clientGenerator, PrettyPrinterAbstract $prettyPrinter)
+    /**
+     * @var Guesser\ChainGuesser
+     */
+    private $chainGuesser;
+
+    public function __construct(SerializerInterface $serializer, ChainGuesser $chainGuesser, ModelGenerator $modelGenerator, NormalizerGenerator $normalizerGenerator, ClientGenerator $clientGenerator, PrettyPrinterAbstract $prettyPrinter)
     {
-        $this->serializer = $serializer;
-        $this->clientGenerator = $clientGenerator;
-        $this->prettyPrinter = $prettyPrinter;
-        $this->modelGenerator = $modelGenerator;
+        $this->serializer          = $serializer;
+        $this->clientGenerator     = $clientGenerator;
+        $this->prettyPrinter       = $prettyPrinter;
+        $this->modelGenerator      = $modelGenerator;
         $this->normalizerGenerator = $normalizerGenerator;
+        $this->chainGuesser        = $chainGuesser;
+    }
+
+    /**
+     * Return a list of class guessed
+     *
+     * @param $swaggerSpec
+     * @param $name
+     * @param $namespace
+     * @param $directory
+     *
+     * @return Context
+     */
+    public function createContext($swaggerSpec, $name, $namespace, $directory)
+    {
+        $schema  = $this->serializer->deserialize(file_get_contents($swaggerSpec), Swagger::class, 'json');
+        $classes = $this->chainGuesser->guessClass($schema, $name);
+
+        foreach ($classes as $class) {
+            $properties = $this->chainGuesser->guessProperties($class->getObject(), $name, $classes);
+
+            foreach ($properties as $property) {
+                $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $classes));
+            }
+
+            $class->setProperties($properties);
+        }
+
+        return new Context($schema, $namespace, $directory, $classes);
     }
 
     public function generate($swaggerSpec, $namespace, $directory)
     {
         /** @var Swagger $swagger */
-        $swagger = $this->serializer->deserialize(file_get_contents($swaggerSpec), Swagger::class, 'json');
-        $context = new Context($swagger, $namespace, $directory);
+        $context = $this->createContext($swaggerSpec, 'Client', $namespace, $directory);
         $files   = [];
+        $files   = array_merge($files, $this->modelGenerator->generate($context->getRootReference(), 'Client', $context));
+        $files   = array_merge($files, $this->normalizerGenerator->generate($context->getRootReference(), 'Client', $context));
 
-        foreach ($swagger->getDefinitions() as $key => $definition) {
-            if ($definition->getType() == "object") {
-                $files = array_merge($files, $this->modelGenerator->generate($definition, ucfirst($key), $context));
-                $files = array_merge($files, $this->normalizerGenerator->generate($definition, ucfirst($key), $context));
-            }
-        }
-
-        $clients = $this->clientGenerator->generate($swagger, $namespace);
+        $clients = $this->clientGenerator->generate($context->getRootReference(), $namespace);
 
         foreach ($clients as $node) {
-            $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[3]->name . '.php', $node);
+            $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[3]->name . '.php', $node, '');
         }
 
         foreach ($files as $file) {
+            if (!file_exists(dirname($file->getFilename()))) {
+                mkdir(dirname($file->getFilename()), 0755, true);
+            }
+
             file_put_contents($file->getFilename(), $this->prettyPrinter->prettyPrintFile([$file->getNode()]));
         }
     }
 
     public static function build()
     {
-        $encoders    = [new JsonEncoder(new JsonEncode(), new JsonDecode(false))];
-        $normalizers = [NormalizerChain::build()];
-        $serializer  = new Serializer($normalizers, $encoders);
+        $encoders        = [new JsonEncoder(new JsonEncode(), new JsonDecode(false)), new RawEncoder()];
+        $normalizers     = NormalizerFactory::create();
+        $serializer      = new Serializer($normalizers, $encoders);
         $clientGenerator = GeneratorFactory::build();
         $prettyPrinter   = new \PhpParser\PrettyPrinter\Standard();
-        $typeDecision   = TypeDecisionManager::build($serializer);
-        $modelGenerator = new ModelGenerator($typeDecision);
-        $normGenerator  = new NormalizerGenerator($typeDecision);
+        $naming          = new Naming();
+        $modelGenerator  = new ModelGenerator($naming);
+        $normGenerator   = new NormalizerGenerator($naming);
 
-        return new self($serializer, $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter);
+        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter);
     }
 } 
