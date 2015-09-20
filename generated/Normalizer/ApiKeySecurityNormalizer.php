@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\ApiKeySecurity) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -42,5 +51,23 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getType()) {
+            $data->{'type'} = $object->getType();
+        }
+        if (null !== $object->getName()) {
+            $data->{'name'} = $object->getName();
+        }
+        if (null !== $object->getIn()) {
+            $data->{'in'} = $object->getIn();
+        }
+        if (null !== $object->getDescription()) {
+            $data->{'description'} = $object->getDescription();
+        }
+
+        return $data;
     }
 }

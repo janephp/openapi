@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class BodyParameterNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class BodyParameterNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\BodyParameter) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -45,5 +54,26 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getDescription()) {
+            $data->{'description'} = $object->getDescription();
+        }
+        if (null !== $object->getName()) {
+            $data->{'name'} = $object->getName();
+        }
+        if (null !== $object->getIn()) {
+            $data->{'in'} = $object->getIn();
+        }
+        if (null !== $object->getRequired()) {
+            $data->{'required'} = $object->getRequired();
+        }
+        if (null !== $object->getSchema()) {
+            $data->{'schema'} = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+        }
+
+        return $data;
     }
 }

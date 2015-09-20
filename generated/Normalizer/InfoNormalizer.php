@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\Info) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -48,5 +57,29 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getTitle()) {
+            $data->{'title'} = $object->getTitle();
+        }
+        if (null !== $object->getVersion()) {
+            $data->{'version'} = $object->getVersion();
+        }
+        if (null !== $object->getDescription()) {
+            $data->{'description'} = $object->getDescription();
+        }
+        if (null !== $object->getTermsOfService()) {
+            $data->{'termsOfService'} = $object->getTermsOfService();
+        }
+        if (null !== $object->getContact()) {
+            $data->{'contact'} = $this->serializer->serialize($object->getContact(), 'raw', $context);
+        }
+        if (null !== $object->getLicense()) {
+            $data->{'license'} = $this->serializer->serialize($object->getLicense(), 'raw', $context);
+        }
+
+        return $data;
     }
 }

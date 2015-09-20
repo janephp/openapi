@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class SwaggerNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class SwaggerNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\Swagger) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -165,5 +174,135 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getSwagger()) {
+            $data->{'swagger'} = $object->getSwagger();
+        }
+        if (null !== $object->getInfo()) {
+            $data->{'info'} = $this->serializer->serialize($object->getInfo(), 'raw', $context);
+        }
+        if (null !== $object->getHost()) {
+            $data->{'host'} = $object->getHost();
+        }
+        if (null !== $object->getBasePath()) {
+            $data->{'basePath'} = $object->getBasePath();
+        }
+        if (null !== $object->getSchemes()) {
+            $values_29 = array();
+            foreach ($object->getSchemes() as $value_30) {
+                $values_29[] = $value_30;
+            }
+            $data->{'schemes'} = $values_29;
+        }
+        if (null !== $object->getConsumes()) {
+            $values_31 = array();
+            foreach ($object->getConsumes() as $value_32) {
+                $values_31[] = $value_32;
+            }
+            $data->{'consumes'} = $values_31;
+        }
+        if (null !== $object->getProduces()) {
+            $values_33 = array();
+            foreach ($object->getProduces() as $value_34) {
+                $values_33[] = $value_34;
+            }
+            $data->{'produces'} = $values_33;
+        }
+        if (null !== $object->getPaths()) {
+            $data->{'paths'} = $object->getPaths();
+        }
+        if (null !== $object->getDefinitions()) {
+            $values_35 = new \stdClass();
+            foreach ($object->getDefinitions() as $key_37 => $value_36) {
+                $values_35->{$key_37} = $this->serializer->serialize($value_36, 'raw', $context);
+            }
+            $data->{'definitions'} = $values_35;
+        }
+        if (null !== $object->getParameters()) {
+            $values_38 = new \stdClass();
+            foreach ($object->getParameters() as $key_40 => $value_39) {
+                $value_41 = $value_39;
+                if (is_object($value_39)) {
+                    $value_41 = $this->serializer->serialize($value_39, 'raw', $context);
+                }
+                if (is_object($value_39)) {
+                    $value_41 = $this->serializer->serialize($value_39, 'raw', $context);
+                }
+                if (is_object($value_39)) {
+                    $value_41 = $this->serializer->serialize($value_39, 'raw', $context);
+                }
+                if (is_object($value_39)) {
+                    $value_41 = $this->serializer->serialize($value_39, 'raw', $context);
+                }
+                if (is_object($value_39)) {
+                    $value_41 = $this->serializer->serialize($value_39, 'raw', $context);
+                }
+                $values_38->{$key_40} = $value_41;
+            }
+            $data->{'parameters'} = $values_38;
+        }
+        if (null !== $object->getResponses()) {
+            $values_42 = new \stdClass();
+            foreach ($object->getResponses() as $key_44 => $value_43) {
+                $values_42->{$key_44} = $this->serializer->serialize($value_43, 'raw', $context);
+            }
+            $data->{'responses'} = $values_42;
+        }
+        if (null !== $object->getSecurity()) {
+            $values_45 = array();
+            foreach ($object->getSecurity() as $value_46) {
+                $values_47 = new \stdClass();
+                foreach ($value_46 as $key_49 => $value_48) {
+                    $values_50 = array();
+                    foreach ($value_48 as $value_51) {
+                        $values_50[] = $value_51;
+                    }
+                    $values_47->{$key_49} = $values_50;
+                }
+                $values_45[] = $values_47;
+            }
+            $data->{'security'} = $values_45;
+        }
+        if (null !== $object->getSecurityDefinitions()) {
+            $values_52 = new \stdClass();
+            foreach ($object->getSecurityDefinitions() as $key_54 => $value_53) {
+                $value_55 = $value_53;
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                if (is_object($value_53)) {
+                    $value_55 = $this->serializer->serialize($value_53, 'raw', $context);
+                }
+                $values_52->{$key_54} = $value_55;
+            }
+            $data->{'securityDefinitions'} = $values_52;
+        }
+        if (null !== $object->getTags()) {
+            $values_56 = array();
+            foreach ($object->getTags() as $value_57) {
+                $values_56[] = $this->serializer->serialize($value_57, 'raw', $context);
+            }
+            $data->{'tags'} = $values_56;
+        }
+        if (null !== $object->getExternalDocs()) {
+            $data->{'externalDocs'} = $this->serializer->serialize($object->getExternalDocs(), 'raw', $context);
+        }
+
+        return $data;
     }
 }

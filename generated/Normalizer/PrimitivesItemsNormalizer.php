@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\PrimitivesItems) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -74,16 +83,77 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_85 = array();
-            foreach ($data->{'enum'} as $value_86) {
-                $values_85[] = $value_86;
+            $values_164 = array();
+            foreach ($data->{'enum'} as $value_165) {
+                $values_164[] = $value_165;
             }
-            $object->setEnum($values_85);
+            $object->setEnum($values_164);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getType()) {
+            $data->{'type'} = $object->getType();
+        }
+        if (null !== $object->getFormat()) {
+            $data->{'format'} = $object->getFormat();
+        }
+        if (null !== $object->getItems()) {
+            $data->{'items'} = $this->serializer->serialize($object->getItems(), 'raw', $context);
+        }
+        if (null !== $object->getCollectionFormat()) {
+            $data->{'collectionFormat'} = $object->getCollectionFormat();
+        }
+        if (null !== $object->getDefault()) {
+            $data->{'default'} = $object->getDefault();
+        }
+        if (null !== $object->getMaximum()) {
+            $data->{'maximum'} = $object->getMaximum();
+        }
+        if (null !== $object->getExclusiveMaximum()) {
+            $data->{'exclusiveMaximum'} = $object->getExclusiveMaximum();
+        }
+        if (null !== $object->getMinimum()) {
+            $data->{'minimum'} = $object->getMinimum();
+        }
+        if (null !== $object->getExclusiveMinimum()) {
+            $data->{'exclusiveMinimum'} = $object->getExclusiveMinimum();
+        }
+        if (null !== $object->getMaxLength()) {
+            $data->{'maxLength'} = $object->getMaxLength();
+        }
+        if (null !== $object->getMinLength()) {
+            $data->{'minLength'} = $object->getMinLength();
+        }
+        if (null !== $object->getPattern()) {
+            $data->{'pattern'} = $object->getPattern();
+        }
+        if (null !== $object->getMaxItems()) {
+            $data->{'maxItems'} = $object->getMaxItems();
+        }
+        if (null !== $object->getMinItems()) {
+            $data->{'minItems'} = $object->getMinItems();
+        }
+        if (null !== $object->getUniqueItems()) {
+            $data->{'uniqueItems'} = $object->getUniqueItems();
+        }
+        if (null !== $object->getEnum()) {
+            $values_166 = array();
+            foreach ($object->getEnum() as $value_167) {
+                $values_166[] = $value_167;
+            }
+            $data->{'enum'} = $values_166;
+        }
+        if (null !== $object->getMultipleOf()) {
+            $data->{'multipleOf'} = $object->getMultipleOf();
+        }
+
+        return $data;
     }
 }

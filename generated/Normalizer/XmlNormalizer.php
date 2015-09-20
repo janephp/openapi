@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\Xml) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -45,5 +54,26 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getName()) {
+            $data->{'name'} = $object->getName();
+        }
+        if (null !== $object->getNamespace()) {
+            $data->{'namespace'} = $object->getNamespace();
+        }
+        if (null !== $object->getPrefix()) {
+            $data->{'prefix'} = $object->getPrefix();
+        }
+        if (null !== $object->getAttribute()) {
+            $data->{'attribute'} = $object->getAttribute();
+        }
+        if (null !== $object->getWrapped()) {
+            $data->{'wrapped'} = $object->getWrapped();
+        }
+
+        return $data;
     }
 }

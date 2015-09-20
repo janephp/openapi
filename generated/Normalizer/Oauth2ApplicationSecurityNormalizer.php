@@ -4,9 +4,10 @@ namespace Joli\Jane\Swagger\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface
+class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -15,6 +16,14 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
         }
 
         return true;
+    }
+    public function supportsNormalization($data, $format = null)
+    {
+        if ($data instanceof \Joli\Jane\Swagger\Model\Oauth2ApplicationSecurity) {
+            return true;
+        }
+
+        return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -35,11 +44,11 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
             $object->setFlow($data->{'flow'});
         }
         if (isset($data->{'scopes'})) {
-            $values_93 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'scopes'} as $key_95 => $value_94) {
-                $values_93[$key_95] = $value_94;
+            $values_180 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'scopes'} as $key_182 => $value_181) {
+                $values_180[$key_182] = $value_181;
             }
-            $object->setScopes($values_93);
+            $object->setScopes($values_180);
         }
         if (isset($data->{'tokenUrl'})) {
             $object->setTokenUrl($data->{'tokenUrl'});
@@ -49,5 +58,30 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
         }
 
         return $object;
+    }
+    public function normalize($object, $format = null, array $context = array())
+    {
+        $data = new \stdClass();
+        if (null !== $object->getType()) {
+            $data->{'type'} = $object->getType();
+        }
+        if (null !== $object->getFlow()) {
+            $data->{'flow'} = $object->getFlow();
+        }
+        if (null !== $object->getScopes()) {
+            $values_183 = new \stdClass();
+            foreach ($object->getScopes() as $key_185 => $value_184) {
+                $values_183->{$key_185} = $value_184;
+            }
+            $data->{'scopes'} = $values_183;
+        }
+        if (null !== $object->getTokenUrl()) {
+            $data->{'tokenUrl'} = $object->getTokenUrl();
+        }
+        if (null !== $object->getDescription()) {
+            $data->{'description'} = $object->getDescription();
+        }
+
+        return $data;
     }
 }
