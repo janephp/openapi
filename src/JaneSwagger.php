@@ -103,6 +103,15 @@ class JaneSwagger
         return new Context($schema, $namespace, $directory, $classes);
     }
 
+    /**
+     * Generate a list of files
+     *
+     * @param string $swaggerSpec Location of the specification
+     * @param string $namespace   Namespace of the library
+     * @param string $directory   Path for the root directory of the generated files
+     *
+     * @return File[]
+     */
     public function generate($swaggerSpec, $namespace, $directory)
     {
         /** @var Swagger $swagger */
@@ -116,6 +125,17 @@ class JaneSwagger
             $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[3]->name . '.php', $node, '');
         }
 
+        return $files;
+    }
+
+    /**
+     * Print files
+     *
+     * @param File[] $files
+     * @param string $directory
+     */
+    public function printFiles($files, $directory)
+    {
         foreach ($files as $file) {
             if (!file_exists(dirname($file->getFilename()))) {
                 mkdir(dirname($file->getFilename()), 0755, true);

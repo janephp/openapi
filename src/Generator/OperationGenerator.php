@@ -120,7 +120,7 @@ class OperationGenerator
             }
         }
 
-        $documentation[] = " * ";
+        $documentation[] = " *";
         $documentation[] = " * @return \\Psr\\Http\\Message\\ResponseInterface";
         $documentation[] = " */";
         $methodBody = [

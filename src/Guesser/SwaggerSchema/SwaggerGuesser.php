@@ -34,8 +34,10 @@ class SwaggerGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
     {
         $classes = [];
 
-        foreach ($object->getDefinitions() as $key => $definition) {
-            $classes = array_merge($classes, $this->chainGuesser->guessClass($definition, $key));
+        if ($object->getDefinitions() !== null) {
+            foreach ($object->getDefinitions() as $key => $definition) {
+                $classes = array_merge($classes, $this->chainGuesser->guessClass($definition, $key));
+            }
         }
 
         foreach ($object->getPaths() as $pathName => $path) {
