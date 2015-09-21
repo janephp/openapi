@@ -14,9 +14,11 @@
     "require": {
         "jane/jane": "dev-master",
         "zendframework/zend-diactoros": "^1.1",
+        "egeloen/http-adapter": "dev-master",
         "nikic/php-parser": "^1.4",
-        "doctrine/inflector": "^1.0",
-        "egeloen/http-adapter": "dev-master"
+        "symfony/options-resolver": "~2.7.0",
+        "fabpot/php-cs-fixer": "^1.10",
+        "doctrine/inflector": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7"

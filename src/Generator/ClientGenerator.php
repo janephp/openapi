@@ -3,6 +3,7 @@
 namespace Joli\Jane\Swagger\Generator;
 
 use Doctrine\Common\Inflector\Inflector;
+use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Swagger\Model\Swagger;
 use Joli\Jane\Swagger\Operation\OperationManager;
 
@@ -33,24 +34,25 @@ class ClientGenerator
      * Generate an ast node (which correspond to a class) for a swagger spec
      *
      * @param Swagger $swagger
-     * @param string $namespace
-     * @param string $suffix
+     * @param string  $namespace
+     * @param string  $suffix
+     * @param Context $context
      *
      * @return Node[]
      */
-    public function generate(Swagger $swagger, $namespace, $suffix = 'Resource')
+    public function generate(Swagger $swagger, $namespace, Context $context, $suffix = 'Resource')
     {
         $operationsGrouped = $this->operationManager->buildOperationCollection($swagger);
         $nodes             = [];
 
         foreach ($operationsGrouped as $group => $operations) {
-            $nodes[] = $this->generateClass($group, $operations, $namespace, $suffix);
+            $nodes[] = $this->generateClass($group, $operations, $namespace, $context, $suffix);
         }
 
         return $nodes;
     }
 
-    protected function generateClass($group, $operations, $namespace, $suffix = 'Resource')
+    protected function generateClass($group, $operations, $namespace, Context $context, $suffix = 'Resource')
     {
         $factory    = new BuilderFactory();
         $name       = $group === 0 ? '' : $group;
@@ -58,7 +60,7 @@ class ClientGenerator
         $class->extend('Resource');
 
         foreach ($operations as $id => $operation) {
-            $class->addStmt($this->operationGenerator->generate($id, $operation));
+            $class->addStmt($this->operationGenerator->generate($id, $operation, $context));
         }
 
         return $factory->namespace($namespace . "\\Resource")

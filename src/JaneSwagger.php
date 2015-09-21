@@ -8,20 +8,24 @@ use Joli\Jane\Generator\File;
 use Joli\Jane\Generator\ModelGenerator;
 use Joli\Jane\Generator\Naming;
 use Joli\Jane\Generator\NormalizerGenerator;
-use Joli\Jane\Generator\TypeDecisionManager;
 use Joli\Jane\Swagger\Generator\ClientGenerator;
 use Joli\Jane\Swagger\Generator\GeneratorFactory;
 use Joli\Jane\Swagger\Guesser\ChainGuesser;
 use Joli\Jane\Swagger\Guesser\SwaggerSchema\GuesserFactory;
 use Joli\Jane\Swagger\Model\Swagger;
-
 use Joli\Jane\Swagger\Normalizer\NormalizerFactory;
+
 use PhpParser\PrettyPrinterAbstract;
+
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\CS\Config\Config;
+use Symfony\CS\ConfigurationResolver;
+use Symfony\CS\FixerInterface;
+use Symfony\CS\Fixer;
 
 class JaneSwagger
 {
@@ -55,7 +59,12 @@ class JaneSwagger
      */
     private $chainGuesser;
 
-    public function __construct(SerializerInterface $serializer, ChainGuesser $chainGuesser, ModelGenerator $modelGenerator, NormalizerGenerator $normalizerGenerator, ClientGenerator $clientGenerator, PrettyPrinterAbstract $prettyPrinter)
+    /**
+     * @var Fixer
+     */
+    private $fixer;
+
+    public function __construct(SerializerInterface $serializer, ChainGuesser $chainGuesser, ModelGenerator $modelGenerator, NormalizerGenerator $normalizerGenerator, ClientGenerator $clientGenerator, PrettyPrinterAbstract $prettyPrinter, Fixer $fixer)
     {
         $this->serializer          = $serializer;
         $this->clientGenerator     = $clientGenerator;
@@ -63,6 +72,7 @@ class JaneSwagger
         $this->modelGenerator      = $modelGenerator;
         $this->normalizerGenerator = $normalizerGenerator;
         $this->chainGuesser        = $chainGuesser;
+        $this->fixer               = $fixer;
     }
 
     /**
@@ -100,8 +110,7 @@ class JaneSwagger
         $files   = [];
         $files   = array_merge($files, $this->modelGenerator->generate($context->getRootReference(), 'Client', $context));
         $files   = array_merge($files, $this->normalizerGenerator->generate($context->getRootReference(), 'Client', $context));
-
-        $clients = $this->clientGenerator->generate($context->getRootReference(), $namespace);
+        $clients = $this->clientGenerator->generate($context->getRootReference(), $namespace, $context);
 
         foreach ($clients as $node) {
             $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[3]->name . '.php', $node, '');
@@ -113,6 +122,24 @@ class JaneSwagger
             }
 
             file_put_contents($file->getFilename(), $this->prettyPrinter->prettyPrintFile([$file->getNode()]));
+        }
+
+        if ($this->fixer !== null) {
+            $config = new Config();
+            $config->setDir($directory);
+            $config->level(FixerInterface::PSR0_LEVEL | FixerInterface::PSR1_LEVEL | FixerInterface::PSR2_LEVEL);
+
+            $resolver = new ConfigurationResolver();
+            $resolver
+                ->setAllFixers($this->fixer->getFixers())
+                ->setConfig($config)
+                ->resolve();
+
+            $config->fixers(array_merge($resolver->getFixers(), [
+                new Fixer\Symfony\ReturnFixer()
+            ]));
+
+            $this->fixer->fix($config);
         }
     }
 
@@ -126,7 +153,9 @@ class JaneSwagger
         $naming          = new Naming();
         $modelGenerator  = new ModelGenerator($naming);
         $normGenerator   = new NormalizerGenerator($naming);
+        $fixer           = new Fixer();
+        $fixer->registerBuiltInFixers();
 
-        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter);
+        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter, $fixer);
     }
 } 

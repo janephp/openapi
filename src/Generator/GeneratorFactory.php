@@ -2,6 +2,8 @@
 
 namespace Joli\Jane\Swagger\Generator;
 
+use Joli\Jane\Jane;
+use Joli\Jane\Reference\Resolver;
 use Joli\Jane\Swagger\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\FormDataParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\HeaderParameterGenerator;
@@ -22,8 +24,9 @@ class GeneratorFactory
         $formDataParameter = new FormDataParameterGenerator($parser);
         $headerParameter   = new HeaderParameterGenerator($parser);
         $queryParameter    = new QueryParameterGenerator($parser);
+        $resolver          = new Resolver(Jane::buildSerializer());
 
-        $operation = new OperationGenerator($bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
+        $operation = new OperationGenerator($resolver, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
         $operationManager = new OperationManager();
         $client = new ClientGenerator($operationManager, $operation);
 

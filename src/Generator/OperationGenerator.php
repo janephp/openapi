@@ -2,6 +2,9 @@
 
 namespace Joli\Jane\Swagger\Generator;
 
+use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\Reference\Reference;
+use Joli\Jane\Reference\Resolver;
 use Joli\Jane\Swagger\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\FormDataParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\HeaderParameterGenerator;
@@ -12,6 +15,7 @@ use Joli\Jane\Swagger\Model\FormDataParameterSubSchema;
 use Joli\Jane\Swagger\Model\HeaderParameterSubSchema;
 use Joli\Jane\Swagger\Model\PathParameterSubSchema;
 use Joli\Jane\Swagger\Model\QueryParameterSubSchema;
+use Joli\Jane\Swagger\Model\Schema;
 use Joli\Jane\Swagger\Operation\Operation;
 
 use PhpParser\Node\Arg;
@@ -23,6 +27,11 @@ use PhpParser\Comment;
 
 class OperationGenerator
 {
+    /**
+     * @var \Joli\Jane\Reference\Resolver
+     */
+    private $resolver;
+
     /**
      * @var Parameter\BodyParameterGenerator
      */
@@ -48,8 +57,9 @@ class OperationGenerator
      */
     private $queryParameterGenerator;
 
-    public function __construct(BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
+    public function __construct(Resolver $resolver, BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
     {
+        $this->resolver                   = $resolver;
         $this->bodyParameterGenerator     = $bodyParameterGenerator;
         $this->formDataParameterGenerator = $formDataParameterGenerator;
         $this->headerParameterGenerator   = $headerParameterGenerator;
@@ -62,10 +72,11 @@ class OperationGenerator
      *
      * @param string    $name
      * @param Operation $operation
+     * @param Context   $context
      *
      * @return Stmt\ClassMethod
      */
-    public function generate($name, Operation $operation)
+    public function generate($name, Operation $operation, Context $context)
     {
         $methodParameters = [];
         $documentation    = ['/**'];
@@ -113,7 +124,7 @@ class OperationGenerator
         $documentation[] = " * @return \\Psr\\Http\\Message\\ResponseInterface";
         $documentation[] = " */";
         $methodBody = [
-            new Stmt\Return_(new Expr\MethodCall(new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'), 'sendRequest', [
+            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'), 'sendRequest', [
                 new Arg(
                     new Expr\MethodCall(
                         new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
@@ -126,8 +137,49 @@ class OperationGenerator
                         ]
                     )
                 )
+            ])),
+            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withoutHeader', [
+                new Arg(new Scalar\String_('jane-serializer'))
             ]))
         ];
+
+        foreach ($operation->getOperation()->getResponses() as $status => $response) {
+            $schema         = $response->getSchema();
+            $resolvedSchema = null;
+            $addStmts       = [];
+
+            if ($schema instanceof Reference) {
+                $resolvedSchema = $this->resolver->resolve($schema);
+            }
+
+            if ($schema instanceof Schema && $schema->getType() === "array" && $schema->getItems() instanceof Reference) {
+                $resolvedSchema = $this->resolver->resolve($schema->getItems());
+                $addStmts[] = new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withHeader', [
+                    new Arg(new Scalar\String_('jane-serializer-array')),
+                    new Arg(new Scalar\String_('true'))
+                ]));
+            }
+
+            if ($resolvedSchema !== null && isset($context->getObjectClassMap()[spl_object_hash($resolvedSchema)])) {
+                $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
+
+                $methodBody[] = new Stmt\If_(
+                    new Expr\BinaryOp\Equal(
+                        new Scalar\String_($status),
+                        new Expr\MethodCall(new Expr\Variable('response'), 'getStatusCode')
+                    ), [
+                        'stmts' => array_merge($addStmts, [
+                            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withHeader', [
+                                new Arg(new Scalar\String_('jane-serializer')),
+                                new Arg(new Scalar\String_($context->getNamespace() . "\\Model\\" . $class->getName()))
+                            ]))
+                        ])
+                    ]
+                );
+            }
+        }
+
+        $methodBody[] = new Stmt\Return_(new Expr\Variable('response'));
 
         return new Stmt\ClassMethod($name, [
             'type'     => Stmt\Class_::MODIFIER_PUBLIC,
