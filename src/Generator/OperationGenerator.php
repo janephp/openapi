@@ -82,6 +82,10 @@ class OperationGenerator
         $documentation    = ['/**'];
         $bodyParameter    = null;
         $headerParameters = [];
+        $defaults         = [];
+        $required         = [];
+        $formParameters   = [];
+        $headerParameters = [];
 
         if ($operation->getOperation()->getDescription()) {
             $documentation[] = sprintf(" * %s", $operation->getOperation()->getDescription());
@@ -98,7 +102,7 @@ class OperationGenerator
                 }
 
                 if ($parameter instanceof FormDataParameterSubSchema) {
-                    $methodParameters[] = $this->formDataParameterGenerator->generateMethodParameter($parameter);
+                    $this->formDataParameterGenerator->populateQueryParam($defaults, $required, $formParameters, $headerParameters);
                     $documentation[]    = sprintf(' * @param %s', $this->formDataParameterGenerator->generateDocParameter($parameter));
                 }
 
@@ -109,7 +113,7 @@ class OperationGenerator
                 }
 
                 if ($parameter instanceof PathParameterSubSchema) {
-                    $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter);
+                    $this->formDataParameterGenerator->populateQueryParam($defaults, $required, $formParameters, $headerParameters);
                     $documentation[]    = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
                 }
 
