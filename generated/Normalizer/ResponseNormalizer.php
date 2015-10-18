@@ -41,24 +41,28 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setDescription($data->{'description'});
         }
         if (isset($data->{'schema'})) {
-            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context));
+            $value_111 = $data->{'schema'};
+            if (is_object($data->{'schema'})) {
+                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+            }
+            if (is_object($data->{'schema'}) and (isset($data->{'schema'}->{'type'}) and $data->{'schema'}->{'type'} == 'file')) {
+                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\FileSchema', 'raw', $context);
+            }
+            $object->setSchema($value_111);
         }
         if (isset($data->{'headers'})) {
-            $values_109 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'headers'} as $key_111 => $value_110) {
-                $values_109[$key_111] = $this->serializer->deserialize($value_110, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
+            $values_112 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'headers'} as $key_114 => $value_113) {
+                $values_112[$key_114] = $this->serializer->deserialize($value_113, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
             }
-            $object->setHeaders($values_109);
+            $object->setHeaders($values_112);
         }
         if (isset($data->{'examples'})) {
-            $values_112 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'examples'} as $key_114 => $value_113) {
-                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_114) && isset($value_113)) {
-                    $values_112[$key_114] = $value_113;
-                    continue;
-                }
+            $values_115 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'examples'} as $key_117 => $value_116) {
+                $values_115[$key_117] = $value_116;
             }
-            $object->setExamples($values_112);
+            $object->setExamples($values_115);
         }
 
         return $object;
@@ -70,24 +74,28 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'description'} = $object->getDescription();
         }
         if (null !== $object->getSchema()) {
-            $data->{'schema'} = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+            $value_118 = $object->getSchema();
+            if (is_object($object->getSchema())) {
+                $value_118 = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+            }
+            if (is_object($object->getSchema())) {
+                $value_118 = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+            }
+            $data->{'schema'} = $value_118;
         }
         if (null !== $object->getHeaders()) {
-            $values_115 = new \stdClass();
-            foreach ($object->getHeaders() as $key_117 => $value_116) {
-                $values_115->{$key_117} = $this->serializer->serialize($value_116, 'raw', $context);
+            $values_119 = new \stdClass();
+            foreach ($object->getHeaders() as $key_121 => $value_120) {
+                $values_119->{$key_121} = $this->serializer->serialize($value_120, 'raw', $context);
             }
-            $data->{'headers'} = $values_115;
+            $data->{'headers'} = $values_119;
         }
         if (null !== $object->getExamples()) {
-            $values_118 = new \stdClass();
-            foreach ($object->getExamples() as $key_120 => $value_119) {
-                if (preg_match('/^[a-z0-9-]+\/[a-z0-9\-+]+$/', $key_120) && !is_null($value_119)) {
-                    $values_118->{$key_120} = $value_119;
-                    continue;
-                }
+            $values_122 = new \stdClass();
+            foreach ($object->getExamples() as $key_124 => $value_123) {
+                $values_122->{$key_124} = $value_123;
             }
-            $data->{'examples'} = $values_118;
+            $data->{'examples'} = $values_122;
         }
 
         return $data;

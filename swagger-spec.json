@@ -1,4 +1,3 @@
-
 {
     "title": "A JSON Schema for Swagger 2.0 API.",
     "id": "http://swagger.io/v2/schema.json#",
@@ -28,9 +27,8 @@
         },
         "host": {
             "type": "string",
-            "format": "uri",
             "pattern": "^[^{}/ :\\\\]+(?::\\d+)?$",
-            "description": "The fully qualified URI to the host of the API."
+            "description": "The host (name or ip) of the API. Example: 'swagger.io'"
         },
         "basePath": {
             "type": "string",
@@ -102,7 +100,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A longer description of the API. Should be different from the title.  Github-flavored markdown is allowed."
+                    "description": "A longer description of the API. Should be different from the title.  GitHub Flavored Markdown is allowed."
                 },
                 "termsOfService": {
                     "type": "string",
@@ -135,6 +133,11 @@
                     "description": "The email address of the contact person/organization.",
                     "format": "email"
                 }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
             }
         },
         "license": {
@@ -152,6 +155,11 @@
                     "type": "string",
                     "description": "The URL pointing to the license.",
                     "format": "uri"
+                }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
                 }
             }
         },
@@ -204,14 +212,16 @@
                     "type": "string",
                     "format": "uri"
                 }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
             }
         },
         "examples": {
             "type": "object",
-            "patternProperties": {
-                "^[a-z0-9-]+/[a-z0-9\\-+]+$": {}
-            },
-            "additionalProperties": false
+            "additionalProperties": true
         },
         "mimeType": {
             "type": "string",
@@ -242,14 +252,14 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A longer description of the operation, github-flavored markdown is allowed."
+                    "description": "A longer description of the operation, GitHub Flavored Markdown is allowed."
                 },
                 "externalDocs": {
                     "$ref": "#/definitions/externalDocs"
                 },
                 "operationId": {
                     "type": "string",
-                    "description": "A friendly name of the operation"
+                    "description": "A unique identifier of the operation."
                 },
                 "produces": {
                     "description": "A list of MIME types the API can produce.",
@@ -339,7 +349,14 @@
             }
         },
         "responseValue": {
-            "$ref": "#/definitions/response"
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/response"
+                },
+                {
+                    "$ref": "#/definitions/jsonReference"
+                }
+            ]
         },
         "response": {
             "type": "object",
@@ -351,7 +368,14 @@
                     "type": "string"
                 },
                 "schema": {
-                    "$ref": "#/definitions/schema"
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/schema"
+                        },
+                        {
+                            "$ref": "#/definitions/fileSchema"
+                        }
+                    ]
                 },
                 "headers": {
                     "$ref": "#/definitions/headers"
@@ -360,7 +384,12 @@
                     "$ref": "#/definitions/examples"
                 }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
+            }
         },
         "headers": {
             "type": "object",
@@ -436,6 +465,11 @@
                 "description": {
                     "type": "string"
                 }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
             }
         },
         "vendorExtension": {
@@ -458,7 +492,7 @@
             "properties": {
                 "description": {
                     "type": "string",
-                    "description": "A brief description of the parameter. This could contain examples of use.  Github-flavored markdown is allowed."
+                    "description": "A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed."
                 },
                 "name": {
                     "type": "string",
@@ -483,12 +517,6 @@
             "additionalProperties": false
         },
         "headerParameterSubSchema": {
-            "type": "object",
-            "required": [
-                "name",
-                "in",
-                "type"
-            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -510,7 +538,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A brief description of the parameter. This could contain examples of use.  Github-flavored markdown is allowed."
+                    "description": "A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed."
                 },
                 "name": {
                     "type": "string",
@@ -577,12 +605,6 @@
             }
         },
         "queryParameterSubSchema": {
-            "type": "object",
-            "required": [
-                "name",
-                "in",
-                "type"
-            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -604,7 +626,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A brief description of the parameter. This could contain examples of use.  Github-flavored markdown is allowed."
+                    "description": "A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed."
                 },
                 "name": {
                     "type": "string",
@@ -676,12 +698,6 @@
             }
         },
         "formDataParameterSubSchema": {
-            "type": "object",
-            "required": [
-                "name",
-                "in",
-                "type"
-            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
@@ -703,7 +719,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A brief description of the parameter. This could contain examples of use.  Github-flavored markdown is allowed."
+                    "description": "A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed."
                 },
                 "name": {
                     "type": "string",
@@ -776,18 +792,15 @@
             }
         },
         "pathParameterSubSchema": {
-            "type": "object",
-            "required": [
-                "name",
-                "in",
-                "type"
-            ],
             "additionalProperties": false,
             "patternProperties": {
                 "^x-": {
                     "$ref": "#/definitions/vendorExtension"
                 }
             },
+            "required": [
+                "required"
+            ],
             "properties": {
                 "required": {
                     "type": "boolean",
@@ -805,7 +818,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "A brief description of the parameter. This could contain examples of use.  Github-flavored markdown is allowed."
+                    "description": "A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed."
                 },
                 "name": {
                     "type": "string",
@@ -872,6 +885,12 @@
             }
         },
         "nonBodyParameter": {
+            "type": "object",
+            "required": [
+                "name",
+                "in",
+                "type"
+            ],
             "oneOf": [
                 {
                     "$ref": "#/definitions/headerParameterSubSchema"
@@ -1026,6 +1045,50 @@
             },
             "additionalProperties": false
         },
+        "fileSchema": {
+            "type": "object",
+            "description": "A deterministic version of a JSON Schema object.",
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "format": {
+                    "type": "string"
+                },
+                "title": {
+                    "$ref": "http://json-schema.org/draft-04/schema#/properties/title"
+                },
+                "description": {
+                    "$ref": "http://json-schema.org/draft-04/schema#/properties/description"
+                },
+                "default": {
+                    "$ref": "http://json-schema.org/draft-04/schema#/properties/default"
+                },
+                "required": {
+                    "$ref": "http://json-schema.org/draft-04/schema#/definitions/stringArray"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "file"
+                    ]
+                },
+                "readOnly": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "externalDocs": {
+                    "$ref": "#/definitions/externalDocs"
+                },
+                "example": {}
+            },
+            "additionalProperties": false
+        },
         "primitivesItems": {
             "type": "object",
             "additionalProperties": false,
@@ -1088,6 +1151,11 @@
                 "multipleOf": {
                     "$ref": "#/definitions/multipleOf"
                 }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
+                }
             }
         },
         "security": {
@@ -1127,6 +1195,11 @@
                 "wrapped": {
                     "type": "boolean",
                     "default": false
+                }
+            },
+            "patternProperties": {
+                "^x-": {
+                    "$ref": "#/definitions/vendorExtension"
                 }
             }
         },
@@ -1411,7 +1484,14 @@
             "description": "The parameters needed to send a valid API call.",
             "additionalItems": false,
             "items": {
-                "$ref": "#/definitions/parameter"
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/parameter"
+                    },
+                    {
+                        "$ref": "#/definitions/jsonReference"
+                    }
+                ]
             },
             "uniqueItems": true
         },
@@ -1494,6 +1574,18 @@
         },
         "enum": {
             "$ref": "http://json-schema.org/draft-04/schema#/properties/enum"
+        },
+        "jsonReference": {
+            "type": "object",
+            "required": [
+                "$ref"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "$ref": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

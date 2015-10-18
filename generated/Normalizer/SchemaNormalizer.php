@@ -92,70 +92,70 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setMinProperties($data->{'minProperties'});
         }
         if (isset($data->{'required'})) {
-            $values_141 = array();
-            foreach ($data->{'required'} as $value_142) {
-                $values_141[] = $value_142;
+            $values_145 = array();
+            foreach ($data->{'required'} as $value_146) {
+                $values_145[] = $value_146;
             }
-            $object->setRequired($values_141);
+            $object->setRequired($values_145);
         }
         if (isset($data->{'enum'})) {
-            $values_143 = array();
-            foreach ($data->{'enum'} as $value_144) {
-                $values_143[] = $value_144;
+            $values_147 = array();
+            foreach ($data->{'enum'} as $value_148) {
+                $values_147[] = $value_148;
             }
-            $object->setEnum($values_143);
+            $object->setEnum($values_147);
         }
         if (isset($data->{'additionalProperties'})) {
-            $value_145 = $data->{'additionalProperties'};
+            $value_149 = $data->{'additionalProperties'};
             if (is_object($data->{'additionalProperties'})) {
-                $value_145 = $this->serializer->deserialize($data->{'additionalProperties'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $value_149 = $this->serializer->deserialize($data->{'additionalProperties'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
             if (is_bool($data->{'additionalProperties'})) {
-                $value_145 = $data->{'additionalProperties'};
+                $value_149 = $data->{'additionalProperties'};
             }
-            $object->setAdditionalProperties($value_145);
+            $object->setAdditionalProperties($value_149);
         }
         if (isset($data->{'type'})) {
-            $value_146 = $data->{'type'};
+            $value_150 = $data->{'type'};
             if (isset($data->{'type'})) {
-                $value_146 = $data->{'type'};
+                $value_150 = $data->{'type'};
             }
             if (is_array($data->{'type'})) {
-                $values_147 = array();
-                foreach ($data->{'type'} as $value_148) {
-                    $values_147[] = $value_148;
+                $values_151 = array();
+                foreach ($data->{'type'} as $value_152) {
+                    $values_151[] = $value_152;
                 }
-                $value_146 = $values_147;
+                $value_150 = $values_151;
             }
-            $object->setType($value_146);
+            $object->setType($value_150);
         }
         if (isset($data->{'items'})) {
-            $value_149 = $data->{'items'};
+            $value_153 = $data->{'items'};
             if (is_object($data->{'items'})) {
-                $value_149 = $this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $value_153 = $this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
             if (is_array($data->{'items'})) {
-                $values_150 = array();
-                foreach ($data->{'items'} as $value_151) {
-                    $values_150[] = $this->serializer->deserialize($value_151, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $values_154 = array();
+                foreach ($data->{'items'} as $value_155) {
+                    $values_154[] = $this->serializer->deserialize($value_155, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
                 }
-                $value_149 = $values_150;
+                $value_153 = $values_154;
             }
-            $object->setItems($value_149);
+            $object->setItems($value_153);
         }
         if (isset($data->{'allOf'})) {
-            $values_152 = array();
-            foreach ($data->{'allOf'} as $value_153) {
-                $values_152[] = $this->serializer->deserialize($value_153, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+            $values_156 = array();
+            foreach ($data->{'allOf'} as $value_157) {
+                $values_156[] = $this->serializer->deserialize($value_157, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setAllOf($values_152);
+            $object->setAllOf($values_156);
         }
         if (isset($data->{'properties'})) {
-            $values_154 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'properties'} as $key_156 => $value_155) {
-                $values_154[$key_156] = $this->serializer->deserialize($value_155, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+            $values_158 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'properties'} as $key_160 => $value_159) {
+                $values_158[$key_160] = $this->serializer->deserialize($value_159, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
-            $object->setProperties($values_154);
+            $object->setProperties($values_158);
         }
         if (isset($data->{'discriminator'})) {
             $object->setDiscriminator($data->{'discriminator'});
@@ -233,70 +233,70 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $data->{'minProperties'} = $object->getMinProperties();
         }
         if (null !== $object->getRequired()) {
-            $values_157 = array();
-            foreach ($object->getRequired() as $value_158) {
-                $values_157[] = $value_158;
+            $values_161 = array();
+            foreach ($object->getRequired() as $value_162) {
+                $values_161[] = $value_162;
             }
-            $data->{'required'} = $values_157;
+            $data->{'required'} = $values_161;
         }
         if (null !== $object->getEnum()) {
-            $values_159 = array();
-            foreach ($object->getEnum() as $value_160) {
-                $values_159[] = $value_160;
+            $values_163 = array();
+            foreach ($object->getEnum() as $value_164) {
+                $values_163[] = $value_164;
             }
-            $data->{'enum'} = $values_159;
+            $data->{'enum'} = $values_163;
         }
         if (null !== $object->getAdditionalProperties()) {
-            $value_161 = $object->getAdditionalProperties();
+            $value_165 = $object->getAdditionalProperties();
             if (is_object($object->getAdditionalProperties())) {
-                $value_161 = $this->serializer->serialize($object->getAdditionalProperties(), 'raw', $context);
+                $value_165 = $this->serializer->serialize($object->getAdditionalProperties(), 'raw', $context);
             }
             if (is_bool($object->getAdditionalProperties())) {
-                $value_161 = $object->getAdditionalProperties();
+                $value_165 = $object->getAdditionalProperties();
             }
-            $data->{'additionalProperties'} = $value_161;
+            $data->{'additionalProperties'} = $value_165;
         }
         if (null !== $object->getType()) {
-            $value_162 = $object->getType();
+            $value_166 = $object->getType();
             if (!is_null($object->getType())) {
-                $value_162 = $object->getType();
+                $value_166 = $object->getType();
             }
             if (is_array($object->getType())) {
-                $values_163 = array();
-                foreach ($object->getType() as $value_164) {
-                    $values_163[] = $value_164;
+                $values_167 = array();
+                foreach ($object->getType() as $value_168) {
+                    $values_167[] = $value_168;
                 }
-                $value_162 = $values_163;
+                $value_166 = $values_167;
             }
-            $data->{'type'} = $value_162;
+            $data->{'type'} = $value_166;
         }
         if (null !== $object->getItems()) {
-            $value_165 = $object->getItems();
+            $value_169 = $object->getItems();
             if (is_object($object->getItems())) {
-                $value_165 = $this->serializer->serialize($object->getItems(), 'raw', $context);
+                $value_169 = $this->serializer->serialize($object->getItems(), 'raw', $context);
             }
             if (is_array($object->getItems())) {
-                $values_166 = array();
-                foreach ($object->getItems() as $value_167) {
-                    $values_166[] = $this->serializer->serialize($value_167, 'raw', $context);
+                $values_170 = array();
+                foreach ($object->getItems() as $value_171) {
+                    $values_170[] = $this->serializer->serialize($value_171, 'raw', $context);
                 }
-                $value_165 = $values_166;
+                $value_169 = $values_170;
             }
-            $data->{'items'} = $value_165;
+            $data->{'items'} = $value_169;
         }
         if (null !== $object->getAllOf()) {
-            $values_168 = array();
-            foreach ($object->getAllOf() as $value_169) {
-                $values_168[] = $this->serializer->serialize($value_169, 'raw', $context);
+            $values_172 = array();
+            foreach ($object->getAllOf() as $value_173) {
+                $values_172[] = $this->serializer->serialize($value_173, 'raw', $context);
             }
-            $data->{'allOf'} = $values_168;
+            $data->{'allOf'} = $values_172;
         }
         if (null !== $object->getProperties()) {
-            $values_170 = new \stdClass();
-            foreach ($object->getProperties() as $key_172 => $value_171) {
-                $values_170->{$key_172} = $this->serializer->serialize($value_171, 'raw', $context);
+            $values_174 = new \stdClass();
+            foreach ($object->getProperties() as $key_176 => $value_175) {
+                $values_174->{$key_176} = $this->serializer->serialize($value_175, 'raw', $context);
             }
-            $data->{'properties'} = $values_170;
+            $data->{'properties'} = $values_174;
         }
         if (null !== $object->getDiscriminator()) {
             $data->{'discriminator'} = $object->getDiscriminator();

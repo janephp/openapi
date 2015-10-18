@@ -33,11 +33,11 @@ class Operation
      */
     protected $consumes;
     /**
-     * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
+     * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[]
      */
     protected $parameters;
     /**
-     * @var Response[]|mixed[]
+     * @var Response|JsonReference[]|mixed[]
      */
     protected $responses;
     /**
@@ -179,14 +179,14 @@ class Operation
         return $this;
     }
     /**
-     * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
+     * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[]
      */
     public function getParameters()
     {
         return $this->parameters;
     }
     /**
-     * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[] $parameters
+     * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[] $parameters
      *
      * @return self
      */
@@ -197,14 +197,14 @@ class Operation
         return $this;
     }
     /**
-     * @return Response[]|mixed[]
+     * @return Response|JsonReference[]|mixed[]
      */
     public function getResponses()
     {
         return $this->responses;
     }
     /**
-     * @param Response[]|mixed[] $responses
+     * @param Response|JsonReference[]|mixed[] $responses
      *
      * @return self
      */

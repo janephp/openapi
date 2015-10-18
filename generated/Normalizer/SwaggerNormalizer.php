@@ -107,7 +107,7 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
                 if (is_object($value_10) and (isset($value_10->{'in'}) and $value_10->{'in'} == 'query') and isset($value_10->{'name'}) and (isset($value_10->{'type'}) and ($value_10->{'type'} == 'string' or $value_10->{'type'} == 'number' or $value_10->{'type'} == 'boolean' or $value_10->{'type'} == 'integer' or $value_10->{'type'} == 'array'))) {
                     $value_12 = $this->serializer->deserialize($value_10, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'raw', $context);
                 }
-                if (is_object($value_10) and (isset($value_10->{'in'}) and $value_10->{'in'} == 'path') and isset($value_10->{'name'}) and (isset($value_10->{'type'}) and ($value_10->{'type'} == 'string' or $value_10->{'type'} == 'number' or $value_10->{'type'} == 'boolean' or $value_10->{'type'} == 'integer' or $value_10->{'type'} == 'array'))) {
+                if (is_object($value_10) and (isset($value_10->{'required'}) and $value_10->{'required'} == '1') and (isset($value_10->{'in'}) and $value_10->{'in'} == 'path') and isset($value_10->{'name'}) and (isset($value_10->{'type'}) and ($value_10->{'type'} == 'string' or $value_10->{'type'} == 'number' or $value_10->{'type'} == 'boolean' or $value_10->{'type'} == 'integer' or $value_10->{'type'} == 'array'))) {
                     $value_12 = $this->serializer->deserialize($value_10, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'raw', $context);
                 }
                 $values_9[$key_11] = $value_12;

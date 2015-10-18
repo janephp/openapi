@@ -95,11 +95,11 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_137 = array();
-            foreach ($data->{'enum'} as $value_138) {
-                $values_137[] = $value_138;
+            $values_141 = array();
+            foreach ($data->{'enum'} as $value_142) {
+                $values_141[] = $value_142;
             }
-            $object->setEnum($values_137);
+            $object->setEnum($values_141);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
@@ -168,11 +168,11 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_139 = array();
-            foreach ($object->getEnum() as $value_140) {
-                $values_139[] = $value_140;
+            $values_143 = array();
+            foreach ($object->getEnum() as $value_144) {
+                $values_143[] = $value_144;
             }
-            $data->{'enum'} = $values_139;
+            $data->{'enum'} = $values_143;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();

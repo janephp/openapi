@@ -83,11 +83,11 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_121 = array();
-            foreach ($data->{'enum'} as $value_122) {
-                $values_121[] = $value_122;
+            $values_125 = array();
+            foreach ($data->{'enum'} as $value_126) {
+                $values_125[] = $value_126;
             }
-            $object->setEnum($values_121);
+            $object->setEnum($values_125);
         }
         if (isset($data->{'multipleOf'})) {
             $object->setMultipleOf($data->{'multipleOf'});
@@ -147,11 +147,11 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_123 = array();
-            foreach ($object->getEnum() as $value_124) {
-                $values_123[] = $value_124;
+            $values_127 = array();
+            foreach ($object->getEnum() as $value_128) {
+                $values_127[] = $value_128;
             }
-            $data->{'enum'} = $values_123;
+            $data->{'enum'} = $values_127;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();

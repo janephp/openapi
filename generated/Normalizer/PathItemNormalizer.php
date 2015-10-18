@@ -62,27 +62,30 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setPatch($this->serializer->deserialize($data->{'patch'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'parameters'})) {
-            $values_103 = array();
-            foreach ($data->{'parameters'} as $value_104) {
-                $value_105 = $value_104;
-                if (is_object($value_104) and isset($value_104->{'name'}) and (isset($value_104->{'in'}) and $value_104->{'in'} == 'body') and isset($value_104->{'schema'})) {
-                    $value_105 = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\BodyParameter', 'raw', $context);
+            $values_105 = array();
+            foreach ($data->{'parameters'} as $value_106) {
+                $value_107 = $value_106;
+                if (is_object($value_106) and isset($value_106->{'name'}) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'body') and isset($value_106->{'schema'})) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\BodyParameter', 'raw', $context);
                 }
-                if (is_object($value_104) and (isset($value_104->{'in'}) and $value_104->{'in'} == 'header') and isset($value_104->{'name'}) and (isset($value_104->{'type'}) and ($value_104->{'type'} == 'string' or $value_104->{'type'} == 'number' or $value_104->{'type'} == 'boolean' or $value_104->{'type'} == 'integer' or $value_104->{'type'} == 'array'))) {
-                    $value_105 = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema', 'raw', $context);
+                if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'header') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema', 'raw', $context);
                 }
-                if (is_object($value_104) and (isset($value_104->{'in'}) and $value_104->{'in'} == 'formData') and isset($value_104->{'name'}) and (isset($value_104->{'type'}) and ($value_104->{'type'} == 'string' or $value_104->{'type'} == 'number' or $value_104->{'type'} == 'boolean' or $value_104->{'type'} == 'integer' or $value_104->{'type'} == 'array' or $value_104->{'type'} == 'file'))) {
-                    $value_105 = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\FormDataParameterSubSchema', 'raw', $context);
+                if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'formData') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array' or $value_106->{'type'} == 'file'))) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\FormDataParameterSubSchema', 'raw', $context);
                 }
-                if (is_object($value_104) and (isset($value_104->{'in'}) and $value_104->{'in'} == 'query') and isset($value_104->{'name'}) and (isset($value_104->{'type'}) and ($value_104->{'type'} == 'string' or $value_104->{'type'} == 'number' or $value_104->{'type'} == 'boolean' or $value_104->{'type'} == 'integer' or $value_104->{'type'} == 'array'))) {
-                    $value_105 = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'raw', $context);
+                if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'query') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'raw', $context);
                 }
-                if (is_object($value_104) and (isset($value_104->{'in'}) and $value_104->{'in'} == 'path') and isset($value_104->{'name'}) and (isset($value_104->{'type'}) and ($value_104->{'type'} == 'string' or $value_104->{'type'} == 'number' or $value_104->{'type'} == 'boolean' or $value_104->{'type'} == 'integer' or $value_104->{'type'} == 'array'))) {
-                    $value_105 = $this->serializer->deserialize($value_104, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'raw', $context);
+                if (is_object($value_106) and (isset($value_106->{'required'}) and $value_106->{'required'} == '1') and (isset($value_106->{'in'}) and $value_106->{'in'} == 'path') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'raw', $context);
                 }
-                $values_103[] = $value_105;
+                if (is_object($value_106) and isset($value_106->{'$ref'})) {
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\JsonReference', 'raw', $context);
+                }
+                $values_105[] = $value_107;
             }
-            $object->setParameters($values_103);
+            $object->setParameters($values_105);
         }
 
         return $object;
@@ -115,27 +118,30 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'patch'} = $this->serializer->serialize($object->getPatch(), 'raw', $context);
         }
         if (null !== $object->getParameters()) {
-            $values_106 = array();
-            foreach ($object->getParameters() as $value_107) {
-                $value_108 = $value_107;
-                if (is_object($value_107)) {
-                    $value_108 = $this->serializer->serialize($value_107, 'raw', $context);
+            $values_108 = array();
+            foreach ($object->getParameters() as $value_109) {
+                $value_110 = $value_109;
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
                 }
-                if (is_object($value_107)) {
-                    $value_108 = $this->serializer->serialize($value_107, 'raw', $context);
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
                 }
-                if (is_object($value_107)) {
-                    $value_108 = $this->serializer->serialize($value_107, 'raw', $context);
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
                 }
-                if (is_object($value_107)) {
-                    $value_108 = $this->serializer->serialize($value_107, 'raw', $context);
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
                 }
-                if (is_object($value_107)) {
-                    $value_108 = $this->serializer->serialize($value_107, 'raw', $context);
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
                 }
-                $values_106[] = $value_108;
+                if (is_object($value_109)) {
+                    $value_110 = $this->serializer->serialize($value_109, 'raw', $context);
+                }
+                $values_108[] = $value_110;
             }
-            $data->{'parameters'} = $values_106;
+            $data->{'parameters'} = $values_108;
         }
 
         return $data;

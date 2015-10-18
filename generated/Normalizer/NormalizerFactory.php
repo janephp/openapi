@@ -21,10 +21,11 @@ class NormalizerFactory
         $normalizers[] = new HeaderNormalizer();
         $normalizers[] = new BodyParameterNormalizer();
         $normalizers[] = new HeaderParameterSubSchemaNormalizer();
-        $normalizers[] = new QueryParameterSubSchemaNormalizer();
         $normalizers[] = new FormDataParameterSubSchemaNormalizer();
+        $normalizers[] = new QueryParameterSubSchemaNormalizer();
         $normalizers[] = new PathParameterSubSchemaNormalizer();
         $normalizers[] = new SchemaNormalizer();
+        $normalizers[] = new FileSchemaNormalizer();
         $normalizers[] = new PrimitivesItemsNormalizer();
         $normalizers[] = new XmlNormalizer();
         $normalizers[] = new TagNormalizer();
@@ -34,6 +35,7 @@ class NormalizerFactory
         $normalizers[] = new Oauth2PasswordSecurityNormalizer();
         $normalizers[] = new Oauth2ApplicationSecurityNormalizer();
         $normalizers[] = new Oauth2AccessCodeSecurityNormalizer();
+        $normalizers[] = new JsonReferenceNormalizer();
 
         return $normalizers;
     }

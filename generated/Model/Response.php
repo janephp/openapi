@@ -9,7 +9,7 @@ class Response
      */
     protected $description;
     /**
-     * @var Schema
+     * @var Schema|FileSchema
      */
     protected $schema;
     /**
@@ -39,14 +39,14 @@ class Response
         return $this;
     }
     /**
-     * @return Schema
+     * @return Schema|FileSchema
      */
     public function getSchema()
     {
         return $this->schema;
     }
     /**
-     * @param Schema $schema
+     * @param Schema|FileSchema $schema
      *
      * @return self
      */
