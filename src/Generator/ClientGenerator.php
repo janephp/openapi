@@ -5,6 +5,7 @@ namespace Joli\Jane\Swagger\Generator;
 use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Swagger\Model\Swagger;
+use Joli\Jane\Swagger\Naming\OperationNamingInterface;
 use Joli\Jane\Swagger\Operation\OperationManager;
 
 use PhpParser\BuilderFactory;
@@ -24,10 +25,16 @@ class ClientGenerator
      */
     private $operationGenerator;
 
-    public function __construct(OperationManager $operationManager, OperationGenerator $operationGenerator)
+    /**
+     * @var OperationNamingInterface
+     */
+    private $operationNaming;
+
+    public function __construct(OperationManager $operationManager, OperationGenerator $operationGenerator, OperationNamingInterface $operationNaming)
     {
         $this->operationManager   = $operationManager;
         $this->operationGenerator = $operationGenerator;
+        $this->operationNaming    = $operationNaming;
     }
 
     /**
@@ -59,8 +66,8 @@ class ClientGenerator
         $class      = $factory->class(Inflector::classify($name . $suffix));
         $class->extend('Resource');
 
-        foreach ($operations as $id => $operation) {
-            $class->addStmt($this->operationGenerator->generate($id, $operation, $context));
+        foreach ($operations as $operation) {
+            $class->addStmt($this->operationGenerator->generate($this->operationNaming->generateFunctionName($operation), $operation, $context));
         }
 
         return $factory->namespace($namespace . "\\Resource")

@@ -20,6 +20,12 @@ class GuesserFactory
         $chainGuesser->addGuesser(new ReferenceGuesser($resolver));
         $chainGuesser->addGuesser(new SwaggerGuesser());
         $chainGuesser->addGuesser(new SchemaGuesser($naming, $resolver));
+        $chainGuesser->addGuesser(new AdditionalPropertiesGuesser());
+        $chainGuesser->addGuesser(new AllOfGuesser($resolver));
+        $chainGuesser->addGuesser(new ArrayGuesser());
+        $chainGuesser->addGuesser(new ItemsGuesser());
+        $chainGuesser->addGuesser(new SimpleTypeGuesser());
+        $chainGuesser->addGuesser(new MultipleGuesser());
 
         return $chainGuesser;
     }
