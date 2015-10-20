@@ -20,14 +20,30 @@ abstract class ParameterGenerator
     /**
      * @param $parameter
      *
-     * @return Node\Param
+     * @return Node\Param|null
      */
-    abstract public function generateMethodParameter($parameter);
+    public function generateMethodParameter($parameter)
+    {
+        return null;
+    }
 
     /**
      * @param $parameter
      *
      * @return string
      */
-    abstract public function generateDocParameter($parameter);
+    public function generateDocParameter($parameter)
+    {
+        return '';
+    }
+
+    /**
+     * @param $parameter
+     *
+     * @return Node\Expr[]
+     */
+    public function generateQueryParamStatements($parameter)
+    {
+        return [];
+    }
 } 

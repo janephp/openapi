@@ -9,7 +9,7 @@ use Joli\Jane\Swagger\Generator\Parameter\FormDataParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\HeaderParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\PathParameterGenerator;
 use Joli\Jane\Swagger\Generator\Parameter\QueryParameterGenerator;
-use Joli\Jane\Swagger\Naming\OperationUrlNaming;
+use Joli\Jane\Swagger\Naming\OperationIdNaming;
 use Joli\Jane\Swagger\Operation\OperationManager;
 use PhpParser\Lexer;
 use PhpParser\Parser;
@@ -29,7 +29,7 @@ class GeneratorFactory
 
         $operation = new OperationGenerator($resolver, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
         $operationManager = new OperationManager();
-        $client = new ClientGenerator($operationManager, $operation, new OperationUrlNaming());
+        $client = new ClientGenerator($operationManager, $operation, new OperationIdNaming());
 
         return $client;
     }

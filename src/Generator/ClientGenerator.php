@@ -71,9 +71,9 @@ class ClientGenerator
         }
 
         return $factory->namespace($namespace . "\\Resource")
+            ->addStmt($factory->use('Joli\Jane\Swagger\Client\QueryParam'))
             ->addStmt($factory->use('Joli\Jane\Swagger\Client\Resource'))
             ->addStmt($factory->use('Ivory\HttpAdapter\Message\RequestInterface'))
-            ->addStmt($factory->use('Zend\Diactoros\Request'))
             ->addStmt($class)
             ->getNode();
     }
