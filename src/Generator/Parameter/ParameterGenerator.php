@@ -38,13 +38,12 @@ abstract class ParameterGenerator
     }
 
     /**
-     * @param $defaults
-     * @param $required
-     * @param $formParameters
-     * @param $headerParameters
+     * @param $parameter
      *
+     * @return Node\Expr[]
      */
-    public function populateQueryParam(&$defaults, &$required, &$formParameters, &$headerParameters)
+    public function generateQueryParamStatements($parameter)
     {
+        return [];
     }
 } 

@@ -21,6 +21,7 @@ use Joli\Jane\Swagger\Operation\Operation;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
+use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar;
 use PhpParser\Comment;
@@ -78,14 +79,14 @@ class OperationGenerator
      */
     public function generate($name, Operation $operation, Context $context)
     {
-        $methodParameters = [];
-        $documentation    = ['/**'];
-        $bodyParameter    = null;
-        $headerParameters = [];
-        $defaults         = [];
-        $required         = [];
-        $formParameters   = [];
-        $headerParameters = [];
+        $methodParameters     = [];
+        $documentation        = ['/**'];
+        $bodyParameter        = null;
+        $queryParamStatements = [];
+        $pathParameters       = [];
+        $replaceArgs          = [];
+        $queryParamVariable   = new Expr\Variable('queryParam');
+        $url                  = $operation->getPath();
 
         if ($operation->getOperation()->getDescription()) {
             $documentation[] = sprintf(" * %s", $operation->getOperation()->getDescription());
@@ -102,41 +103,56 @@ class OperationGenerator
                 }
 
                 if ($parameter instanceof FormDataParameterSubSchema) {
-                    $this->formDataParameterGenerator->populateQueryParam($defaults, $required, $formParameters, $headerParameters);
-                    $documentation[]    = sprintf(' * @param %s', $this->formDataParameterGenerator->generateDocParameter($parameter));
+                    $queryParamStatements = array_merge($queryParamStatements, $this->formDataParameterGenerator->generateQueryParamStatements($parameter, $queryParamVariable));
                 }
 
                 if ($parameter instanceof HeaderParameterSubSchema) {
-                    $methodParameters[] = $this->headerParameterGenerator->generateMethodParameter($parameter);
-                    $documentation[]    = sprintf(' * @param %s', $this->headerParameterGenerator->generateDocParameter($parameter));
-                    $headerParameters[] = $parameter;
+                    $queryParamStatements = array_merge($queryParamStatements, $this->formDataParameterGenerator->generateQueryParamStatements($parameter, $queryParamVariable));
                 }
 
                 if ($parameter instanceof PathParameterSubSchema) {
-                    $this->formDataParameterGenerator->populateQueryParam($defaults, $required, $formParameters, $headerParameters);
-                    $documentation[]    = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
+                    $methodParameters[]   = $this->pathParameterGenerator->generateMethodParameter($parameter);
+                    $documentation[]      = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
+                    $replaceArgs[]        = new Arg(new Expr\Variable($parameter->getName()));
+                    $url                  = str_replace('{'.$parameter->getName().'}', '%s', $url);
                 }
 
                 if ($parameter instanceof QueryParameterSubSchema) {
-                    $methodParameters[] = $this->queryParameterGenerator->generateMethodParameter($parameter);
-                    $documentation[]    = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter));
+                    $queryParamStatements = array_merge($queryParamStatements, $this->queryParameterGenerator->generateQueryParamStatements($parameter, $queryParamVariable));
                 }
             }
         }
 
+        $methodParameters[] = new Param('parameters', new Expr\Array_());
+
+        $documentation[] = " * @param array \$parameters";
         $documentation[] = " *";
         $documentation[] = " * @return \\Psr\\Http\\Message\\ResponseInterface";
         $documentation[] = " */";
+
         $methodBody = [
+            new Expr\Assign($queryParamVariable, new Expr\New_(new Name('QueryParam')))
+        ];
+
+        $methodBody = array_merge($methodBody, $queryParamStatements);
+        $methodBody = array_merge($methodBody, [
+            new Expr\Assign(new Expr\Variable('url'), new Expr\FuncCall(new Name('sprintf'), array_merge([
+                new Arg(new Scalar\String_($url.'?%s'))
+            ], array_merge($replaceArgs, [
+                new Expr\MethodCall($queryParamVariable, 'buildQueryString', [new Arg(new Expr\Variable('parameters'))])
+            ])))),
+        ]);
+
+        $methodBody = array_merge($methodBody, [
             new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'), 'sendRequest', [
                 new Arg(
                     new Expr\MethodCall(
                         new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
                         'createRequest', [
-                            new Arg(new Scalar\String_($operation->getPath())),
+                            new Arg(new Expr\Variable('url')),
                             new Arg(new Scalar\String_($operation->getMethod())),
                             new Arg(new Expr\ClassConstFetch(new Name('RequestInterface'), 'PROTOCOL_VERSION_1_1')),
-                            new Arg(new Expr\Array_()),
+                            new Arg(new Expr\MethodCall($queryParamVariable, 'buildHeaders', [new Arg(new Expr\Variable('parameters'))])),
                             new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
                         ]
                     )
@@ -145,7 +161,7 @@ class OperationGenerator
             new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withoutHeader', [
                 new Arg(new Scalar\String_('jane-serializer'))
             ]))
-        ];
+        ]);
 
         foreach ($operation->getOperation()->getResponses() as $status => $response) {
             $schema         = $response->getSchema();
