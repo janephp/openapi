@@ -2,23 +2,21 @@
 
 namespace Joli\Jane\Swagger\Client;
 
-use Ivory\HttpAdapter\Message\MessageFactoryInterface;
-use Ivory\HttpAdapter\PsrHttpAdapterInterface;
-use Zend\Diactoros\Request;
+use Http\Message\MessageFactory;
 
 class Resource
 {
     /**
-     * @var \Ivory\HttpAdapter\PsrHttpAdapterInterface
+     * @var HttpClient
      */
     protected $httpClient;
 
     /**
-     * @var \Ivory\HttpAdapter\Message\MessageFactoryInterface
+     * @var MessageFactory
      */
     protected $messageFactory;
 
-    public function __construct(PsrHttpAdapterInterface $httpClient, MessageFactoryInterface $messageFactory)
+    public function __construct(HttpClient $httpClient, MessageFactory $messageFactory)
     {
         $this->httpClient     = $httpClient;
         $this->messageFactory = $messageFactory;

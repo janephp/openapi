@@ -122,7 +122,7 @@ class JaneSwagger
         $clients = $this->clientGenerator->generate($context->getRootReference(), $namespace, $context);
 
         foreach ($clients as $node) {
-            $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[3]->name . '.php', $node, '');
+            $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[2]->name . '.php', $node, '');
         }
 
         return $files;

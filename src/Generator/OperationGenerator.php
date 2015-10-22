@@ -144,23 +144,21 @@ class OperationGenerator
         ]);
 
         $methodBody = array_merge($methodBody, [
-            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'), 'sendRequest', [
-                new Arg(
-                    new Expr\MethodCall(
-                        new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
-                        'createRequest', [
-                            new Arg(new Expr\Variable('url')),
-                            new Arg(new Scalar\String_($operation->getMethod())),
-                            new Arg(new Expr\ClassConstFetch(new Name('RequestInterface'), 'PROTOCOL_VERSION_1_1')),
-                            new Arg(new Expr\MethodCall($queryParamVariable, 'buildHeaders', [new Arg(new Expr\Variable('parameters'))])),
-                            new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
-                        ]
-                    )
-                )
-            ])),
-            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withoutHeader', [
-                new Arg(new Scalar\String_('jane-serializer'))
-            ]))
+            new Expr\Assign(new Expr\Variable('request'), new Expr\MethodCall(
+                new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
+                'createRequest', [
+                    new Arg(new Scalar\String_($operation->getMethod())),
+                    new Arg(new Expr\Variable('url')),
+                    new Arg(new Scalar\String_('1.1')),
+                    new Arg(new Expr\MethodCall($queryParamVariable, 'buildHeaders', [new Arg(new Expr\Variable('parameters'))])),
+                    new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
+                ]
+            )),
+            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(
+                new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'),
+                'sendRequest',
+                [new Arg(new Expr\Variable('request'))]
+            ))
         ]);
 
         foreach ($operation->getOperation()->getResponses() as $status => $response) {
