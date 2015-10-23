@@ -27,6 +27,10 @@ class HttpClient
      */
     public function sendRequest(RequestInterface $request, array $options = array())
     {
+        // @TODO Remove this when underlying library as a plugins system with some to support 1.1 protocol
+        // Lots of error due to chunked encoding, transfer encoding, ....
+        $request = $request->withProtocolVersion('1.0');
+
         return $this->client->sendRequest($request);
     }
 }

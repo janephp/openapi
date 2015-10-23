@@ -13,9 +13,8 @@
     },
     "require": {
         "jane/jane": "dev-master",
-        "php-http/httplug": "dev-master as dev-utility_separation",
+        "php-http/httplug": "~1.0@dev",
         "php-http/message-factory": "dev-master as 0.1.1",
-        "php-http/utils": "dev-master",
         "nikic/php-parser": "^1.4",
         "symfony/options-resolver": "^2.7",
         "fabpot/php-cs-fixer": "^1.10",
@@ -23,25 +22,17 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7",
-        "php-http/socket-adapter": "dev-master",
+        "php-http/socket-client": "dev-master",
         "php-http/discovery": "dev-master",
         "guzzlehttp/psr7": "dev-master"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/joelwurtz/socket-adapter-temp"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/php-http/utils"
-        }
-    ],
     "license": "MIT",
     "authors": [
         {
             "name": "Joel Wurtz",
             "email": "jwurtz@jolicode.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
