@@ -14,10 +14,10 @@
     "require": {
         "jane/jane": "dev-master",
         "php-http/httplug": "~1.0@dev",
-        "php-http/message-factory": "dev-master as 0.1.1",
+        "php-http/message-factory": "^0.3@dev",
         "nikic/php-parser": "^1.4",
         "symfony/options-resolver": "^2.7",
-        "fabpot/php-cs-fixer": "^1.10",
+        "fabpot/php-cs-fixer": "dev-master",
         "doctrine/inflector": "^1.0"
     },
     "require-dev": {
