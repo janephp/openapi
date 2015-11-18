@@ -23,7 +23,7 @@ class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
         $resource = $files[1];
 
         $this->assertEquals($resource->getFilename(), 'dummy/Resource/TestResource.php');
-        $this->assertEquals($expected, $printer->prettyPrintFile([$resource->getNode()]));
+        $this->assertEquals(trim($expected), trim($printer->prettyPrintFile([$resource->getNode()])));
     }
 
     public function resourceProvider()
@@ -45,4 +45,3 @@ class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
         return $data;
     }
 }
- 

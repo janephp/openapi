@@ -149,7 +149,6 @@ class OperationGenerator
                 'createRequest', [
                     new Arg(new Scalar\String_($operation->getMethod())),
                     new Arg(new Expr\Variable('url')),
-                    new Arg(new Scalar\String_('1.1')),
                     new Arg(new Expr\MethodCall($queryParamVariable, 'buildHeaders', [new Arg(new Expr\Variable('parameters'))])),
                     new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
                 ]

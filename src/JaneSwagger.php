@@ -23,8 +23,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\CS\Config\Config;
-use Symfony\CS\ConfigurationResolver;
-use Symfony\CS\FixerInterface;
+use Symfony\CS\Console\ConfigurationResolver;
+use Symfony\CS\Finder\DefaultFinder;
 use Symfony\CS\Fixer;
 
 class JaneSwagger
@@ -145,19 +145,32 @@ class JaneSwagger
         }
 
         if ($this->fixer !== null) {
-            $config = new Config();
-            $config->setDir($directory);
-            $config->level(FixerInterface::PSR0_LEVEL | FixerInterface::PSR1_LEVEL | FixerInterface::PSR2_LEVEL);
+            $config = Config::create()
+                ->setRiskyAllowed(true)
+                ->setRules(array(
+                    '@Symfony' => true,
+                    'empty_return' => false,
+                    'concat_without_spaces' => false,
+                    'double_arrow_multiline_whitespaces' => false,
+                    'unalign_equals' => false,
+                    'unalign_double_arrow' => false,
+                    'align_double_arrow' => true,
+                    'align_equals' => true,
+                    'concat_with_spaces' => true,
+                    'newline_after_open_tag' => true,
+                    'ordered_use' => true,
+                    'phpdoc_order' => true,
+                    'short_array_syntax' => true,
+                ))
+                ->finder(
+                    DefaultFinder::create()
+                        ->in($directory)
+                )
+            ;
 
             $resolver = new ConfigurationResolver();
-            $resolver
-                ->setAllFixers($this->fixer->getFixers())
-                ->setConfig($config)
-                ->resolve();
-
-            $config->fixers(array_merge($resolver->getFixers(), [
-                new Fixer\Symfony\ReturnFixer()
-            ]));
+            $resolver->setDefaultConfig($config);
+            $resolver->resolve();
 
             $this->fixer->fix($config);
         }
@@ -174,7 +187,6 @@ class JaneSwagger
         $modelGenerator  = new ModelGenerator($naming);
         $normGenerator   = new NormalizerGenerator($naming);
         $fixer           = new Fixer();
-        $fixer->registerBuiltInFixers();
 
         return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter, $fixer);
     }
