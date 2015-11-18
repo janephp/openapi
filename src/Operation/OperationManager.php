@@ -15,31 +15,31 @@ class OperationManager
         foreach ($swagger->getPaths() as $path => $pathItem) {
             if ($pathItem instanceof PathItem) {
                 if ($pathItem->getDelete() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getDelete(), $path, Operation::DELETE));
+                    $operationCollection->addOperation(new Operation($pathItem->getDelete(), $path, Operation::DELETE, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getGet() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getGet(), $path, Operation::GET));
+                    $operationCollection->addOperation(new Operation($pathItem->getGet(), $path, Operation::GET, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getHead() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getHead(), $path, Operation::HEAD));
+                    $operationCollection->addOperation(new Operation($pathItem->getHead(), $path, Operation::HEAD, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getOptions() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getOptions(), $path, Operation::OPTIONS));
+                    $operationCollection->addOperation(new Operation($pathItem->getOptions(), $path, Operation::OPTIONS, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getPatch() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getPatch(), $path, Operation::PATCH));
+                    $operationCollection->addOperation(new Operation($pathItem->getPatch(), $path, Operation::PATCH, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getPost() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getPost(), $path, Operation::POST));
+                    $operationCollection->addOperation(new Operation($pathItem->getPost(), $path, Operation::POST, $swagger->getBasePath()));
                 }
 
                 if ($pathItem->getPut() instanceof SwaggerOperation) {
-                    $operationCollection->addOperation(new Operation($pathItem->getPut(), $path, Operation::PUT));
+                    $operationCollection->addOperation(new Operation($pathItem->getPut(), $path, Operation::PUT, $swagger->getBasePath()));
                 }
             }
         }

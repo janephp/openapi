@@ -29,10 +29,10 @@ class Operation
      */
     private $method;
 
-    public function __construct(SwaggerOperation $operation, $path, $method)
+    public function __construct(SwaggerOperation $operation, $path, $method, $basePath = "")
     {
         $this->operation = $operation;
-        $this->path      = $path;
+        $this->path      = $basePath . $path;
         $this->method    = $method;
     }
 
