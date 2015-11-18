@@ -2,10 +2,15 @@
 
 namespace Joli\Jane\Swagger\Client;
 
+use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class Resource
 {
+    const FETCH_RESPONSE = 'response';
+    const FETCH_OBJECT   = 'object';
+
     /**
      * @var HttpClient
      */
@@ -16,9 +21,15 @@ class Resource
      */
     protected $messageFactory;
 
-    public function __construct(HttpClient $httpClient, MessageFactory $messageFactory)
+    /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    public function __construct(HttpClient $httpClient, MessageFactory $messageFactory, SerializerInterface $serializer)
     {
         $this->httpClient     = $httpClient;
         $this->messageFactory = $messageFactory;
+        $this->serializer     = $serializer;
     }
 } 

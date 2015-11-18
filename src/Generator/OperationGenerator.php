@@ -29,11 +29,6 @@ use PhpParser\Comment;
 class OperationGenerator
 {
     /**
-     * @var \Joli\Jane\Reference\Resolver
-     */
-    private $resolver;
-
-    /**
      * @var Parameter\BodyParameterGenerator
      */
     private $bodyParameterGenerator;
@@ -57,6 +52,11 @@ class OperationGenerator
      * @var Parameter\QueryParameterGenerator
      */
     private $queryParameterGenerator;
+
+    /**
+     * @var Resolver
+     */
+    private $resolver;
 
     public function __construct(Resolver $resolver, BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
     {
@@ -83,7 +83,6 @@ class OperationGenerator
         $documentation        = ['/**'];
         $bodyParameter        = null;
         $queryParamStatements = [];
-        $pathParameters       = [];
         $replaceArgs          = [];
         $queryParamVariable   = new Expr\Variable('queryParam');
         $url                  = $operation->getPath();
@@ -124,8 +123,10 @@ class OperationGenerator
         }
 
         $methodParameters[] = new Param('parameters', new Expr\Array_());
+        $methodParameters[] = new Param('fetch', new Expr\ConstFetch(new Name('self::FETCH_OBJECT')));
 
-        $documentation[] = " * @param array \$parameters";
+        $documentation[] = " * @param array  \$parameters List of parameters";
+        $documentation[] = " * @param string \$fetch      Fetch mode (object or response)";
         $documentation[] = " *";
         $documentation[] = " * @return \\Psr\\Http\\Message\\ResponseInterface";
         $documentation[] = " */";
@@ -157,42 +158,21 @@ class OperationGenerator
                 new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'),
                 'sendRequest',
                 [new Arg(new Expr\Variable('request'))]
-            ))
+            )),
+            new Stmt\If_(
+                new Expr\BinaryOp\Equal(new Expr\ConstFetch(new Name('self::FETCH_RESPONSE')), new Expr\Variable('fetch')), [
+                    'stmts' => [
+                        new Stmt\Return_(new Expr\Variable('response'))
+                    ]
+                ]
+            ),
         ]);
 
         foreach ($operation->getOperation()->getResponses() as $status => $response) {
-            $schema         = $response->getSchema();
-            $resolvedSchema = null;
-            $addStmts       = [];
+            $ifStatus = $this->createResponseDenormalizationStatement($status, $response->getSchema(), $context);
 
-            if ($schema instanceof Reference) {
-                $resolvedSchema = $this->resolver->resolve($schema);
-            }
-
-            if ($schema instanceof Schema && $schema->getType() === "array" && $schema->getItems() instanceof Reference) {
-                $resolvedSchema = $this->resolver->resolve($schema->getItems());
-                $addStmts[] = new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withHeader', [
-                    new Arg(new Scalar\String_('jane-serializer-array')),
-                    new Arg(new Scalar\String_('true'))
-                ]));
-            }
-
-            if ($resolvedSchema !== null && isset($context->getObjectClassMap()[spl_object_hash($resolvedSchema)])) {
-                $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
-
-                $methodBody[] = new Stmt\If_(
-                    new Expr\BinaryOp\Equal(
-                        new Scalar\String_($status),
-                        new Expr\MethodCall(new Expr\Variable('response'), 'getStatusCode')
-                    ), [
-                        'stmts' => array_merge($addStmts, [
-                            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(new Expr\Variable('response'), 'withHeader', [
-                                new Arg(new Scalar\String_('jane-serializer')),
-                                new Arg(new Scalar\String_($context->getNamespace() . "\\Model\\" . $class->getName()))
-                            ]))
-                        ])
-                    ]
-                );
+            if (null !== $ifStatus) {
+                $methodBody[]   = $ifStatus;
             }
         }
 
@@ -205,5 +185,57 @@ class OperationGenerator
         ], [
             'comments' => [new Comment\Doc(implode("\n", $documentation))]
         ]);
+    }
+
+    /**
+     * @param         $status
+     * @param         $schema
+     * @param Context $context
+     *
+     * @return null|Stmt\If_
+     */
+    protected function createResponseDenormalizationStatement($status, $schema, Context $context)
+    {
+        $resolvedSchema = null;
+        $array          = false;
+
+        if ($schema instanceof Reference) {
+            $resolvedSchema = $this->resolver->resolve($schema);
+        }
+
+        if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
+            $resolvedSchema = $this->resolver->resolve($schema->getItems());
+            $array          = true;
+        }
+
+        if ($resolvedSchema === null) {
+            return null;
+        }
+
+        $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
+        $class = $context->getNamespace() . "\\Model\\" . $class->getName();
+
+        if ($array) {
+            $class .= "[]";
+        }
+
+        return new Stmt\If_(
+            new Expr\BinaryOp\Equal(
+                new Scalar\String_($status),
+                new Expr\MethodCall(new Expr\Variable('response'), 'getStatusCode')
+            ), [
+                'stmts' => [
+                    new Stmt\Return_(new Expr\MethodCall(
+                        new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
+                        'deserialize',
+                        [
+                            new Arg(new Expr\MethodCall(new Expr\MethodCall(new Expr\Variable('response'), 'getBody'), 'getContents')),
+                            new Arg(new Scalar\String_($class)),
+                            new Arg(new Scalar\String_('json'))
+                        ]
+                    ))
+                ]
+            ]
+        );
     }
 } 

@@ -8,10 +8,11 @@ class TestResource extends Resource
 {
     /**
      * @param array $parameters
+     * @param string $fetch
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getTest($parameters = array())
+    public function getTest($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url = sprintf('/test?%s', $queryParam->buildQueryString($parameters));
