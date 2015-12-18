@@ -118,7 +118,7 @@ class BodyParameter
      *
      * @return self
      */
-    public function setSchema(Schema $schema = null)
+    public function setSchema($schema = null)
     {
         $this->schema = $schema;
 
