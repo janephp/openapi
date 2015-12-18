@@ -17,6 +17,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\FileSchema) {
@@ -25,7 +26,8 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -50,7 +52,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $object->setDefault($data->{'default'});
         }
         if (isset($data->{'required'})) {
-            $values_177 = array();
+            $values_177 = [];
             foreach ($data->{'required'} as $value_178) {
                 $values_177[] = $value_178;
             }
@@ -71,7 +73,8 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getFormat()) {
@@ -87,7 +90,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $data->{'default'} = $object->getDefault();
         }
         if (null !== $object->getRequired()) {
-            $values_179 = array();
+            $values_179 = [];
             foreach ($object->getRequired() as $value_180) {
                 $values_179[] = $value_180;
             }

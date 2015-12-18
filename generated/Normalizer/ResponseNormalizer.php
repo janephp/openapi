@@ -17,6 +17,7 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Response) {
@@ -25,7 +26,8 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -51,14 +53,14 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setSchema($value_111);
         }
         if (isset($data->{'headers'})) {
-            $values_112 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_112 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'headers'} as $key_114 => $value_113) {
                 $values_112[$key_114] = $this->serializer->deserialize($value_113, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
             }
             $object->setHeaders($values_112);
         }
         if (isset($data->{'examples'})) {
-            $values_115 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_115 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'examples'} as $key_117 => $value_116) {
                 $values_115[$key_117] = $value_116;
             }
@@ -67,7 +69,8 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getDescription()) {

@@ -17,6 +17,7 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\PathParameterSubSchema) {
@@ -25,7 +26,8 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -95,7 +97,7 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_141 = array();
+            $values_141 = [];
             foreach ($data->{'enum'} as $value_142) {
                 $values_141[] = $value_142;
             }
@@ -107,7 +109,8 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getRequired()) {
@@ -168,7 +171,7 @@ class PathParameterSubSchemaNormalizer extends SerializerAwareNormalizer impleme
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_143 = array();
+            $values_143 = [];
             foreach ($object->getEnum() as $value_144) {
                 $values_143[] = $value_144;
             }

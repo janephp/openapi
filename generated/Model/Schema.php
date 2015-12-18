@@ -124,6 +124,7 @@ class Schema
      * @var mixed
      */
     protected $example;
+
     /**
      * @return string
      */
@@ -131,17 +132,19 @@ class Schema
     {
         return $this->dollarRef;
     }
+
     /**
      * @param string $dollarRef
      *
      * @return self
      */
-    public function setDollarRef($dollarRef)
+    public function setDollarRef($dollarRef = null)
     {
         $this->dollarRef = $dollarRef;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -149,17 +152,19 @@ class Schema
     {
         return $this->format;
     }
+
     /**
      * @param string $format
      *
      * @return self
      */
-    public function setFormat($format)
+    public function setFormat($format = null)
     {
         $this->format = $format;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -167,17 +172,19 @@ class Schema
     {
         return $this->title;
     }
+
     /**
      * @param string $title
      *
      * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title = null)
     {
         $this->title = $title;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -185,17 +192,19 @@ class Schema
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -203,17 +212,19 @@ class Schema
     {
         return $this->default;
     }
+
     /**
      * @param mixed $default
      *
      * @return self
      */
-    public function setDefault($default)
+    public function setDefault($default = null)
     {
         $this->default = $default;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -221,17 +232,19 @@ class Schema
     {
         return $this->multipleOf;
     }
+
     /**
      * @param float $multipleOf
      *
      * @return self
      */
-    public function setMultipleOf($multipleOf)
+    public function setMultipleOf($multipleOf = null)
     {
         $this->multipleOf = $multipleOf;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -239,17 +252,19 @@ class Schema
     {
         return $this->maximum;
     }
+
     /**
      * @param float $maximum
      *
      * @return self
      */
-    public function setMaximum($maximum)
+    public function setMaximum($maximum = null)
     {
         $this->maximum = $maximum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -257,17 +272,19 @@ class Schema
     {
         return $this->exclusiveMaximum;
     }
+
     /**
      * @param bool $exclusiveMaximum
      *
      * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum)
+    public function setExclusiveMaximum($exclusiveMaximum = null)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -275,17 +292,19 @@ class Schema
     {
         return $this->minimum;
     }
+
     /**
      * @param float $minimum
      *
      * @return self
      */
-    public function setMinimum($minimum)
+    public function setMinimum($minimum = null)
     {
         $this->minimum = $minimum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -293,17 +312,19 @@ class Schema
     {
         return $this->exclusiveMinimum;
     }
+
     /**
      * @param bool $exclusiveMinimum
      *
      * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum)
+    public function setExclusiveMinimum($exclusiveMinimum = null)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -311,17 +332,19 @@ class Schema
     {
         return $this->maxLength;
     }
+
     /**
      * @param int $maxLength
      *
      * @return self
      */
-    public function setMaxLength($maxLength)
+    public function setMaxLength($maxLength = null)
     {
         $this->maxLength = $maxLength;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -329,17 +352,19 @@ class Schema
     {
         return $this->minLength;
     }
+
     /**
      * @param int $minLength
      *
      * @return self
      */
-    public function setMinLength($minLength)
+    public function setMinLength($minLength = null)
     {
         $this->minLength = $minLength;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -347,17 +372,19 @@ class Schema
     {
         return $this->pattern;
     }
+
     /**
      * @param string $pattern
      *
      * @return self
      */
-    public function setPattern($pattern)
+    public function setPattern($pattern = null)
     {
         $this->pattern = $pattern;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -365,17 +392,19 @@ class Schema
     {
         return $this->maxItems;
     }
+
     /**
      * @param int $maxItems
      *
      * @return self
      */
-    public function setMaxItems($maxItems)
+    public function setMaxItems($maxItems = null)
     {
         $this->maxItems = $maxItems;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -383,17 +412,19 @@ class Schema
     {
         return $this->minItems;
     }
+
     /**
      * @param int $minItems
      *
      * @return self
      */
-    public function setMinItems($minItems)
+    public function setMinItems($minItems = null)
     {
         $this->minItems = $minItems;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -401,17 +432,19 @@ class Schema
     {
         return $this->uniqueItems;
     }
+
     /**
      * @param bool $uniqueItems
      *
      * @return self
      */
-    public function setUniqueItems($uniqueItems)
+    public function setUniqueItems($uniqueItems = null)
     {
         $this->uniqueItems = $uniqueItems;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -419,17 +452,19 @@ class Schema
     {
         return $this->maxProperties;
     }
+
     /**
      * @param int $maxProperties
      *
      * @return self
      */
-    public function setMaxProperties($maxProperties)
+    public function setMaxProperties($maxProperties = null)
     {
         $this->maxProperties = $maxProperties;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -437,17 +472,19 @@ class Schema
     {
         return $this->minProperties;
     }
+
     /**
      * @param int $minProperties
      *
      * @return self
      */
-    public function setMinProperties($minProperties)
+    public function setMinProperties($minProperties = null)
     {
         $this->minProperties = $minProperties;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -455,17 +492,19 @@ class Schema
     {
         return $this->required;
     }
+
     /**
      * @param string[] $required
      *
      * @return self
      */
-    public function setRequired($required)
+    public function setRequired(array $required = null)
     {
         $this->required = $required;
 
         return $this;
     }
+
     /**
      * @return mixed[]
      */
@@ -473,17 +512,19 @@ class Schema
     {
         return $this->enum;
     }
+
     /**
      * @param mixed[] $enum
      *
      * @return self
      */
-    public function setEnum($enum)
+    public function setEnum(array $enum = null)
     {
         $this->enum = $enum;
 
         return $this;
     }
+
     /**
      * @return Schema|bool
      */
@@ -491,17 +532,19 @@ class Schema
     {
         return $this->additionalProperties;
     }
+
     /**
      * @param Schema|bool $additionalProperties
      *
      * @return self
      */
-    public function setAdditionalProperties($additionalProperties)
+    public function setAdditionalProperties($additionalProperties = null)
     {
         $this->additionalProperties = $additionalProperties;
 
         return $this;
     }
+
     /**
      * @return mixed|mixed[]
      */
@@ -509,17 +552,19 @@ class Schema
     {
         return $this->type;
     }
+
     /**
      * @param mixed|mixed[] $type
      *
      * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
 
         return $this;
     }
+
     /**
      * @return Schema|Schema[]
      */
@@ -527,17 +572,19 @@ class Schema
     {
         return $this->items;
     }
+
     /**
      * @param Schema|Schema[] $items
      *
      * @return self
      */
-    public function setItems($items)
+    public function setItems($items = null)
     {
         $this->items = $items;
 
         return $this;
     }
+
     /**
      * @return Schema[]
      */
@@ -545,17 +592,19 @@ class Schema
     {
         return $this->allOf;
     }
+
     /**
      * @param Schema[] $allOf
      *
      * @return self
      */
-    public function setAllOf($allOf)
+    public function setAllOf(array $allOf = null)
     {
         $this->allOf = $allOf;
 
         return $this;
     }
+
     /**
      * @return Schema[]
      */
@@ -563,17 +612,19 @@ class Schema
     {
         return $this->properties;
     }
+
     /**
      * @param Schema[] $properties
      *
      * @return self
      */
-    public function setProperties($properties)
+    public function setProperties(\ArrayObject $properties = null)
     {
         $this->properties = $properties;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -581,17 +632,19 @@ class Schema
     {
         return $this->discriminator;
     }
+
     /**
      * @param string $discriminator
      *
      * @return self
      */
-    public function setDiscriminator($discriminator)
+    public function setDiscriminator($discriminator = null)
     {
         $this->discriminator = $discriminator;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -599,17 +652,19 @@ class Schema
     {
         return $this->readOnly;
     }
+
     /**
      * @param bool $readOnly
      *
      * @return self
      */
-    public function setReadOnly($readOnly)
+    public function setReadOnly($readOnly = null)
     {
         $this->readOnly = $readOnly;
 
         return $this;
     }
+
     /**
      * @return Xml
      */
@@ -617,17 +672,19 @@ class Schema
     {
         return $this->xml;
     }
+
     /**
      * @param Xml $xml
      *
      * @return self
      */
-    public function setXml($xml)
+    public function setXml(Xml $xml = null)
     {
         $this->xml = $xml;
 
         return $this;
     }
+
     /**
      * @return ExternalDocs
      */
@@ -635,17 +692,19 @@ class Schema
     {
         return $this->externalDocs;
     }
+
     /**
      * @param ExternalDocs $externalDocs
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs)
+    public function setExternalDocs(ExternalDocs $externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -653,12 +712,13 @@ class Schema
     {
         return $this->example;
     }
+
     /**
      * @param mixed $example
      *
      * @return self
      */
-    public function setExample($example)
+    public function setExample($example = null)
     {
         $this->example = $example;
 

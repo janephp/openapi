@@ -28,6 +28,7 @@ class Info
      * @var License
      */
     protected $license;
+
     /**
      * @return string
      */
@@ -35,17 +36,19 @@ class Info
     {
         return $this->title;
     }
+
     /**
      * @param string $title
      *
      * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title = null)
     {
         $this->title = $title;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -53,17 +56,19 @@ class Info
     {
         return $this->version;
     }
+
     /**
      * @param string $version
      *
      * @return self
      */
-    public function setVersion($version)
+    public function setVersion($version = null)
     {
         $this->version = $version;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -71,17 +76,19 @@ class Info
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -89,17 +96,19 @@ class Info
     {
         return $this->termsOfService;
     }
+
     /**
      * @param string $termsOfService
      *
      * @return self
      */
-    public function setTermsOfService($termsOfService)
+    public function setTermsOfService($termsOfService = null)
     {
         $this->termsOfService = $termsOfService;
 
         return $this;
     }
+
     /**
      * @return Contact
      */
@@ -107,17 +116,19 @@ class Info
     {
         return $this->contact;
     }
+
     /**
      * @param Contact $contact
      *
      * @return self
      */
-    public function setContact($contact)
+    public function setContact(Contact $contact = null)
     {
         $this->contact = $contact;
 
         return $this;
     }
+
     /**
      * @return License
      */
@@ -125,12 +136,13 @@ class Info
     {
         return $this->license;
     }
+
     /**
      * @param License $license
      *
      * @return self
      */
-    public function setLicense($license)
+    public function setLicense(License $license = null)
     {
         $this->license = $license;
 

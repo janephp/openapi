@@ -17,6 +17,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\PrimitivesItems) {
@@ -25,7 +26,8 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -83,7 +85,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_181 = array();
+            $values_181 = [];
             foreach ($data->{'enum'} as $value_182) {
                 $values_181[] = $value_182;
             }
@@ -95,7 +97,8 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getType()) {
@@ -144,7 +147,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_183 = array();
+            $values_183 = [];
             foreach ($object->getEnum() as $value_184) {
                 $values_183[] = $value_184;
             }

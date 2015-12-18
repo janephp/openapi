@@ -17,6 +17,7 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Header) {
@@ -25,7 +26,8 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -83,7 +85,7 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_125 = array();
+            $values_125 = [];
             foreach ($data->{'enum'} as $value_126) {
                 $values_125[] = $value_126;
             }
@@ -98,7 +100,8 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getType()) {
@@ -147,7 +150,7 @@ class HeaderNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_127 = array();
+            $values_127 = [];
             foreach ($object->getEnum() as $value_128) {
                 $values_127[] = $value_128;
             }

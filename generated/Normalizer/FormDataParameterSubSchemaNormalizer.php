@@ -17,6 +17,7 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\FormDataParameterSubSchema) {
@@ -25,7 +26,8 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -98,7 +100,7 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_133 = array();
+            $values_133 = [];
             foreach ($data->{'enum'} as $value_134) {
                 $values_133[] = $value_134;
             }
@@ -110,7 +112,8 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getRequired()) {
@@ -174,7 +177,7 @@ class FormDataParameterSubSchemaNormalizer extends SerializerAwareNormalizer imp
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_135 = array();
+            $values_135 = [];
             foreach ($object->getEnum() as $value_136) {
                 $values_135[] = $value_136;
             }

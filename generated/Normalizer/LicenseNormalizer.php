@@ -17,6 +17,7 @@ class LicenseNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\License) {
@@ -25,7 +26,8 @@ class LicenseNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -46,7 +48,8 @@ class LicenseNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getName()) {

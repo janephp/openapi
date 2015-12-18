@@ -17,6 +17,7 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Swagger) {
@@ -25,7 +26,8 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -50,28 +52,28 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setBasePath($data->{'basePath'});
         }
         if (isset($data->{'schemes'})) {
-            $values = array();
+            $values = [];
             foreach ($data->{'schemes'} as $value) {
                 $values[] = $value;
             }
             $object->setSchemes($values);
         }
         if (isset($data->{'consumes'})) {
-            $values_0 = array();
+            $values_0 = [];
             foreach ($data->{'consumes'} as $value_1) {
                 $values_0[] = $value_1;
             }
             $object->setConsumes($values_0);
         }
         if (isset($data->{'produces'})) {
-            $values_2 = array();
+            $values_2 = [];
             foreach ($data->{'produces'} as $value_3) {
                 $values_2[] = $value_3;
             }
             $object->setProduces($values_2);
         }
         if (isset($data->{'paths'})) {
-            $values_4 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_4 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'paths'} as $key => $value_5) {
                 if (preg_match('/^x-/', $key) && isset($value_5)) {
                     $values_4[$key] = $value_5;
@@ -85,14 +87,14 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setPaths($values_4);
         }
         if (isset($data->{'definitions'})) {
-            $values_6 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_6 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'definitions'} as $key_8 => $value_7) {
                 $values_6[$key_8] = $this->serializer->deserialize($value_7, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
             }
             $object->setDefinitions($values_6);
         }
         if (isset($data->{'parameters'})) {
-            $values_9 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_9 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'parameters'} as $key_11 => $value_10) {
                 $value_12 = $value_10;
                 if (is_object($value_10) and isset($value_10->{'name'}) and (isset($value_10->{'in'}) and $value_10->{'in'} == 'body') and isset($value_10->{'schema'})) {
@@ -115,18 +117,18 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setParameters($values_9);
         }
         if (isset($data->{'responses'})) {
-            $values_13 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_13 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'responses'} as $key_15 => $value_14) {
                 $values_13[$key_15] = $this->serializer->deserialize($value_14, 'Joli\\Jane\\Swagger\\Model\\Response', 'raw', $context);
             }
             $object->setResponses($values_13);
         }
         if (isset($data->{'security'})) {
-            $values_16 = array();
+            $values_16 = [];
             foreach ($data->{'security'} as $value_17) {
-                $values_18 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+                $values_18 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
                 foreach ($value_17 as $key_20 => $value_19) {
-                    $values_21 = array();
+                    $values_21 = [];
                     foreach ($value_19 as $value_22) {
                         $values_21[] = $value_22;
                     }
@@ -137,7 +139,7 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setSecurity($values_16);
         }
         if (isset($data->{'securityDefinitions'})) {
-            $values_23 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_23 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'securityDefinitions'} as $key_25 => $value_24) {
                 $value_26 = $value_24;
                 if (is_object($value_24) and (isset($value_24->{'type'}) and $value_24->{'type'} == 'basic')) {
@@ -163,7 +165,7 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setSecurityDefinitions($values_23);
         }
         if (isset($data->{'tags'})) {
-            $values_27 = array();
+            $values_27 = [];
             foreach ($data->{'tags'} as $value_28) {
                 $values_27[] = $this->serializer->deserialize($value_28, 'Joli\\Jane\\Swagger\\Model\\Tag', 'raw', $context);
             }
@@ -175,7 +177,8 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getSwagger()) {
@@ -191,21 +194,21 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $data->{'basePath'} = $object->getBasePath();
         }
         if (null !== $object->getSchemes()) {
-            $values_29 = array();
+            $values_29 = [];
             foreach ($object->getSchemes() as $value_30) {
                 $values_29[] = $value_30;
             }
             $data->{'schemes'} = $values_29;
         }
         if (null !== $object->getConsumes()) {
-            $values_31 = array();
+            $values_31 = [];
             foreach ($object->getConsumes() as $value_32) {
                 $values_31[] = $value_32;
             }
             $data->{'consumes'} = $values_31;
         }
         if (null !== $object->getProduces()) {
-            $values_33 = array();
+            $values_33 = [];
             foreach ($object->getProduces() as $value_34) {
                 $values_33[] = $value_34;
             }
@@ -263,11 +266,11 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $data->{'responses'} = $values_45;
         }
         if (null !== $object->getSecurity()) {
-            $values_48 = array();
+            $values_48 = [];
             foreach ($object->getSecurity() as $value_49) {
                 $values_50 = new \stdClass();
                 foreach ($value_49 as $key_52 => $value_51) {
-                    $values_53 = array();
+                    $values_53 = [];
                     foreach ($value_51 as $value_54) {
                         $values_53[] = $value_54;
                     }
@@ -304,7 +307,7 @@ class SwaggerNormalizer extends SerializerAwareNormalizer implements Denormalize
             $data->{'securityDefinitions'} = $values_55;
         }
         if (null !== $object->getTags()) {
-            $values_59 = array();
+            $values_59 = [];
             foreach ($object->getTags() as $value_60) {
                 $values_59[] = $this->serializer->serialize($value_60, 'raw', $context);
             }

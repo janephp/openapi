@@ -24,6 +24,7 @@ class BodyParameter
      * @var Schema
      */
     protected $schema;
+
     /**
      * @return string
      */
@@ -31,17 +32,19 @@ class BodyParameter
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -49,17 +52,19 @@ class BodyParameter
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *
      * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -67,17 +72,19 @@ class BodyParameter
     {
         return $this->in;
     }
+
     /**
      * @param string $in
      *
      * @return self
      */
-    public function setIn($in)
+    public function setIn($in = null)
     {
         $this->in = $in;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -85,17 +92,19 @@ class BodyParameter
     {
         return $this->required;
     }
+
     /**
      * @param bool $required
      *
      * @return self
      */
-    public function setRequired($required)
+    public function setRequired($required = null)
     {
         $this->required = $required;
 
         return $this;
     }
+
     /**
      * @return Schema
      */
@@ -103,12 +112,13 @@ class BodyParameter
     {
         return $this->schema;
     }
+
     /**
      * @param Schema $schema
      *
      * @return self
      */
-    public function setSchema($schema)
+    public function setSchema(Schema $schema = null)
     {
         $this->schema = $schema;
 

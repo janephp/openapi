@@ -20,6 +20,7 @@ class Response
      * @var mixed[]
      */
     protected $examples;
+
     /**
      * @return string
      */
@@ -27,17 +28,19 @@ class Response
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return Schema|FileSchema
      */
@@ -45,17 +48,19 @@ class Response
     {
         return $this->schema;
     }
+
     /**
      * @param Schema|FileSchema $schema
      *
      * @return self
      */
-    public function setSchema($schema)
+    public function setSchema($schema = null)
     {
         $this->schema = $schema;
 
         return $this;
     }
+
     /**
      * @return Header[]
      */
@@ -63,17 +68,19 @@ class Response
     {
         return $this->headers;
     }
+
     /**
      * @param Header[] $headers
      *
      * @return self
      */
-    public function setHeaders($headers)
+    public function setHeaders(\ArrayObject $headers = null)
     {
         $this->headers = $headers;
 
         return $this;
     }
+
     /**
      * @return mixed[]
      */
@@ -81,12 +88,13 @@ class Response
     {
         return $this->examples;
     }
+
     /**
      * @param mixed[] $examples
      *
      * @return self
      */
-    public function setExamples($examples)
+    public function setExamples(\ArrayObject $examples = null)
     {
         $this->examples = $examples;
 

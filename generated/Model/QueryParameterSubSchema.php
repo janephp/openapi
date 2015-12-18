@@ -92,6 +92,7 @@ class QueryParameterSubSchema
      * @var float
      */
     protected $multipleOf;
+
     /**
      * @return bool
      */
@@ -99,17 +100,19 @@ class QueryParameterSubSchema
     {
         return $this->required;
     }
+
     /**
      * @param bool $required
      *
      * @return self
      */
-    public function setRequired($required)
+    public function setRequired($required = null)
     {
         $this->required = $required;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -117,17 +120,19 @@ class QueryParameterSubSchema
     {
         return $this->in;
     }
+
     /**
      * @param string $in
      *
      * @return self
      */
-    public function setIn($in)
+    public function setIn($in = null)
     {
         $this->in = $in;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -135,17 +140,19 @@ class QueryParameterSubSchema
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -153,17 +160,19 @@ class QueryParameterSubSchema
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *
      * @return self
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -171,17 +180,19 @@ class QueryParameterSubSchema
     {
         return $this->allowEmptyValue;
     }
+
     /**
      * @param bool $allowEmptyValue
      *
      * @return self
      */
-    public function setAllowEmptyValue($allowEmptyValue)
+    public function setAllowEmptyValue($allowEmptyValue = null)
     {
         $this->allowEmptyValue = $allowEmptyValue;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -189,17 +200,19 @@ class QueryParameterSubSchema
     {
         return $this->type;
     }
+
     /**
      * @param string $type
      *
      * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -207,17 +220,19 @@ class QueryParameterSubSchema
     {
         return $this->format;
     }
+
     /**
      * @param string $format
      *
      * @return self
      */
-    public function setFormat($format)
+    public function setFormat($format = null)
     {
         $this->format = $format;
 
         return $this;
     }
+
     /**
      * @return PrimitivesItems
      */
@@ -225,17 +240,19 @@ class QueryParameterSubSchema
     {
         return $this->items;
     }
+
     /**
      * @param PrimitivesItems $items
      *
      * @return self
      */
-    public function setItems($items)
+    public function setItems(PrimitivesItems $items = null)
     {
         $this->items = $items;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -243,17 +260,19 @@ class QueryParameterSubSchema
     {
         return $this->collectionFormat;
     }
+
     /**
      * @param string $collectionFormat
      *
      * @return self
      */
-    public function setCollectionFormat($collectionFormat)
+    public function setCollectionFormat($collectionFormat = null)
     {
         $this->collectionFormat = $collectionFormat;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -261,17 +280,19 @@ class QueryParameterSubSchema
     {
         return $this->default;
     }
+
     /**
      * @param mixed $default
      *
      * @return self
      */
-    public function setDefault($default)
+    public function setDefault($default = null)
     {
         $this->default = $default;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -279,17 +300,19 @@ class QueryParameterSubSchema
     {
         return $this->maximum;
     }
+
     /**
      * @param float $maximum
      *
      * @return self
      */
-    public function setMaximum($maximum)
+    public function setMaximum($maximum = null)
     {
         $this->maximum = $maximum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -297,17 +320,19 @@ class QueryParameterSubSchema
     {
         return $this->exclusiveMaximum;
     }
+
     /**
      * @param bool $exclusiveMaximum
      *
      * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum)
+    public function setExclusiveMaximum($exclusiveMaximum = null)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -315,17 +340,19 @@ class QueryParameterSubSchema
     {
         return $this->minimum;
     }
+
     /**
      * @param float $minimum
      *
      * @return self
      */
-    public function setMinimum($minimum)
+    public function setMinimum($minimum = null)
     {
         $this->minimum = $minimum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -333,17 +360,19 @@ class QueryParameterSubSchema
     {
         return $this->exclusiveMinimum;
     }
+
     /**
      * @param bool $exclusiveMinimum
      *
      * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum)
+    public function setExclusiveMinimum($exclusiveMinimum = null)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -351,17 +380,19 @@ class QueryParameterSubSchema
     {
         return $this->maxLength;
     }
+
     /**
      * @param int $maxLength
      *
      * @return self
      */
-    public function setMaxLength($maxLength)
+    public function setMaxLength($maxLength = null)
     {
         $this->maxLength = $maxLength;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -369,17 +400,19 @@ class QueryParameterSubSchema
     {
         return $this->minLength;
     }
+
     /**
      * @param int $minLength
      *
      * @return self
      */
-    public function setMinLength($minLength)
+    public function setMinLength($minLength = null)
     {
         $this->minLength = $minLength;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -387,17 +420,19 @@ class QueryParameterSubSchema
     {
         return $this->pattern;
     }
+
     /**
      * @param string $pattern
      *
      * @return self
      */
-    public function setPattern($pattern)
+    public function setPattern($pattern = null)
     {
         $this->pattern = $pattern;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -405,17 +440,19 @@ class QueryParameterSubSchema
     {
         return $this->maxItems;
     }
+
     /**
      * @param int $maxItems
      *
      * @return self
      */
-    public function setMaxItems($maxItems)
+    public function setMaxItems($maxItems = null)
     {
         $this->maxItems = $maxItems;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -423,17 +460,19 @@ class QueryParameterSubSchema
     {
         return $this->minItems;
     }
+
     /**
      * @param int $minItems
      *
      * @return self
      */
-    public function setMinItems($minItems)
+    public function setMinItems($minItems = null)
     {
         $this->minItems = $minItems;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -441,17 +480,19 @@ class QueryParameterSubSchema
     {
         return $this->uniqueItems;
     }
+
     /**
      * @param bool $uniqueItems
      *
      * @return self
      */
-    public function setUniqueItems($uniqueItems)
+    public function setUniqueItems($uniqueItems = null)
     {
         $this->uniqueItems = $uniqueItems;
 
         return $this;
     }
+
     /**
      * @return mixed[]
      */
@@ -459,17 +500,19 @@ class QueryParameterSubSchema
     {
         return $this->enum;
     }
+
     /**
      * @param mixed[] $enum
      *
      * @return self
      */
-    public function setEnum($enum)
+    public function setEnum(array $enum = null)
     {
         $this->enum = $enum;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -477,12 +520,13 @@ class QueryParameterSubSchema
     {
         return $this->multipleOf;
     }
+
     /**
      * @param float $multipleOf
      *
      * @return self
      */
-    public function setMultipleOf($multipleOf)
+    public function setMultipleOf($multipleOf = null)
     {
         $this->multipleOf = $multipleOf;
 

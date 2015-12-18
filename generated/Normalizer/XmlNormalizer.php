@@ -17,6 +17,7 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Xml) {
@@ -25,7 +26,8 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -55,7 +57,8 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getName()) {

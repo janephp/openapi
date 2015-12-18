@@ -2,14 +2,16 @@
 
 namespace Joli\Jane\Swagger\Normalizer;
 
+use Joli\Jane\Normalizer\NormalizerArray;
 use Joli\Jane\Normalizer\ReferenceNormalizer;
 
 class NormalizerFactory
 {
     public static function create()
     {
-        $normalizers = array();
+        $normalizers   = [];
         $normalizers[] = new ReferenceNormalizer();
+        $normalizers[] = new NormalizerArray();
         $normalizers[] = new SwaggerNormalizer();
         $normalizers[] = new InfoNormalizer();
         $normalizers[] = new ContactNormalizer();

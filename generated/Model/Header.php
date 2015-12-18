@@ -76,6 +76,7 @@ class Header
      * @var string
      */
     protected $description;
+
     /**
      * @return string
      */
@@ -83,17 +84,19 @@ class Header
     {
         return $this->type;
     }
+
     /**
      * @param string $type
      *
      * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -101,17 +104,19 @@ class Header
     {
         return $this->format;
     }
+
     /**
      * @param string $format
      *
      * @return self
      */
-    public function setFormat($format)
+    public function setFormat($format = null)
     {
         $this->format = $format;
 
         return $this;
     }
+
     /**
      * @return PrimitivesItems
      */
@@ -119,17 +124,19 @@ class Header
     {
         return $this->items;
     }
+
     /**
      * @param PrimitivesItems $items
      *
      * @return self
      */
-    public function setItems($items)
+    public function setItems(PrimitivesItems $items = null)
     {
         $this->items = $items;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -137,17 +144,19 @@ class Header
     {
         return $this->collectionFormat;
     }
+
     /**
      * @param string $collectionFormat
      *
      * @return self
      */
-    public function setCollectionFormat($collectionFormat)
+    public function setCollectionFormat($collectionFormat = null)
     {
         $this->collectionFormat = $collectionFormat;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -155,17 +164,19 @@ class Header
     {
         return $this->default;
     }
+
     /**
      * @param mixed $default
      *
      * @return self
      */
-    public function setDefault($default)
+    public function setDefault($default = null)
     {
         $this->default = $default;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -173,17 +184,19 @@ class Header
     {
         return $this->maximum;
     }
+
     /**
      * @param float $maximum
      *
      * @return self
      */
-    public function setMaximum($maximum)
+    public function setMaximum($maximum = null)
     {
         $this->maximum = $maximum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -191,17 +204,19 @@ class Header
     {
         return $this->exclusiveMaximum;
     }
+
     /**
      * @param bool $exclusiveMaximum
      *
      * @return self
      */
-    public function setExclusiveMaximum($exclusiveMaximum)
+    public function setExclusiveMaximum($exclusiveMaximum = null)
     {
         $this->exclusiveMaximum = $exclusiveMaximum;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -209,17 +224,19 @@ class Header
     {
         return $this->minimum;
     }
+
     /**
      * @param float $minimum
      *
      * @return self
      */
-    public function setMinimum($minimum)
+    public function setMinimum($minimum = null)
     {
         $this->minimum = $minimum;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -227,17 +244,19 @@ class Header
     {
         return $this->exclusiveMinimum;
     }
+
     /**
      * @param bool $exclusiveMinimum
      *
      * @return self
      */
-    public function setExclusiveMinimum($exclusiveMinimum)
+    public function setExclusiveMinimum($exclusiveMinimum = null)
     {
         $this->exclusiveMinimum = $exclusiveMinimum;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -245,17 +264,19 @@ class Header
     {
         return $this->maxLength;
     }
+
     /**
      * @param int $maxLength
      *
      * @return self
      */
-    public function setMaxLength($maxLength)
+    public function setMaxLength($maxLength = null)
     {
         $this->maxLength = $maxLength;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -263,17 +284,19 @@ class Header
     {
         return $this->minLength;
     }
+
     /**
      * @param int $minLength
      *
      * @return self
      */
-    public function setMinLength($minLength)
+    public function setMinLength($minLength = null)
     {
         $this->minLength = $minLength;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -281,17 +304,19 @@ class Header
     {
         return $this->pattern;
     }
+
     /**
      * @param string $pattern
      *
      * @return self
      */
-    public function setPattern($pattern)
+    public function setPattern($pattern = null)
     {
         $this->pattern = $pattern;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -299,17 +324,19 @@ class Header
     {
         return $this->maxItems;
     }
+
     /**
      * @param int $maxItems
      *
      * @return self
      */
-    public function setMaxItems($maxItems)
+    public function setMaxItems($maxItems = null)
     {
         $this->maxItems = $maxItems;
 
         return $this;
     }
+
     /**
      * @return int
      */
@@ -317,17 +344,19 @@ class Header
     {
         return $this->minItems;
     }
+
     /**
      * @param int $minItems
      *
      * @return self
      */
-    public function setMinItems($minItems)
+    public function setMinItems($minItems = null)
     {
         $this->minItems = $minItems;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -335,17 +364,19 @@ class Header
     {
         return $this->uniqueItems;
     }
+
     /**
      * @param bool $uniqueItems
      *
      * @return self
      */
-    public function setUniqueItems($uniqueItems)
+    public function setUniqueItems($uniqueItems = null)
     {
         $this->uniqueItems = $uniqueItems;
 
         return $this;
     }
+
     /**
      * @return mixed[]
      */
@@ -353,17 +384,19 @@ class Header
     {
         return $this->enum;
     }
+
     /**
      * @param mixed[] $enum
      *
      * @return self
      */
-    public function setEnum($enum)
+    public function setEnum(array $enum = null)
     {
         $this->enum = $enum;
 
         return $this;
     }
+
     /**
      * @return float
      */
@@ -371,17 +404,19 @@ class Header
     {
         return $this->multipleOf;
     }
+
     /**
      * @param float $multipleOf
      *
      * @return self
      */
-    public function setMultipleOf($multipleOf)
+    public function setMultipleOf($multipleOf = null)
     {
         $this->multipleOf = $multipleOf;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -389,12 +424,13 @@ class Header
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 

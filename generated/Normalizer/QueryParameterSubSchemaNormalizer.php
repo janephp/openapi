@@ -17,6 +17,7 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\QueryParameterSubSchema) {
@@ -25,7 +26,8 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -98,7 +100,7 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_137 = array();
+            $values_137 = [];
             foreach ($data->{'enum'} as $value_138) {
                 $values_137[] = $value_138;
             }
@@ -110,7 +112,8 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getRequired()) {
@@ -174,7 +177,7 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_139 = array();
+            $values_139 = [];
             foreach ($object->getEnum() as $value_140) {
                 $values_139[] = $value_140;
             }

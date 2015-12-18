@@ -24,6 +24,7 @@ class Oauth2PasswordSecurity
      * @var string
      */
     protected $description;
+
     /**
      * @return string
      */
@@ -31,17 +32,19 @@ class Oauth2PasswordSecurity
     {
         return $this->type;
     }
+
     /**
      * @param string $type
      *
      * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -49,17 +52,19 @@ class Oauth2PasswordSecurity
     {
         return $this->flow;
     }
+
     /**
      * @param string $flow
      *
      * @return self
      */
-    public function setFlow($flow)
+    public function setFlow($flow = null)
     {
         $this->flow = $flow;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -67,17 +72,19 @@ class Oauth2PasswordSecurity
     {
         return $this->scopes;
     }
+
     /**
      * @param string[] $scopes
      *
      * @return self
      */
-    public function setScopes($scopes)
+    public function setScopes(\ArrayObject $scopes = null)
     {
         $this->scopes = $scopes;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -85,17 +92,19 @@ class Oauth2PasswordSecurity
     {
         return $this->tokenUrl;
     }
+
     /**
      * @param string $tokenUrl
      *
      * @return self
      */
-    public function setTokenUrl($tokenUrl)
+    public function setTokenUrl($tokenUrl = null)
     {
         $this->tokenUrl = $tokenUrl;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -103,12 +112,13 @@ class Oauth2PasswordSecurity
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 

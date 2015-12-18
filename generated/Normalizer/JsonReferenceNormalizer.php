@@ -17,6 +17,7 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\JsonReference) {
@@ -25,7 +26,8 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -43,7 +45,8 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getDollarRef()) {

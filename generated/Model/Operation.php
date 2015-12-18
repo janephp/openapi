@@ -52,6 +52,7 @@ class Operation
      * @var string[][][]
      */
     protected $security;
+
     /**
      * @return string[]
      */
@@ -59,17 +60,19 @@ class Operation
     {
         return $this->tags;
     }
+
     /**
      * @param string[] $tags
      *
      * @return self
      */
-    public function setTags($tags)
+    public function setTags(array $tags = null)
     {
         $this->tags = $tags;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -77,17 +80,19 @@ class Operation
     {
         return $this->summary;
     }
+
     /**
      * @param string $summary
      *
      * @return self
      */
-    public function setSummary($summary)
+    public function setSummary($summary = null)
     {
         $this->summary = $summary;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -95,17 +100,19 @@ class Operation
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return ExternalDocs
      */
@@ -113,17 +120,19 @@ class Operation
     {
         return $this->externalDocs;
     }
+
     /**
      * @param ExternalDocs $externalDocs
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs)
+    public function setExternalDocs(ExternalDocs $externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -131,17 +140,19 @@ class Operation
     {
         return $this->operationId;
     }
+
     /**
      * @param string $operationId
      *
      * @return self
      */
-    public function setOperationId($operationId)
+    public function setOperationId($operationId = null)
     {
         $this->operationId = $operationId;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -149,17 +160,19 @@ class Operation
     {
         return $this->produces;
     }
+
     /**
      * @param string[] $produces
      *
      * @return self
      */
-    public function setProduces($produces)
+    public function setProduces(array $produces = null)
     {
         $this->produces = $produces;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -167,17 +180,19 @@ class Operation
     {
         return $this->consumes;
     }
+
     /**
      * @param string[] $consumes
      *
      * @return self
      */
-    public function setConsumes($consumes)
+    public function setConsumes(array $consumes = null)
     {
         $this->consumes = $consumes;
 
         return $this;
     }
+
     /**
      * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[]
      */
@@ -185,17 +200,19 @@ class Operation
     {
         return $this->parameters;
     }
+
     /**
      * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[] $parameters
      *
      * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters = null)
     {
         $this->parameters = $parameters;
 
         return $this;
     }
+
     /**
      * @return Response|JsonReference[]|mixed[]
      */
@@ -203,17 +220,19 @@ class Operation
     {
         return $this->responses;
     }
+
     /**
      * @param Response|JsonReference[]|mixed[] $responses
      *
      * @return self
      */
-    public function setResponses($responses)
+    public function setResponses($responses = null)
     {
         $this->responses = $responses;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -221,17 +240,19 @@ class Operation
     {
         return $this->schemes;
     }
+
     /**
      * @param string[] $schemes
      *
      * @return self
      */
-    public function setSchemes($schemes)
+    public function setSchemes(array $schemes = null)
     {
         $this->schemes = $schemes;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -239,17 +260,19 @@ class Operation
     {
         return $this->deprecated;
     }
+
     /**
      * @param bool $deprecated
      *
      * @return self
      */
-    public function setDeprecated($deprecated)
+    public function setDeprecated($deprecated = null)
     {
         $this->deprecated = $deprecated;
 
         return $this;
     }
+
     /**
      * @return string[][][]
      */
@@ -257,12 +280,13 @@ class Operation
     {
         return $this->security;
     }
+
     /**
      * @param string[][][] $security
      *
      * @return self
      */
-    public function setSecurity($security)
+    public function setSecurity(array $security = null)
     {
         $this->security = $security;
 

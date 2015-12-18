@@ -64,6 +64,7 @@ class Swagger
      * @var ExternalDocs
      */
     protected $externalDocs;
+
     /**
      * @return string
      */
@@ -71,17 +72,19 @@ class Swagger
     {
         return $this->swagger;
     }
+
     /**
      * @param string $swagger
      *
      * @return self
      */
-    public function setSwagger($swagger)
+    public function setSwagger($swagger = null)
     {
         $this->swagger = $swagger;
 
         return $this;
     }
+
     /**
      * @return Info
      */
@@ -89,17 +92,19 @@ class Swagger
     {
         return $this->info;
     }
+
     /**
      * @param Info $info
      *
      * @return self
      */
-    public function setInfo($info)
+    public function setInfo(Info $info = null)
     {
         $this->info = $info;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -107,17 +112,19 @@ class Swagger
     {
         return $this->host;
     }
+
     /**
      * @param string $host
      *
      * @return self
      */
-    public function setHost($host)
+    public function setHost($host = null)
     {
         $this->host = $host;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -125,17 +132,19 @@ class Swagger
     {
         return $this->basePath;
     }
+
     /**
      * @param string $basePath
      *
      * @return self
      */
-    public function setBasePath($basePath)
+    public function setBasePath($basePath = null)
     {
         $this->basePath = $basePath;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -143,17 +152,19 @@ class Swagger
     {
         return $this->schemes;
     }
+
     /**
      * @param string[] $schemes
      *
      * @return self
      */
-    public function setSchemes($schemes)
+    public function setSchemes(array $schemes = null)
     {
         $this->schemes = $schemes;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -161,17 +172,19 @@ class Swagger
     {
         return $this->consumes;
     }
+
     /**
      * @param string[] $consumes
      *
      * @return self
      */
-    public function setConsumes($consumes)
+    public function setConsumes(array $consumes = null)
     {
         $this->consumes = $consumes;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -179,17 +192,19 @@ class Swagger
     {
         return $this->produces;
     }
+
     /**
      * @param string[] $produces
      *
      * @return self
      */
-    public function setProduces($produces)
+    public function setProduces(array $produces = null)
     {
         $this->produces = $produces;
 
         return $this;
     }
+
     /**
      * @return mixed[]|PathItem[]
      */
@@ -197,17 +212,19 @@ class Swagger
     {
         return $this->paths;
     }
+
     /**
      * @param mixed[]|PathItem[] $paths
      *
      * @return self
      */
-    public function setPaths($paths)
+    public function setPaths($paths = null)
     {
         $this->paths = $paths;
 
         return $this;
     }
+
     /**
      * @return Schema[]
      */
@@ -215,17 +232,19 @@ class Swagger
     {
         return $this->definitions;
     }
+
     /**
      * @param Schema[] $definitions
      *
      * @return self
      */
-    public function setDefinitions($definitions)
+    public function setDefinitions(\ArrayObject $definitions = null)
     {
         $this->definitions = $definitions;
 
         return $this;
     }
+
     /**
      * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]
      */
@@ -233,17 +252,19 @@ class Swagger
     {
         return $this->parameters;
     }
+
     /**
      * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[] $parameters
      *
      * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters(\ArrayObject $parameters = null)
     {
         $this->parameters = $parameters;
 
         return $this;
     }
+
     /**
      * @return Response[]
      */
@@ -251,17 +272,19 @@ class Swagger
     {
         return $this->responses;
     }
+
     /**
      * @param Response[] $responses
      *
      * @return self
      */
-    public function setResponses($responses)
+    public function setResponses(\ArrayObject $responses = null)
     {
         $this->responses = $responses;
 
         return $this;
     }
+
     /**
      * @return string[][][]
      */
@@ -269,17 +292,19 @@ class Swagger
     {
         return $this->security;
     }
+
     /**
      * @param string[][][] $security
      *
      * @return self
      */
-    public function setSecurity($security)
+    public function setSecurity(array $security = null)
     {
         $this->security = $security;
 
         return $this;
     }
+
     /**
      * @return BasicAuthenticationSecurity[]|ApiKeySecurity[]|Oauth2ImplicitSecurity[]|Oauth2PasswordSecurity[]|Oauth2ApplicationSecurity[]|Oauth2AccessCodeSecurity[]
      */
@@ -287,17 +312,19 @@ class Swagger
     {
         return $this->securityDefinitions;
     }
+
     /**
      * @param BasicAuthenticationSecurity[]|ApiKeySecurity[]|Oauth2ImplicitSecurity[]|Oauth2PasswordSecurity[]|Oauth2ApplicationSecurity[]|Oauth2AccessCodeSecurity[] $securityDefinitions
      *
      * @return self
      */
-    public function setSecurityDefinitions($securityDefinitions)
+    public function setSecurityDefinitions(\ArrayObject $securityDefinitions = null)
     {
         $this->securityDefinitions = $securityDefinitions;
 
         return $this;
     }
+
     /**
      * @return Tag[]
      */
@@ -305,17 +332,19 @@ class Swagger
     {
         return $this->tags;
     }
+
     /**
      * @param Tag[] $tags
      *
      * @return self
      */
-    public function setTags($tags)
+    public function setTags(array $tags = null)
     {
         $this->tags = $tags;
 
         return $this;
     }
+
     /**
      * @return ExternalDocs
      */
@@ -323,12 +352,13 @@ class Swagger
     {
         return $this->externalDocs;
     }
+
     /**
      * @param ExternalDocs $externalDocs
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs)
+    public function setExternalDocs(ExternalDocs $externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
 

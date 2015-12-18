@@ -17,6 +17,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\PathItem) {
@@ -25,7 +26,8 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -62,7 +64,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setPatch($this->serializer->deserialize($data->{'patch'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'parameters'})) {
-            $values_105 = array();
+            $values_105 = [];
             foreach ($data->{'parameters'} as $value_106) {
                 $value_107 = $value_106;
                 if (is_object($value_106) and isset($value_106->{'name'}) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'body') and isset($value_106->{'schema'})) {
@@ -90,7 +92,8 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getDollarRef()) {
@@ -118,7 +121,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'patch'} = $this->serializer->serialize($object->getPatch(), 'raw', $context);
         }
         if (null !== $object->getParameters()) {
-            $values_108 = array();
+            $values_108 = [];
             foreach ($object->getParameters() as $value_109) {
                 $value_110 = $value_109;
                 if (is_object($value_109)) {

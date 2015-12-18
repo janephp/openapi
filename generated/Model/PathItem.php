@@ -40,6 +40,7 @@ class PathItem
      * @var BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[]
      */
     protected $parameters;
+
     /**
      * @return string
      */
@@ -47,17 +48,19 @@ class PathItem
     {
         return $this->dollarRef;
     }
+
     /**
      * @param string $dollarRef
      *
      * @return self
      */
-    public function setDollarRef($dollarRef)
+    public function setDollarRef($dollarRef = null)
     {
         $this->dollarRef = $dollarRef;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -65,17 +68,19 @@ class PathItem
     {
         return $this->get;
     }
+
     /**
      * @param Operation $get
      *
      * @return self
      */
-    public function setGet($get)
+    public function setGet(Operation $get = null)
     {
         $this->get = $get;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -83,17 +88,19 @@ class PathItem
     {
         return $this->put;
     }
+
     /**
      * @param Operation $put
      *
      * @return self
      */
-    public function setPut($put)
+    public function setPut(Operation $put = null)
     {
         $this->put = $put;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -101,17 +108,19 @@ class PathItem
     {
         return $this->post;
     }
+
     /**
      * @param Operation $post
      *
      * @return self
      */
-    public function setPost($post)
+    public function setPost(Operation $post = null)
     {
         $this->post = $post;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -119,17 +128,19 @@ class PathItem
     {
         return $this->delete;
     }
+
     /**
      * @param Operation $delete
      *
      * @return self
      */
-    public function setDelete($delete)
+    public function setDelete(Operation $delete = null)
     {
         $this->delete = $delete;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -137,17 +148,19 @@ class PathItem
     {
         return $this->options;
     }
+
     /**
      * @param Operation $options
      *
      * @return self
      */
-    public function setOptions($options)
+    public function setOptions(Operation $options = null)
     {
         $this->options = $options;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -155,17 +168,19 @@ class PathItem
     {
         return $this->head;
     }
+
     /**
      * @param Operation $head
      *
      * @return self
      */
-    public function setHead($head)
+    public function setHead(Operation $head = null)
     {
         $this->head = $head;
 
         return $this;
     }
+
     /**
      * @return Operation
      */
@@ -173,17 +188,19 @@ class PathItem
     {
         return $this->patch;
     }
+
     /**
      * @param Operation $patch
      *
      * @return self
      */
-    public function setPatch($patch)
+    public function setPatch(Operation $patch = null)
     {
         $this->patch = $patch;
 
         return $this;
     }
+
     /**
      * @return BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[]
      */
@@ -191,12 +208,13 @@ class PathItem
     {
         return $this->parameters;
     }
+
     /**
      * @param BodyParameter[]|HeaderParameterSubSchema[]|FormDataParameterSubSchema[]|QueryParameterSubSchema[]|PathParameterSubSchema[]|JsonReference[] $parameters
      *
      * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters = null)
     {
         $this->parameters = $parameters;
 

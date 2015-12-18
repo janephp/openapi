@@ -40,6 +40,7 @@ class FileSchema
      * @var mixed
      */
     protected $example;
+
     /**
      * @return string
      */
@@ -47,17 +48,19 @@ class FileSchema
     {
         return $this->format;
     }
+
     /**
      * @param string $format
      *
      * @return self
      */
-    public function setFormat($format)
+    public function setFormat($format = null)
     {
         $this->format = $format;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -65,17 +68,19 @@ class FileSchema
     {
         return $this->title;
     }
+
     /**
      * @param string $title
      *
      * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title = null)
     {
         $this->title = $title;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -83,17 +88,19 @@ class FileSchema
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -101,17 +108,19 @@ class FileSchema
     {
         return $this->default;
     }
+
     /**
      * @param mixed $default
      *
      * @return self
      */
-    public function setDefault($default)
+    public function setDefault($default = null)
     {
         $this->default = $default;
 
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -119,17 +128,19 @@ class FileSchema
     {
         return $this->required;
     }
+
     /**
      * @param string[] $required
      *
      * @return self
      */
-    public function setRequired($required)
+    public function setRequired(array $required = null)
     {
         $this->required = $required;
 
         return $this;
     }
+
     /**
      * @return string
      */
@@ -137,17 +148,19 @@ class FileSchema
     {
         return $this->type;
     }
+
     /**
      * @param string $type
      *
      * @return self
      */
-    public function setType($type)
+    public function setType($type = null)
     {
         $this->type = $type;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -155,17 +168,19 @@ class FileSchema
     {
         return $this->readOnly;
     }
+
     /**
      * @param bool $readOnly
      *
      * @return self
      */
-    public function setReadOnly($readOnly)
+    public function setReadOnly($readOnly = null)
     {
         $this->readOnly = $readOnly;
 
         return $this;
     }
+
     /**
      * @return ExternalDocs
      */
@@ -173,17 +188,19 @@ class FileSchema
     {
         return $this->externalDocs;
     }
+
     /**
      * @param ExternalDocs $externalDocs
      *
      * @return self
      */
-    public function setExternalDocs($externalDocs)
+    public function setExternalDocs(ExternalDocs $externalDocs = null)
     {
         $this->externalDocs = $externalDocs;
 
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -191,12 +208,13 @@ class FileSchema
     {
         return $this->example;
     }
+
     /**
      * @param mixed $example
      *
      * @return self
      */
-    public function setExample($example)
+    public function setExample($example = null)
     {
         $this->example = $example;
 

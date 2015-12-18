@@ -17,6 +17,7 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\ApiKeySecurity) {
@@ -25,7 +26,8 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -52,7 +54,8 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getType()) {

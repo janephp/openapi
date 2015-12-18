@@ -17,6 +17,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\HeaderParameterSubSchema) {
@@ -25,7 +26,8 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -95,7 +97,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
             $object->setUniqueItems($data->{'uniqueItems'});
         }
         if (isset($data->{'enum'})) {
-            $values_129 = array();
+            $values_129 = [];
             foreach ($data->{'enum'} as $value_130) {
                 $values_129[] = $value_130;
             }
@@ -107,7 +109,8 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getRequired()) {
@@ -168,7 +171,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_131 = array();
+            $values_131 = [];
             foreach ($object->getEnum() as $value_132) {
                 $values_131[] = $value_132;
             }

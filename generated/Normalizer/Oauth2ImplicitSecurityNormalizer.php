@@ -17,6 +17,7 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Oauth2ImplicitSecurity) {
@@ -25,7 +26,8 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -44,7 +46,7 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
             $object->setFlow($data->{'flow'});
         }
         if (isset($data->{'scopes'})) {
-            $values_185 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $values_185 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'scopes'} as $key_187 => $value_186) {
                 $values_185[$key_187] = $value_186;
             }
@@ -59,7 +61,8 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getType()) {

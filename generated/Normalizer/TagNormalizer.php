@@ -17,6 +17,7 @@ class TagNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\Tag) {
@@ -25,7 +26,8 @@ class TagNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -49,7 +51,8 @@ class TagNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getName()) {

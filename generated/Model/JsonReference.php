@@ -8,6 +8,7 @@ class JsonReference
      * @var string
      */
     protected $dollarRef;
+
     /**
      * @return string
      */
@@ -15,12 +16,13 @@ class JsonReference
     {
         return $this->dollarRef;
     }
+
     /**
      * @param string $dollarRef
      *
      * @return self
      */
-    public function setDollarRef($dollarRef)
+    public function setDollarRef($dollarRef = null)
     {
         $this->dollarRef = $dollarRef;
 

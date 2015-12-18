@@ -17,6 +17,7 @@ class ExternalDocsNormalizer extends SerializerAwareNormalizer implements Denorm
 
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \Joli\Jane\Swagger\Model\ExternalDocs) {
@@ -25,7 +26,8 @@ class ExternalDocsNormalizer extends SerializerAwareNormalizer implements Denorm
 
         return false;
     }
-    public function denormalize($data, $class, $format = null, array $context = array())
+
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (empty($data)) {
             return null;
@@ -46,7 +48,8 @@ class ExternalDocsNormalizer extends SerializerAwareNormalizer implements Denorm
 
         return $object;
     }
-    public function normalize($object, $format = null, array $context = array())
+
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
         if (null !== $object->getDescription()) {
