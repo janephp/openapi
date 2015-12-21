@@ -24,10 +24,7 @@
         "doctrine/inflector": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7",
-        "php-http/socket-client": "^0.1",
-        "php-http/utils": "^0.2@dev",
-        "guzzlehttp/psr7": "dev-master"
+        "phpunit/phpunit": "^4.7"
     },
     "license": "MIT",
     "authors": [
