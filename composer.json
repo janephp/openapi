@@ -6,9 +6,12 @@
         "psr-4": {
             "Joli\\Jane\\Swagger\\Model\\": "generated/Model/",
             "Joli\\Jane\\Swagger\\Normalizer\\": "generated/Normalizer/",
-            "Joli\\Jane\\Swagger\\": "src/",
-            "Joli\\Jane\\Swagger\\Tests\\": "tests/",
-            "Docker\\": "stub/"
+            "Joli\\Jane\\Swagger\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joli\\Jane\\Swagger\\Tests\\": "tests/"
         }
     },
     "require": {
