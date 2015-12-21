@@ -29,11 +29,12 @@ class Operation
      */
     private $method;
 
-    public function __construct(SwaggerOperation $operation, $path, $method, $basePath = "")
+    public function __construct(SwaggerOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
     {
         $this->operation = $operation;
         $this->path      = $basePath . $path;
         $this->method    = $method;
+        $this->host      = $host;
     }
 
     /**
@@ -58,5 +59,13 @@ class Operation
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 } 

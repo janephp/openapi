@@ -154,6 +154,13 @@ class OperationGenerator
                     new Arg($bodyParameter === null ? new Expr\ConstFetch(new Name('null')) : new Expr\Variable($bodyParameter->getName()))
                 ]
             )),
+            new Expr\Assign(new Expr\Variable('request'), new Expr\MethodCall(
+                new Expr\Variable('request'),
+                'withHeader', [
+                    new Arg(new Scalar\String_('Host')),
+                    new Arg(new Scalar\String_($operation->getHost()))
+                ]
+            )),
             new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(
                 new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'),
                 'sendRequest',
