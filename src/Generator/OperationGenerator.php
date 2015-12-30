@@ -13,7 +13,6 @@ use Joli\Jane\Swagger\Operation\Operation;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
-use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar;
 use PhpParser\Comment;

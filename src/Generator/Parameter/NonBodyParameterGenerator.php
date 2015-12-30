@@ -48,7 +48,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
             ]);
         }
 
-        if ($parameter->getRequired()) {
+        if ($parameter->getRequired() && $parameter->getDefault() === null) {
             $statements[] = new Expr\MethodCall($queryParamVariable, 'setRequired', [new Node\Arg(new Scalar\String_($parameter->getName()))]);
         }
 
