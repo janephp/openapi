@@ -3,6 +3,11 @@
 namespace Joli\Jane\Swagger\Generator\Parameter;
 
 use Doctrine\Common\Inflector\Inflector;
+use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\Swagger\Model\FormDataParameterSubSchema;
+use Joli\Jane\Swagger\Model\HeaderParameterSubSchema;
+use Joli\Jane\Swagger\Model\PathParameterSubSchema;
+use Joli\Jane\Swagger\Model\QueryParameterSubSchema;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Scalar;
@@ -12,8 +17,10 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
 {
     /**
      * {@inheritDoc}
+     *
+     * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
-    public function generateMethodParameter($parameter)
+    public function generateMethodParameter($parameter, Context $context)
     {
         $name            = Inflector::camelize($parameter->getName());
         $methodParameter = new Node\Param($name);
@@ -27,6 +34,8 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
 
     /**
      * {@inheritDoc}
+     *
+     * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
     public function generateQueryParamStatements($parameter, Expr $queryParamVariable)
     {
@@ -49,9 +58,9 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
     /**
      * Generate a default value as an Expr
      *
-     * @param $parameter
+     * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      *
-     * @return Node
+     * @return Expr
      */
     protected function getDefaultAsExpr($parameter)
     {
@@ -60,9 +69,34 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
 
     /**
      * {@inheritDoc}
+     *
+     * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
-    public function generateDocParameter($parameter)
+    public function generateDocParameter($parameter, Context $context)
     {
-        return sprintf('%s $%s %s', 'mixed', Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+        return sprintf('%s $%s %s', $this->convertParameterType($parameter->getType()), Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+    }
+
+    /**
+     * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
+     *
+     * @return string
+     */
+    public function generateQueryDocParameter($parameter)
+    {
+        return sprintf('(%s)%s: %s', $this->convertParameterType($parameter->getType()), $parameter->getName(), $parameter->getDescription() ?: '');
+    }
+
+    public function convertParameterType($type)
+    {
+        $convertArray = [
+            "string" => "string",
+            "number" => "float",
+            "boolean" => "bool",
+            "integer" => "int",
+            "array" => "array"
+        ];
+
+        return $convertArray[$type];
     }
 } 

@@ -2,8 +2,10 @@
 
 namespace Joli\Jane\Swagger\Generator\Parameter;
 
+use Joli\Jane\Generator\Context\Context;
 use PhpParser\Node;
 use PhpParser\Parser;
+use PhpParser\Node\Expr;
 
 abstract class ParameterGenerator
 {
@@ -19,20 +21,22 @@ abstract class ParameterGenerator
 
     /**
      * @param $parameter
+     * @param Context $context
      *
      * @return Node\Param|null
      */
-    public function generateMethodParameter($parameter)
+    public function generateMethodParameter($parameter, Context $context)
     {
         return null;
     }
 
     /**
      * @param $parameter
+     * @param Context $context
      *
      * @return string
      */
-    public function generateDocParameter($parameter)
+    public function generateDocParameter($parameter, Context $context)
     {
         return '';
     }
@@ -42,7 +46,7 @@ abstract class ParameterGenerator
      *
      * @return Node\Expr[]
      */
-    public function generateQueryParamStatements($parameter)
+    public function generateQueryParamStatements($parameter, Expr $queryParamVariable)
     {
         return [];
     }

@@ -3,28 +3,96 @@
 namespace Joli\Jane\Swagger\Generator\Parameter;
 
 use Doctrine\Common\Inflector\Inflector;
+use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\Reference\Reference;
+use Joli\Jane\Reference\Resolver;
+use Joli\Jane\Swagger\Model\BodyParameter;
+use Joli\Jane\Swagger\Model\Schema;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt;
+use PhpParser\Parser;
 
 class BodyParameterGenerator extends ParameterGenerator
 {
     /**
-     * {@inheritDoc}
+     * @var Resolver
      */
-    public function generateMethodParameter($parameter)
-    {
-        $name            = Inflector::camelize($parameter->getName());
-        $methodParameter = new Node\Param($name);
+    private $resolver;
 
-        return $methodParameter;
+    public function __construct(Parser $parser, Resolver $resolver)
+    {
+        parent::__construct($parser);
+
+        $this->resolver = $resolver;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @param $parameter BodyParameter
      */
-    public function generateDocParameter($parameter)
+    public function generateMethodParameter($parameter, Context $context)
     {
-        return sprintf('%s $%s %s', 'mixed', Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+        $name            = Inflector::camelize($parameter->getName());
+
+        list($class, $array) = $this->getClass($parameter, $context);
+
+        if (null === $class || true === $array) {
+            return new Node\Param($name);
+        }
+
+        return new Node\Param($name, null, $class);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param $parameter BodyParameter
+     */
+    public function generateDocParameter($parameter, Context $context)
+    {
+        list($class, $array) = $this->getClass($parameter, $context);
+
+        if (null === $class) {
+            return sprintf('%s $%s %s', 'mixed', Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+        }
+
+        return sprintf('%s $%s %s', $class, Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
+    }
+
+    /**
+     * @param BodyParameter $parameter
+     * @param Context $context
+     *
+     * @return array
+     */
+    protected function getClass(BodyParameter $parameter, Context $context)
+    {
+        $resolvedSchema = null;
+        $array          = false;
+        $schema         = $parameter->getSchema();
+
+        if ($schema instanceof Reference) {
+            $resolvedSchema = $this->resolver->resolve($schema);
+        }
+
+        if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
+            $resolvedSchema = $this->resolver->resolve($schema->getItems());
+            $array          = true;
+        }
+
+        if ($resolvedSchema === null) {
+            return [$schema->getType(), null];
+        }
+
+        $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
+        $class = "\\" . $context->getNamespace() . "\\Model\\" . $class->getName();
+
+        if ($array) {
+            $class .= "[]";
+        }
+
+        return [$class, $array];
     }
 } 

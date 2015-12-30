@@ -116,4 +116,3 @@ class QueryParam extends OptionsResolver
         return $headerOptions;
     }
 }
- 

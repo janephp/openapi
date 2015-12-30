@@ -20,12 +20,12 @@ class GeneratorFactory
     {
         $parser = new Parser(new Lexer());
 
-        $bodyParameter     = new BodyParameterGenerator($parser);
+        $resolver          = new Resolver(Jane::buildSerializer());
+        $bodyParameter     = new BodyParameterGenerator($parser, $resolver);
         $pathParameter     = new PathParameterGenerator($parser);
         $formDataParameter = new FormDataParameterGenerator($parser);
         $headerParameter   = new HeaderParameterGenerator($parser);
         $queryParameter    = new QueryParameterGenerator($parser);
-        $resolver          = new Resolver(Jane::buildSerializer());
 
         $operation = new OperationGenerator($resolver, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
         $operationManager = new OperationManager();
