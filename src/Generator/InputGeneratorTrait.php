@@ -129,7 +129,7 @@ trait InputGeneratorTrait
      * Create all statements around url transformation
      *
      * @param Operation $operation
-     * @param $queryParamVariable
+     * @param Expr\Variable $queryParamVariable
      *
      * @return array
      */
@@ -170,7 +170,7 @@ trait InputGeneratorTrait
      * Create body statements
      *
      * @param Operation $operation
-     * @param $queryParamVariable
+     * @param Expr\Variable $queryParamVariable
      * @param Context $context
      *
      * @return array
@@ -225,7 +225,7 @@ trait InputGeneratorTrait
      * Create headers statements
      *
      * @param Operation $operation
-     * @param $queryParamVariable
+     * @param Expr\Variable $queryParamVariable
      *
      * @return array
      */
