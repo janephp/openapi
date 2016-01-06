@@ -14,9 +14,7 @@ use Joli\Jane\Swagger\Guesser\ChainGuesser;
 use Joli\Jane\Swagger\Guesser\SwaggerSchema\GuesserFactory;
 use Joli\Jane\Swagger\Model\Swagger;
 use Joli\Jane\Swagger\Normalizer\NormalizerFactory;
-
 use PhpParser\PrettyPrinterAbstract;
-
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -87,7 +85,7 @@ class JaneSwagger
      */
     public function createContext($swaggerSpec, $name, $namespace, $directory)
     {
-        $schema  = $this->serializer->deserialize(file_get_contents($swaggerSpec), Swagger::class, 'json');
+        $schema  = $this->serializer->deserialize(file_get_contents($swaggerSpec), 'Joli\Jane\Swagger\Model\Swagger', 'json');
         $classes = $this->chainGuesser->guessClass($schema, $name);
 
         foreach ($classes as $class) {
@@ -190,4 +188,4 @@ class JaneSwagger
 
         return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter, $fixer);
     }
-} 
+}
