@@ -76,10 +76,10 @@ class JaneSwagger
     /**
      * Return a list of class guessed
      *
-     * @param $swaggerSpec
-     * @param $name
-     * @param $namespace
-     * @param $directory
+     * @param string $swaggerSpec
+     * @param string $name
+     * @param string $namespace
+     * @param string $directory
      *
      * @return Context
      */

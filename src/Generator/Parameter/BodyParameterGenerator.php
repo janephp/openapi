@@ -9,8 +9,6 @@ use Joli\Jane\Reference\Resolver;
 use Joli\Jane\Swagger\Model\BodyParameter;
 use Joli\Jane\Swagger\Model\Schema;
 use PhpParser\Node;
-use PhpParser\Node\Expr;
-use PhpParser\Node\Stmt;
 use PhpParser\Parser;
 
 class BodyParameterGenerator extends ParameterGenerator
