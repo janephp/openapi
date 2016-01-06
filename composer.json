@@ -2,6 +2,14 @@
     "name": "jane/swagger",
     "description": "Generate a PHP Client API (PSR7 compatible) given a Swagger specification",
     "type": "library",
+    "keywords": ["jane", "swagger", "openapi"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joel Wurtz",
+            "email": "jwurtz@jolicode.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Joli\\Jane\\Swagger\\Model\\": "generated/Model/",
@@ -15,7 +23,7 @@
         }
     },
     "require": {
-        "jane/jane": "^1.0@dev",
+        "jane/jane": "^1.0.2",
         "php-http/httplug": "^1.0.0-beta",
         "php-http/message-factory": "^1.0",
         "nikic/php-parser": "^1.4",
@@ -26,13 +34,15 @@
     "require-dev": {
         "phpunit/phpunit": "^4.7"
     },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Joel Wurtz",
-            "email": "jwurtz@jolicode.com"
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1-dev"
         }
-    ],
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
