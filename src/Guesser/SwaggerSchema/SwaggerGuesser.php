@@ -6,7 +6,6 @@ use Joli\Jane\Guesser\ChainGuesserAwareInterface;
 use Joli\Jane\Guesser\ChainGuesserAwareTrait;
 use Joli\Jane\Guesser\ClassGuesserInterface;
 use Joli\Jane\Guesser\GuesserInterface;
-
 use Joli\Jane\Swagger\Model\BodyParameter;
 use Joli\Jane\Swagger\Model\Operation;
 use Joli\Jane\Swagger\Model\PathItem;
