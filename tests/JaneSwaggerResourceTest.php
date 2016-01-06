@@ -3,27 +3,58 @@
 namespace Joli\Jane\Swagger\Tests;
 
 use Joli\Jane\Swagger\JaneSwagger;
-use PhpParser\PrettyPrinter\Standard;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider resourceProvider
      */
-    public function testRessources($expected, $swaggerSpec, $name)
+    public function testRessources(SplFileInfo $testDirectory)
     {
+        // 1. Cleanup generated
+        $filesystem = new Filesystem();
+
+        if ($filesystem->exists($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated')) {
+            $filesystem->remove($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
+        }
+
+        $filesystem->mkdir($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
+
+        // 2. Generate
         $swagger = JaneSwagger::build();
-        $printer = new Standard();
-        $files   = $swagger->generate($swaggerSpec, 'Joli\Jane\Swagger\Tests\Expected', 'dummy');
+        $files   = $swagger->generate(
+            $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'swagger.json',
+            'Joli\Jane\Swagger\Tests\Expected',
+            $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated'
+        );
 
-        // Resource + NormalizerFactory
-        $this->assertCount(2, $files);
+        $swagger->printFiles($files, $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
 
-        $resource = $files[1];
+        // 3. Compare
+        $expectedFinder = new Finder();
+        $expectedFinder->in($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'expected');
 
-        $this->assertEquals($resource->getFilename(), 'dummy/Resource/TestResource.php');
-        $this->assertEquals(trim($expected), trim($printer->prettyPrintFile([$resource->getNode()])));
+        $generatedFinder = new Finder();
+        $generatedFinder->in($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
+
+        $generatedData = [];
+
+        $this->assertEquals(count($expectedFinder), count($generatedFinder));
+
+        foreach ($generatedFinder as $generatedFile) {
+            $generatedData[$generatedFile->getRelativePath()] = $generatedFile->getRealPath();
+        }
+
+        foreach ($expectedFinder as $expectedFile) {
+            $this->assertArrayHasKey($expectedFile->getRelativePath(), $generatedData);
+
+            if ($expectedFile->isFile()) {
+                $this->assertEquals(file_get_contents($expectedFile->getRealPath()), file_get_contents($generatedData[$expectedFile->getRelativePath()]));
+            }
+        }
     }
 
     public function resourceProvider()
@@ -35,11 +66,7 @@ class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
         $data = array();
 
         foreach ($finder as $directory) {
-            $data[] = [
-                file_get_contents($directory->getRealPath().'/Resource/TestResource.php'),
-                $directory->getRealPath().'/swagger.json',
-                $directory->getFilename()
-            ];
+            $data[] = [$directory];
         }
 
         return $data;

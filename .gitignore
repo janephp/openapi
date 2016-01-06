@@ -1,2 +1,4 @@
 vendor/
 composer.lock
+tests/fixtures/*/generated
+.php_cs.cache
