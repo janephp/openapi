@@ -62,7 +62,7 @@ class ClientGenerator
     protected function generateClass($group, $operations, $namespace, Context $context, $suffix = 'Resource')
     {
         $factory    = new BuilderFactory();
-        $name       = $group === 0 ? '' : $group;
+        $name       = $group === 0 ? 'Default' : $group;
         $class      = $factory->class(Inflector::classify($name . $suffix));
         $class->extend('Resource');
 
@@ -76,4 +76,4 @@ class ClientGenerator
             ->addStmt($class)
             ->getNode();
     }
-} 
+}

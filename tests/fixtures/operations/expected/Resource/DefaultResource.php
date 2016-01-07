@@ -5,7 +5,7 @@ namespace Joli\Jane\Swagger\Tests\Expected\Resource;
 use Joli\Jane\Swagger\Client\QueryParam;
 use Joli\Jane\Swagger\Client\Resource;
 
-class TestResource extends Resource
+class DefaultResource extends Resource
 {
     /**
      * @param array  $parameters List of parameters
@@ -13,10 +13,10 @@ class TestResource extends Resource
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getTest($parameters = [], $fetch = self::FETCH_OBJECT)
+    public function testNoTag($parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = '/test';
+        $url        = '/test-no-tag';
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);

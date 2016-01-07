@@ -30,27 +30,4 @@ class OperationCollection extends \ArrayObject
 
         return $this;
     }
-
-    /**
-     * @return Operation[]
-     */
-    public function getOperations()
-    {
-        return iterator_to_array($this->getIterator());
-    }
-
-    /**
-     * @param $id
-     * @param $group
-     *
-     * @return Operation|null
-     */
-    public function getOperation($id, $group = 0)
-    {
-        if (!isset($this[$group][$id])) {
-            return null;
-        }
-
-        return $this[$group][$id];
-    }
-} 
+}

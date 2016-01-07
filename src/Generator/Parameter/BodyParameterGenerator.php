@@ -32,11 +32,15 @@ class BodyParameterGenerator extends ParameterGenerator
      */
     public function generateMethodParameter($parameter, Context $context)
     {
-        $name            = Inflector::camelize($parameter->getName());
+        $name = Inflector::camelize($parameter->getName());
 
         list($class, $array) = $this->getClass($parameter, $context);
 
-        if (null === $class || true === $array) {
+        if (null === $array || true === $array) {
+            if ($class == "array") {
+                return new Node\Param($name, null, "array");
+            }
+
             return new Node\Param($name);
         }
 
@@ -93,4 +97,4 @@ class BodyParameterGenerator extends ParameterGenerator
 
         return [$class, $array];
     }
-} 
+}

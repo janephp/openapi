@@ -1,0 +1,94 @@
+{
+    "swagger": "2.0",
+    "paths": {
+        "/test-no-tag": {
+            "get": {
+                "operationId": "Test No Tag",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
+        "/test-get": {
+            "get": {
+                "operationId": "Get Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "post": {
+                "operationId": "Post Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "head": {
+                "operationId": "Head Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "put": {
+                "operationId": "Put Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "delete": {
+                "operationId": "Delete Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "options": {
+                "operationId": "Options Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            },
+            "patch": {
+                "operationId": "Patch Test",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
+        }
+    }
+}

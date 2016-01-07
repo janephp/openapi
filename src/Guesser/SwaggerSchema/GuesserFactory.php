@@ -3,9 +3,9 @@
 namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
 
 use Joli\Jane\Generator\Naming;
+use Joli\Jane\Guesser\ChainGuesser;
 use Joli\Jane\Guesser\ReferenceGuesser;
 use Joli\Jane\Reference\Resolver;
-use Joli\Jane\Swagger\Guesser\ChainGuesser;
 
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -30,4 +30,3 @@ class GuesserFactory
         return $chainGuesser;
     }
 }
- 

@@ -8,9 +8,9 @@ use Joli\Jane\Generator\File;
 use Joli\Jane\Generator\ModelGenerator;
 use Joli\Jane\Generator\Naming;
 use Joli\Jane\Generator\NormalizerGenerator;
+use Joli\Jane\Guesser\ChainGuesser;
 use Joli\Jane\Swagger\Generator\ClientGenerator;
 use Joli\Jane\Swagger\Generator\GeneratorFactory;
-use Joli\Jane\Swagger\Guesser\ChainGuesser;
 use Joli\Jane\Swagger\Guesser\SwaggerSchema\GuesserFactory;
 use Joli\Jane\Swagger\Model\Swagger;
 use Joli\Jane\Swagger\Normalizer\NormalizerFactory;
@@ -53,7 +53,7 @@ class JaneSwagger
     private $normalizerGenerator;
 
     /**
-     * @var Guesser\ChainGuesser
+     * @var ChainGuesser
      */
     private $chainGuesser;
 

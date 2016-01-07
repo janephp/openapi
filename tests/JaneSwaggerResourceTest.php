@@ -45,14 +45,14 @@ class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($expectedFinder), count($generatedFinder));
 
         foreach ($generatedFinder as $generatedFile) {
-            $generatedData[$generatedFile->getRelativePath()] = $generatedFile->getRealPath();
+            $generatedData[$generatedFile->getRelativePathname()] = $generatedFile->getRealPath();
         }
 
         foreach ($expectedFinder as $expectedFile) {
-            $this->assertArrayHasKey($expectedFile->getRelativePath(), $generatedData);
+            $this->assertArrayHasKey($expectedFile->getRelativePathname(), $generatedData);
 
             if ($expectedFile->isFile()) {
-                $this->assertEquals(file_get_contents($expectedFile->getRealPath()), file_get_contents($generatedData[$expectedFile->getRelativePath()]));
+                $this->assertEquals(file_get_contents($expectedFile->getRealPath()), file_get_contents($generatedData[$expectedFile->getRelativePathname()]));
             }
         }
     }

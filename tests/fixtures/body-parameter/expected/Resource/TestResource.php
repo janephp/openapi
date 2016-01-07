@@ -1,0 +1,69 @@
+<?php
+
+namespace Joli\Jane\Swagger\Tests\Expected\Resource;
+
+use Joli\Jane\Swagger\Client\QueryParam;
+use Joli\Jane\Swagger\Client\Resource;
+
+class TestResource extends Resource
+{
+    /**
+     * @param string $testString
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function testSimpleBodyParameter($testString, $parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/test-simple';
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $testString;
+        $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response   = $this->httpClient->sendRequest($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Joli\Jane\Swagger\Tests\Expected\Model\Schema $testObject
+     * @param array                                          $parameters List of parameters
+     * @param string                                         $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function testObjectBodyParameter(\Joli\Jane\Swagger\Tests\Expected\Model\Schema $testObject, $parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/test-object';
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $this->serializer->serialize($testObject, 'json');
+        $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response   = $this->httpClient->sendRequest($request);
+
+        return $response;
+    }
+
+    /**
+     * @param array  $testObjectList
+     * @param array  $parameters     List of parameters
+     * @param string $fetch          Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function testObjectListBodyParameter(array $testObjectList, $parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/test-object-list';
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $testObjectList;
+        $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response   = $this->httpClient->sendRequest($request);
+
+        return $response;
+    }
+}
