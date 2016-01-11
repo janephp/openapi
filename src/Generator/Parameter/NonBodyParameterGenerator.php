@@ -84,7 +84,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
      */
     public function generateQueryDocParameter($parameter)
     {
-        return sprintf('(%s)%s: %s', $this->convertParameterType($parameter->getType()), $parameter->getName(), $parameter->getDescription() ?: '');
+        return sprintf('@var %s $%s %s', $this->convertParameterType($parameter->getType()), $parameter->getName(), $parameter->getDescription() ?: '');
     }
 
     public function convertParameterType($type)
@@ -99,4 +99,4 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
 
         return $convertArray[$type];
     }
-} 
+}

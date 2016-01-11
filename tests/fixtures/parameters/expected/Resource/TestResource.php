@@ -8,14 +8,16 @@ use Joli\Jane\Swagger\Client\Resource;
 class TestResource extends Resource
 {
     /**
-     * @param array $parameters List of parameters
-     * 
-     *     (string)testString: 
-     *     (int)testInteger: 
-     *     (float)testFloat: 
-     *     (array)testArray: 
-     *     (string)testRequired: 
-     *     (string)testDefault: 
+     * @param array $parameters {
+     *
+     *     @var string $testString 
+     *     @var int $testInteger 
+     *     @var float $testFloat 
+     *     @var array $testArray 
+     *     @var string $testRequired 
+     *     @var string $testDefault 
+     * }
+     *
      * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -40,14 +42,16 @@ class TestResource extends Resource
     }
 
     /**
-     * @param array $parameters List of parameters
-     * 
-     *     (string)testString: 
-     *     (int)testInteger: 
-     *     (float)testFloat: 
-     *     (array)testArray: 
-     *     (string)testRequired: 
-     *     (string)testDefault: 
+     * @param array $parameters {
+     *
+     *     @var string $testString 
+     *     @var int $testInteger 
+     *     @var float $testFloat 
+     *     @var array $testArray 
+     *     @var string $testRequired 
+     *     @var string $testDefault 
+     * }
+     *
      * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -78,14 +82,16 @@ class TestResource extends Resource
     }
 
     /**
-     * @param array $parameters List of parameters
-     * 
-     *     (string)testString: 
-     *     (int)testInteger: 
-     *     (float)testFloat: 
-     *     (array)testArray: 
-     *     (string)testRequired: 
-     *     (string)testDefault: 
+     * @param array $parameters {
+     *
+     *     @var string $testString 
+     *     @var int $testInteger 
+     *     @var float $testFloat 
+     *     @var array $testArray 
+     *     @var string $testRequired 
+     *     @var string $testDefault 
+     * }
+     *
      * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface

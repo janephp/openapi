@@ -111,12 +111,16 @@ trait InputGeneratorTrait
             }
         }
 
-        $documentationParams[] = " * @param array  \$parameters List of parameters";
-        $documentationParams[] = " * ";
-        $documentationParams   = array_merge($documentationParams, array_map(function ($doc) {
-            return " *     " . $doc;
-        }, $queryParamDocumentation));
-        $documentationParams[] = " * ";
+        if (!empty($queryParamDocumentation)) {
+            $documentationParams[] = " * @param array  \$parameters {";
+            $documentationParams   = array_merge($documentationParams, array_map(function ($doc) {
+                return " *     " . $doc;
+            }, $queryParamDocumentation));
+            $documentationParams[] = " * }";
+        } else {
+            $documentationParams[] = " * @param array  \$parameters List of parameters";
+        }
+
         $documentationParams[] = " * @param string \$fetch      Fetch mode (object or response)";
 
         $methodParameters[] = new Param('parameters', new Expr\Array_());
