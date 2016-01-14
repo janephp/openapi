@@ -17,6 +17,10 @@ The generated code may contain bug or incorrect behavior, use it as a base for y
 
 // TODO
 
+## Example
+
+The [Docker PHP](https://github.com/stage1/docker-php) library has been built on this, you can see there a complete example of using this library.
+
 ## Installation
 
 Use composer for installation
