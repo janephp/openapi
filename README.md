@@ -17,10 +17,10 @@ The generated code may contain bug or incorrect behavior, use it as a base for y
 
 ```
 # jane-openapi [schema-path] [namespace] [destination]
-php vendor/bin/jane-openapi generate Name\\Space src/Name/Space
+php vendor/bin/jane-openapi generate swagger.json Name\\Space src/Name/Space
 ```
 
-This will generate, in the `src/Name/Space`, a Resource, a Model and a Normalizer directory:
+This will generate, in the `src/Name/Space`, a Resource, a Model and a Normalizer directory from the swagger.json file:
 
  * Resource directory will contain all differents resources of the API with their endpoints;
  * Model directory will contain all Model used in the API;
