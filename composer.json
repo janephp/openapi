@@ -22,6 +22,9 @@
             "Joli\\Jane\\OpenApi\\Tests\\": "tests/"
         }
     },
+    "bin": [
+        "bin/jane-openapi"
+    ],
     "require": {
         "jane/jane": "^1.1.0",
         "php-http/httplug": "^1.0",

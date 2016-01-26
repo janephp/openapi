@@ -28,6 +28,8 @@ use Symfony\CS\Fixer;
 
 class JaneOpenApi
 {
+    const VERSION = '1.0.x';
+
     /**
      * @var \Symfony\Component\Serializer\SerializerInterface
      */

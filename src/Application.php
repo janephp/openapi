@@ -2,6 +2,7 @@
 
 namespace Joli\Jane\OpenApi;
 
+use Joli\Jane\OpenApi\Command\GenerateCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 
 class Application extends BaseApplication
@@ -11,7 +12,7 @@ class Application extends BaseApplication
      */
     public function __construct()
     {
-        parent::__construct('Jane OpenApi', Jane::VERSION);
+        parent::__construct('Jane OpenApi', JaneOpenApi::VERSION);
 
         $this->add(new GenerateCommand());
     }
