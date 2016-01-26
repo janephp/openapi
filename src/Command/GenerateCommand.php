@@ -34,9 +34,10 @@ class GenerateCommand extends Command
         $janeOpenApi = JaneOpenApi::build();
         $files = $janeOpenApi->generate($openApiSchemaFile, $namespace, $generateDirectory);
 
+        $janeOpenApi->printFiles($files, $generateDirectory);
+
         foreach ($files as $file) {
             $output->writeln(sprintf("Generate %s", $file->getFilename()));
-            $janeOpenApi->printFiles([$file], $generateDirectory);
         }
     }
 }
