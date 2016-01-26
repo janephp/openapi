@@ -35,7 +35,7 @@ The [Docker PHP](https://github.com/stage1/docker-php) library has been built on
 Use composer for installation
 
 ```
-composer require jane/openapi
+composer require jane/open-api
 ```
 
 ## Recommended workflow
