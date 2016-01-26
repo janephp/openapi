@@ -20,9 +20,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\CS\Config\Config;
+use Symfony\CS\Config;
+use Symfony\CS\ConfigInterface;
 use Symfony\CS\Console\ConfigurationResolver;
-use Symfony\CS\Finder\DefaultFinder;
+use Symfony\CS\Finder;
 use Symfony\CS\Fixer;
 
 class JaneSwagger
@@ -58,11 +59,19 @@ class JaneSwagger
     private $chainGuesser;
 
     /**
-     * @var Fixer
+     * @var ConfigInterface
      */
-    private $fixer;
+    private $fixerConfig;
 
-    public function __construct(SerializerInterface $serializer, ChainGuesser $chainGuesser, ModelGenerator $modelGenerator, NormalizerGenerator $normalizerGenerator, ClientGenerator $clientGenerator, PrettyPrinterAbstract $prettyPrinter, Fixer $fixer)
+    public function __construct(
+        SerializerInterface $serializer,
+        ChainGuesser $chainGuesser,
+        ModelGenerator $modelGenerator,
+        NormalizerGenerator $normalizerGenerator,
+        ClientGenerator $clientGenerator,
+        PrettyPrinterAbstract $prettyPrinter,
+        ConfigInterface $fixerConfig = null
+    )
     {
         $this->serializer          = $serializer;
         $this->clientGenerator     = $clientGenerator;
@@ -70,7 +79,7 @@ class JaneSwagger
         $this->modelGenerator      = $modelGenerator;
         $this->normalizerGenerator = $normalizerGenerator;
         $this->chainGuesser        = $chainGuesser;
-        $this->fixer               = $fixer;
+        $this->fixer               = $fixerConfig;
     }
 
     /**
@@ -142,12 +151,31 @@ class JaneSwagger
             file_put_contents($file->getFilename(), $this->prettyPrinter->prettyPrintFile([$file->getNode()]));
         }
 
-        if ($this->fixer !== null) {
-            $config = Config::create()
+        $this->fix($directory);
+    }
+
+    /**
+     * Use php cs fixer to have a nice formatting of generated files
+     *
+     * @param string $directory
+     *
+     * @return array|void
+     */
+    protected function fix($directory)
+    {
+        if (!class_exists('Symfony\CS\Config')) {
+            return;
+        }
+
+        /** @var Config $fixerConfig */
+        $fixerConfig = $this->fixerConfig;
+
+        if (null === $fixerConfig) {
+            $fixerConfig = Config::create()
                 ->setRiskyAllowed(true)
                 ->setRules(array(
                     '@Symfony' => true,
-                    'empty_return' => false,
+                    'simplified_null_return' => false,
                     'concat_without_spaces' => false,
                     'double_arrow_multiline_whitespaces' => false,
                     'unalign_equals' => false,
@@ -155,23 +183,24 @@ class JaneSwagger
                     'align_double_arrow' => true,
                     'align_equals' => true,
                     'concat_with_spaces' => true,
-                    'newline_after_open_tag' => true,
-                    'ordered_use' => true,
+                    'ordered_imports' => true,
                     'phpdoc_order' => true,
                     'short_array_syntax' => true,
                 ))
-                ->finder(
-                    DefaultFinder::create()
-                        ->in($directory)
-                )
             ;
 
             $resolver = new ConfigurationResolver();
-            $resolver->setDefaultConfig($config);
+            $resolver->setDefaultConfig($fixerConfig);
             $resolver->resolve();
-
-            $this->fixer->fix($config);
         }
+
+        $finder = new Finder();
+        $finder->in($directory);
+        $fixerConfig->finder($finder);
+
+        $fixer = new Fixer();
+
+        return $fixer->fix($fixerConfig);
     }
 
     public static function build()
@@ -184,8 +213,7 @@ class JaneSwagger
         $naming          = new Naming();
         $modelGenerator  = new ModelGenerator($naming);
         $normGenerator   = new NormalizerGenerator($naming);
-        $fixer           = new Fixer();
 
-        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter, $fixer);
+        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter);
     }
 }

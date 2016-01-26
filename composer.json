@@ -23,16 +23,22 @@
         }
     },
     "require": {
-        "jane/jane": "^1.0.2",
-        "php-http/httplug": "^1.0.0-beta",
+        "jane/jane": "^1.1.0",
+        "php-http/httplug": "^1.0",
         "php-http/message-factory": "^1.0",
         "nikic/php-parser": "^1.4",
-        "symfony/options-resolver": "^2.7",
-        "fabpot/php-cs-fixer": "^2.0@dev",
+        "symfony/options-resolver": "^2.7|^3.0",
         "doctrine/inflector": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7"
+        "phpunit/phpunit": "^4.7",
+        "fabpot/php-cs-fixer": "^2.0@dev"
+    },
+    "conflict": {
+        "fabpot/php-cs-fixer": "<2.0"
+    },
+    "suggest": {
+        "fabpot/php-cs-fixer": "To have a nice formatting of the generated files"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
