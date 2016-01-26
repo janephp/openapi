@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/travis/jolicode/jane-openapi.svg?style=flat-square)](https://travis-ci.org/jolicode/jane-openapi)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/jolicode/jane-openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/jolicode/jane-openapi)
 [![Quality Score](https://img.shields.io/scrutinizer/g/jolicode/jane-openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/jolicode/jane-openapi)
-[![Total Downloads](https://img.shields.io/packagist/dt/jane/openapi.svg?style=flat-square)](https://packagist.org/packages/jane/openapi)
+[![Total Downloads](https://img.shields.io/packagist/dt/jane/open-api.svg?style=flat-square)](https://packagist.org/packages/jane/open-api)
 
 Generate a PHP Client API (PSR7 compatible) given a [OpenApi (Swagger) specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
 
