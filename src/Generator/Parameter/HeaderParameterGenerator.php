@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator\Parameter;
+namespace Joli\Jane\OpenApi\Generator\Parameter;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;
@@ -20,4 +20,4 @@ class HeaderParameterGenerator extends NonBodyParameterGenerator
 
         return $statements;
     }
-} 
+}

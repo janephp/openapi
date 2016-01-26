@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\BodyParameter') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\BodyParameter') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\BodyParameter) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\BodyParameter) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\BodyParameter();
+        $object = new \Joli\Jane\OpenApi\Model\BodyParameter();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -52,7 +52,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
             $object->setRequired($data->{'required'});
         }
         if (isset($data->{'schema'})) {
-            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context));
+            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context));
         }
 
         return $object;

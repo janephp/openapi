@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Operation;
+namespace Joli\Jane\OpenApi\Operation;
 
 class OperationCollection extends \ArrayObject
 {

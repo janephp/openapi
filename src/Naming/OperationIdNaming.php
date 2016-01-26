@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Naming;
+namespace Joli\Jane\OpenApi\Naming;
 
 use Doctrine\Common\Inflector\Inflector;
-use Joli\Jane\Swagger\Operation\Operation;
+use Joli\Jane\OpenApi\Operation\Operation;
 
 class OperationIdNaming implements OperationNamingInterface
 {
@@ -12,4 +12,3 @@ class OperationIdNaming implements OperationNamingInterface
         return Inflector::camelize($operation->getOperation()->getOperationId());
     }
 }
- 

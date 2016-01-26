@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Guesser\JsonSchema\ItemsGuesser as BaseItemsGuesser;
-use Joli\Jane\Swagger\Model\Schema;
+use Joli\Jane\OpenApi\Model\Schema;
 
 class ItemsGuesser extends BaseItemsGuesser
 {
@@ -26,4 +26,3 @@ class ItemsGuesser extends BaseItemsGuesser
         );
     }
 }
- 

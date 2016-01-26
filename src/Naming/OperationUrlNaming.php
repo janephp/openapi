@@ -1,8 +1,8 @@
 <?php
 
-namespace Joli\Jane\Swagger\Naming;
+namespace Joli\Jane\OpenApi\Naming;
 
-use Joli\Jane\Swagger\Operation\Operation;
+use Joli\Jane\OpenApi\Operation\Operation;
 
 class OperationUrlNaming implements OperationNamingInterface
 {
@@ -33,4 +33,3 @@ class OperationUrlNaming implements OperationNamingInterface
         return $prefix . implode('', $parts);
     }
 }
- 

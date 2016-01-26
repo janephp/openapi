@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Client;
+namespace Joli\Jane\OpenApi\Client;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

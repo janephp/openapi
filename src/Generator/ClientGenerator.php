@@ -1,12 +1,12 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator;
+namespace Joli\Jane\OpenApi\Generator;
 
 use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
-use Joli\Jane\Swagger\Model\Swagger;
-use Joli\Jane\Swagger\Naming\OperationNamingInterface;
-use Joli\Jane\Swagger\Operation\OperationManager;
+use Joli\Jane\OpenApi\Model\OpenApi;
+use Joli\Jane\OpenApi\Naming\OperationNamingInterface;
+use Joli\Jane\OpenApi\Operation\OperationManager;
 
 use PhpParser\BuilderFactory;
 use PhpParser\Node;
@@ -16,7 +16,7 @@ use PhpParser\Node\Stmt;
 class ClientGenerator
 {
     /**
-     * @var \Joli\Jane\Swagger\Operation\OperationManager
+     * @var \Joli\Jane\OpenApi\Operation\OperationManager
      */
     private $operationManager;
 
@@ -38,18 +38,18 @@ class ClientGenerator
     }
 
     /**
-     * Generate an ast node (which correspond to a class) for a swagger spec
+     * Generate an ast node (which correspond to a class) for a OpenApi spec
      *
-     * @param Swagger $swagger
+     * @param OpenApi $openApi
      * @param string  $namespace
      * @param string  $suffix
      * @param Context $context
      *
      * @return Node[]
      */
-    public function generate(Swagger $swagger, $namespace, Context $context, $suffix = 'Resource')
+    public function generate(OpenApi $openApi, $namespace, Context $context, $suffix = 'Resource')
     {
-        $operationsGrouped = $this->operationManager->buildOperationCollection($swagger);
+        $operationsGrouped = $this->operationManager->buildOperationCollection($openApi);
         $nodes             = [];
 
         foreach ($operationsGrouped as $group => $operations) {
@@ -71,8 +71,8 @@ class ClientGenerator
         }
 
         return $factory->namespace($namespace . "\\Resource")
-            ->addStmt($factory->use('Joli\Jane\Swagger\Client\QueryParam'))
-            ->addStmt($factory->use('Joli\Jane\Swagger\Client\Resource'))
+            ->addStmt($factory->use('Joli\Jane\OpenApi\Client\QueryParam'))
+            ->addStmt($factory->use('Joli\Jane\OpenApi\Client\Resource'))
             ->addStmt($class)
             ->getNode();
     }

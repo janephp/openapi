@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Resource;
+namespace Joli\Jane\OpenApi\Tests\Expected\Resource;
 
-use Joli\Jane\Swagger\Client\QueryParam;
-use Joli\Jane\Swagger\Client\Resource;
+use Joli\Jane\OpenApi\Client\QueryParam;
+use Joli\Jane\OpenApi\Client\Resource;
 
 class TestResource extends Resource
 {
@@ -28,13 +28,13 @@ class TestResource extends Resource
     }
 
     /**
-     * @param \Joli\Jane\Swagger\Tests\Expected\Model\Schema $testObject
+     * @param \Joli\Jane\OpenApi\Tests\Expected\Model\Schema $testObject
      * @param array                                          $parameters List of parameters
      * @param string                                         $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function testObjectBodyParameter(\Joli\Jane\Swagger\Tests\Expected\Model\Schema $testObject, $parameters = [], $fetch = self::FETCH_OBJECT)
+    public function testObjectBodyParameter(\Joli\Jane\OpenApi\Tests\Expected\Model\Schema $testObject, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url        = '/test-object';

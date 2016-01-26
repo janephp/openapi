@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\FileSchema') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\FileSchema') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\FileSchema) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\FileSchema) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\FileSchema();
+        $object = new \Joli\Jane\OpenApi\Model\FileSchema();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -65,7 +65,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $object->setReadOnly($data->{'readOnly'});
         }
         if (isset($data->{'externalDocs'})) {
-            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'raw', $context));
+            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
         }
         if (isset($data->{'example'})) {
             $object->setExample($data->{'example'});

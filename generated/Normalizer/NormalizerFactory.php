@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Normalizer\NormalizerArray;
 use Joli\Jane\Normalizer\ReferenceNormalizer;
@@ -12,7 +12,7 @@ class NormalizerFactory
         $normalizers   = [];
         $normalizers[] = new ReferenceNormalizer();
         $normalizers[] = new NormalizerArray();
-        $normalizers[] = new SwaggerNormalizer();
+        $normalizers[] = new OpenApiNormalizer();
         $normalizers[] = new InfoNormalizer();
         $normalizers[] = new ContactNormalizer();
         $normalizers[] = new LicenseNormalizer();

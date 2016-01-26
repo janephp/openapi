@@ -1,13 +1,13 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator\Parameter;
+namespace Joli\Jane\OpenApi\Generator\Parameter;
 
 use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Reference\Reference;
 use Joli\Jane\Reference\Resolver;
-use Joli\Jane\Swagger\Model\BodyParameter;
-use Joli\Jane\Swagger\Model\Schema;
+use Joli\Jane\OpenApi\Model\BodyParameter;
+use Joli\Jane\OpenApi\Model\Schema;
 use PhpParser\Node;
 use PhpParser\Parser;
 

@@ -1,5 +1,5 @@
 {
-    "swagger": "2.0",
+    "OpenApi": "2.0",
     "paths": {
         "/test-no-tag": {
             "get": {

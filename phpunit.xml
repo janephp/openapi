@@ -13,7 +13,7 @@
         bootstrap                   = "vendor/autoload.php" >
 
     <testsuites>
-        <testsuite name="Jane Swagger Unit Test Suite">
+        <testsuite name="Jane Open Api Unit Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

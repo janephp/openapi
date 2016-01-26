@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\Oauth2ApplicationSecurity') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Oauth2ApplicationSecurity') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\Oauth2ApplicationSecurity) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\Oauth2ApplicationSecurity) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\Oauth2ApplicationSecurity();
+        $object = new \Joli\Jane\OpenApi\Model\Oauth2ApplicationSecurity();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }

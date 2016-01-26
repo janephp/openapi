@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Guesser\JsonSchema\AllOfGuesser as BaseAllOfGuesser;
-use Joli\Jane\Swagger\Model\Schema;
+use Joli\Jane\OpenApi\Model\Schema;
 
 class AllOfGuesser extends BaseAllOfGuesser
 {
@@ -15,4 +15,3 @@ class AllOfGuesser extends BaseAllOfGuesser
         return (($object instanceof Schema) && is_array($object->getAllOf()) && count($object->getAllOf()) > 0);
     }
 }
- 

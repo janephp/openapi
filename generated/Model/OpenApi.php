@@ -1,8 +1,8 @@
 <?php
 
-namespace Joli\Jane\Swagger\Model;
+namespace Joli\Jane\OpenApi\Model;
 
-class Swagger
+class OpenApi
 {
     /**
      * @var string

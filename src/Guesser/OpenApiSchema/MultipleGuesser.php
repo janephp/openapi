@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Guesser\JsonSchema\MultipleGuesser as BaseMultipleGuesser;
-use Joli\Jane\Swagger\Model\Schema;
+use Joli\Jane\OpenApi\Model\Schema;
 
 class MultipleGuesser extends BaseMultipleGuesser
 {
@@ -15,4 +15,3 @@ class MultipleGuesser extends BaseMultipleGuesser
         return ($object instanceof Schema) && is_array($object->getType());
     }
 }
- 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Resource;
+namespace Joli\Jane\OpenApi\Tests\Expected\Resource;
 
-use Joli\Jane\Swagger\Client\QueryParam;
-use Joli\Jane\Swagger\Client\Resource;
+use Joli\Jane\OpenApi\Client\QueryParam;
+use Joli\Jane\OpenApi\Client\Resource;
 
 class TestResource extends Resource
 {
@@ -11,7 +11,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\Swagger\Tests\Expected\Model\Schema
+     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\Schema
      */
     public function getTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -24,7 +24,7 @@ class TestResource extends Resource
         $response   = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\Schema', 'json');
+                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'json');
             }
         }
 
@@ -35,7 +35,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\Swagger\Tests\Expected\Model\Schema[]
+     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\Schema[]
      */
     public function getTestList($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -48,7 +48,7 @@ class TestResource extends Resource
         $response   = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\Schema[]', 'json');
+                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema[]', 'json');
             }
         }
 

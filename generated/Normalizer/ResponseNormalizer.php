@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\Response') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Response') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\Response) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\Response) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\Response();
+        $object = new \Joli\Jane\OpenApi\Model\Response();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -45,17 +45,17 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (isset($data->{'schema'})) {
             $value_111 = $data->{'schema'};
             if (is_object($data->{'schema'})) {
-                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             if (is_object($data->{'schema'}) and (isset($data->{'schema'}->{'type'}) and $data->{'schema'}->{'type'} == 'file')) {
-                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\Swagger\\Model\\FileSchema', 'raw', $context);
+                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\FileSchema', 'raw', $context);
             }
             $object->setSchema($value_111);
         }
         if (isset($data->{'headers'})) {
             $values_112 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'headers'} as $key_114 => $value_113) {
-                $values_112[$key_114] = $this->serializer->deserialize($value_113, 'Joli\\Jane\\Swagger\\Model\\Header', 'raw', $context);
+                $values_112[$key_114] = $this->serializer->deserialize($value_113, 'Joli\\Jane\\OpenApi\\Model\\Header', 'raw', $context);
             }
             $object->setHeaders($values_112);
         }

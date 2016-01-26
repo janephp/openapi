@@ -1,18 +1,18 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Guesser\ChainGuesserAwareInterface;
 use Joli\Jane\Guesser\ChainGuesserAwareTrait;
 use Joli\Jane\Guesser\ClassGuesserInterface;
 use Joli\Jane\Guesser\GuesserInterface;
-use Joli\Jane\Swagger\Model\BodyParameter;
-use Joli\Jane\Swagger\Model\Operation;
-use Joli\Jane\Swagger\Model\PathItem;
-use Joli\Jane\Swagger\Model\Response;
-use Joli\Jane\Swagger\Model\Swagger;
+use Joli\Jane\OpenApi\Model\BodyParameter;
+use Joli\Jane\OpenApi\Model\Operation;
+use Joli\Jane\OpenApi\Model\PathItem;
+use Joli\Jane\OpenApi\Model\Response;
+use Joli\Jane\OpenApi\Model\OpenApi;
 
-class SwaggerGuesser implements GuesserInterface, ClassGuesserInterface, ChainGuesserAwareInterface
+class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGuesserAwareInterface
 {
     use ChainGuesserAwareTrait;
 
@@ -21,13 +21,13 @@ class SwaggerGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
      */
     public function supportObject($object)
     {
-        return ($object instanceof Swagger);
+        return ($object instanceof OpenApi);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param Swagger $object
+     * @param OpenApi $object
      */
     public function guessClass($object, $name)
     {
@@ -109,4 +109,3 @@ class SwaggerGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
         return $classes;
     }
 }
- 

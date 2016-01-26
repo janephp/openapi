@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Normalizer;
+namespace Joli\Jane\OpenApi\Tests\Expected\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\Schema') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Tests\Expected\Model\Schema) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\Schema) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Tests\Expected\Model\Schema();
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\Schema();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -63,10 +63,10 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setMapProperty($values_0);
         }
         if (isset($data->{'objectProperty'})) {
-            $object->setObjectProperty($this->serializer->deserialize($data->{'objectProperty'}, 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\ObjectProperty', 'raw', $context));
+            $object->setObjectProperty($this->serializer->deserialize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty', 'raw', $context));
         }
         if (isset($data->{'objectRefProperty'})) {
-            $object->setObjectRefProperty($this->serializer->deserialize($data->{'objectRefProperty'}, 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\Schema', 'raw', $context));
+            $object->setObjectRefProperty($this->serializer->deserialize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'raw', $context));
         }
 
         return $object;

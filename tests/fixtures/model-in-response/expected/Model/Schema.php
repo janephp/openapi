@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Model;
+namespace Joli\Jane\OpenApi\Tests\Expected\Model;
 
 class Schema
 {

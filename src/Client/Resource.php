@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Client;
+namespace Joli\Jane\OpenApi\Client;
 
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
@@ -32,4 +32,4 @@ class Resource
         $this->messageFactory = $messageFactory;
         $this->serializer     = $serializer;
     }
-} 
+}

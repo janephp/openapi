@@ -1,6 +1,6 @@
 {
-    "name": "jane/swagger",
-    "description": "Generate a PHP Client API (PSR7 compatible) given a Swagger specification",
+    "name": "jane/open-api",
+    "description": "Generate a PHP Client API (PSR7 compatible) given a OpenApi (Swagger) specification",
     "type": "library",
     "keywords": ["jane", "swagger", "openapi"],
     "license": "MIT",
@@ -12,14 +12,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "Joli\\Jane\\Swagger\\Model\\": "generated/Model/",
-            "Joli\\Jane\\Swagger\\Normalizer\\": "generated/Normalizer/",
-            "Joli\\Jane\\Swagger\\": "src/"
+            "Joli\\Jane\\OpenApi\\Model\\": "generated/Model/",
+            "Joli\\Jane\\OpenApi\\Normalizer\\": "generated/Normalizer/",
+            "Joli\\Jane\\OpenApi\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Joli\\Jane\\Swagger\\Tests\\": "tests/"
+            "Joli\\Jane\\OpenApi\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -28,6 +28,7 @@
         "php-http/message-factory": "^1.0",
         "nikic/php-parser": "^1.4",
         "symfony/options-resolver": "^2.7|^3.0",
+        "symfony/console": "^2.3|^3.0",
         "doctrine/inflector": "^1.0"
     },
     "require-dev": {

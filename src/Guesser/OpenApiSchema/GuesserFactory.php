@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Generator\Naming;
 use Joli\Jane\Guesser\ChainGuesser;
@@ -18,7 +18,7 @@ class GuesserFactory
 
         $chainGuesser = new ChainGuesser();
         $chainGuesser->addGuesser(new ReferenceGuesser($resolver));
-        $chainGuesser->addGuesser(new SwaggerGuesser());
+        $chainGuesser->addGuesser(new OpenApiGuesser());
         $chainGuesser->addGuesser(new SchemaGuesser($naming, $resolver));
         $chainGuesser->addGuesser(new AdditionalPropertiesGuesser());
         $chainGuesser->addGuesser(new AllOfGuesser($resolver));

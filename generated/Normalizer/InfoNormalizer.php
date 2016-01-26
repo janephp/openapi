@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\Info') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Info') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\Info) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\Info) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\Info();
+        $object = new \Joli\Jane\OpenApi\Model\Info();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -52,10 +52,10 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
             $object->setTermsOfService($data->{'termsOfService'});
         }
         if (isset($data->{'contact'})) {
-            $object->setContact($this->serializer->deserialize($data->{'contact'}, 'Joli\\Jane\\Swagger\\Model\\Contact', 'raw', $context));
+            $object->setContact($this->serializer->deserialize($data->{'contact'}, 'Joli\\Jane\\OpenApi\\Model\\Contact', 'raw', $context));
         }
         if (isset($data->{'license'})) {
-            $object->setLicense($this->serializer->deserialize($data->{'license'}, 'Joli\\Jane\\Swagger\\Model\\License', 'raw', $context));
+            $object->setLicense($this->serializer->deserialize($data->{'license'}, 'Joli\\Jane\\OpenApi\\Model\\License', 'raw', $context));
         }
 
         return $object;

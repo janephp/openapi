@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\PrimitivesItems) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\PrimitivesItems) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\PrimitivesItems();
+        $object = new \Joli\Jane\OpenApi\Model\PrimitivesItems();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -46,7 +46,7 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $object->setFormat($data->{'format'});
         }
         if (isset($data->{'items'})) {
-            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'raw', $context));
+            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems', 'raw', $context));
         }
         if (isset($data->{'collectionFormat'})) {
             $object->setCollectionFormat($data->{'collectionFormat'});

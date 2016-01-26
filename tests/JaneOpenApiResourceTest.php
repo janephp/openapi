@@ -1,13 +1,13 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests;
+namespace Joli\Jane\OpenApi\Tests;
 
-use Joli\Jane\Swagger\JaneSwagger;
+use Joli\Jane\OpenApi\JaneOpenApi;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
+class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider resourceProvider
@@ -24,14 +24,14 @@ class JaneSwaggerResourceTest extends \PHPUnit_Framework_TestCase
         $filesystem->mkdir($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
 
         // 2. Generate
-        $swagger = JaneSwagger::build();
-        $files   = $swagger->generate(
+        $OpenApi = JaneOpenApi::build();
+        $files   = $OpenApi->generate(
             $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'swagger.json',
-            'Joli\Jane\Swagger\Tests\Expected',
+            'Joli\Jane\OpenApi\Tests\Expected',
             $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated'
         );
 
-        $swagger->printFiles($files, $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
+        $OpenApi->printFiles($files, $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
 
         // 3. Compare
         $expectedFinder = new Finder();

@@ -1,8 +1,8 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator\Parameter;
+namespace Joli\Jane\OpenApi\Generator\Parameter;
 
 class PathParameterGenerator extends NonBodyParameterGenerator
 {
 
-} 
+}

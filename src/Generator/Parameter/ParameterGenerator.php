@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator\Parameter;
+namespace Joli\Jane\OpenApi\Generator\Parameter;
 
 use Joli\Jane\Generator\Context\Context;
 use PhpParser\Node;
@@ -50,4 +50,4 @@ abstract class ParameterGenerator
     {
         return [];
     }
-} 
+}

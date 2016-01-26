@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Guesser\SwaggerSchema;
+namespace Joli\Jane\OpenApi\Guesser\OpenApiSchema;
 
 use Joli\Jane\Guesser\JsonSchema\AdditionalPropertiesGuesser as BaseAdditionalPropertiesGuesser;
-use Joli\Jane\Swagger\Model\Schema;
+use Joli\Jane\OpenApi\Model\Schema;
 
 class AdditionalPropertiesGuesser extends BaseAdditionalPropertiesGuesser
 {
@@ -27,4 +27,3 @@ class AdditionalPropertiesGuesser extends BaseAdditionalPropertiesGuesser
         return true;
     }
 }
- 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Joli\Jane\Swagger\Operation;
+namespace Joli\Jane\OpenApi\Operation;
 
-use Joli\Jane\Swagger\Model\Operation as SwaggerOperation;
+use Joli\Jane\OpenApi\Model\Operation as OpenApiOperation;
 
 class Operation
 {
@@ -15,7 +15,7 @@ class Operation
     const HEAD    = 'HEAD';
 
     /**
-     * @var \Joli\Jane\Swagger\Model\Operation
+     * @var \Joli\Jane\OpenApi\Model\Operation
      */
     private $operation;
 
@@ -29,7 +29,7 @@ class Operation
      */
     private $method;
 
-    public function __construct(SwaggerOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
+    public function __construct(OpenApiOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
     {
         $this->operation = $operation;
         $this->path      = $basePath . $path;
@@ -46,7 +46,7 @@ class Operation
     }
 
     /**
-     * @return \Joli\Jane\Swagger\Model\Operation
+     * @return \Joli\Jane\OpenApi\Model\Operation
      */
     public function getOperation()
     {
@@ -68,4 +68,4 @@ class Operation
     {
         return $this->host;
     }
-} 
+}

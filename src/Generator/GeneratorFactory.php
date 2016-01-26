@@ -1,16 +1,16 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator;
+namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Jane;
 use Joli\Jane\Reference\Resolver;
-use Joli\Jane\Swagger\Generator\Parameter\BodyParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\FormDataParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\HeaderParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\PathParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\QueryParameterGenerator;
-use Joli\Jane\Swagger\Naming\OperationIdNaming;
-use Joli\Jane\Swagger\Operation\OperationManager;
+use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\HeaderParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\PathParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\QueryParameterGenerator;
+use Joli\Jane\OpenApi\Naming\OperationIdNaming;
+use Joli\Jane\OpenApi\Operation\OperationManager;
 use PhpParser\Lexer;
 use PhpParser\Parser;
 
@@ -33,4 +33,4 @@ class GeneratorFactory
 
         return $client;
     }
-} 
+}

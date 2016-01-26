@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Model;
+namespace Joli\Jane\OpenApi\Model;
 
 class ApiKeySecurity
 {

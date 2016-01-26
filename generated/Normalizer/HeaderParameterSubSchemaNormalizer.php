@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\HeaderParameterSubSchema) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\HeaderParameterSubSchema) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\HeaderParameterSubSchema();
+        $object = new \Joli\Jane\OpenApi\Model\HeaderParameterSubSchema();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -58,7 +58,7 @@ class HeaderParameterSubSchemaNormalizer extends SerializerAwareNormalizer imple
             $object->setFormat($data->{'format'});
         }
         if (isset($data->{'items'})) {
-            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\PrimitivesItems', 'raw', $context));
+            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems', 'raw', $context));
         }
         if (isset($data->{'collectionFormat'})) {
             $object->setCollectionFormat($data->{'collectionFormat'});

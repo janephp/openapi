@@ -1,9 +1,9 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Resource;
+namespace Joli\Jane\OpenApi\Tests\Expected\Resource;
 
-use Joli\Jane\Swagger\Client\QueryParam;
-use Joli\Jane\Swagger\Client\Resource;
+use Joli\Jane\OpenApi\Client\QueryParam;
+use Joli\Jane\OpenApi\Client\Resource;
 
 class DefaultResource extends Resource
 {

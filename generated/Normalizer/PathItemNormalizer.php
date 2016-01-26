@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\PathItem') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\PathItem') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\PathItem) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\PathItem) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\PathItem();
+        $object = new \Joli\Jane\OpenApi\Model\PathItem();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -43,47 +43,47 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setDollarRef($data->{'$ref'});
         }
         if (isset($data->{'get'})) {
-            $object->setGet($this->serializer->deserialize($data->{'get'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setGet($this->serializer->deserialize($data->{'get'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'put'})) {
-            $object->setPut($this->serializer->deserialize($data->{'put'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setPut($this->serializer->deserialize($data->{'put'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'post'})) {
-            $object->setPost($this->serializer->deserialize($data->{'post'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setPost($this->serializer->deserialize($data->{'post'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'delete'})) {
-            $object->setDelete($this->serializer->deserialize($data->{'delete'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setDelete($this->serializer->deserialize($data->{'delete'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'options'})) {
-            $object->setOptions($this->serializer->deserialize($data->{'options'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setOptions($this->serializer->deserialize($data->{'options'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'head'})) {
-            $object->setHead($this->serializer->deserialize($data->{'head'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setHead($this->serializer->deserialize($data->{'head'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'patch'})) {
-            $object->setPatch($this->serializer->deserialize($data->{'patch'}, 'Joli\\Jane\\Swagger\\Model\\Operation', 'raw', $context));
+            $object->setPatch($this->serializer->deserialize($data->{'patch'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
         }
         if (isset($data->{'parameters'})) {
             $values_105 = [];
             foreach ($data->{'parameters'} as $value_106) {
                 $value_107 = $value_106;
                 if (is_object($value_106) and isset($value_106->{'name'}) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'body') and isset($value_106->{'schema'})) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\BodyParameter', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter', 'raw', $context);
                 }
                 if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'header') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\HeaderParameterSubSchema', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema', 'raw', $context);
                 }
                 if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'formData') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array' or $value_106->{'type'} == 'file'))) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\FormDataParameterSubSchema', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema', 'raw', $context);
                 }
                 if (is_object($value_106) and (isset($value_106->{'in'}) and $value_106->{'in'} == 'query') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\QueryParameterSubSchema', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema', 'raw', $context);
                 }
                 if (is_object($value_106) and (isset($value_106->{'required'}) and $value_106->{'required'} == '1') and (isset($value_106->{'in'}) and $value_106->{'in'} == 'path') and isset($value_106->{'name'}) and (isset($value_106->{'type'}) and ($value_106->{'type'} == 'string' or $value_106->{'type'} == 'number' or $value_106->{'type'} == 'boolean' or $value_106->{'type'} == 'integer' or $value_106->{'type'} == 'array'))) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\PathParameterSubSchema', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema', 'raw', $context);
                 }
                 if (is_object($value_106) and isset($value_106->{'$ref'})) {
-                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\Swagger\\Model\\JsonReference', 'raw', $context);
+                    $value_107 = $this->serializer->deserialize($value_106, 'Joli\\Jane\\OpenApi\\Model\\JsonReference', 'raw', $context);
                 }
                 $values_105[] = $value_107;
             }

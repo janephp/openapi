@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Normalizer;
+namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Model\\Schema') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Schema') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Model\Schema) {
+        if ($data instanceof \Joli\Jane\OpenApi\Model\Schema) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Model\Schema();
+        $object = new \Joli\Jane\OpenApi\Model\Schema();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
@@ -110,7 +110,7 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (isset($data->{'additionalProperties'})) {
             $value_149 = $data->{'additionalProperties'};
             if (is_object($data->{'additionalProperties'})) {
-                $value_149 = $this->serializer->deserialize($data->{'additionalProperties'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $value_149 = $this->serializer->deserialize($data->{'additionalProperties'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             if (is_bool($data->{'additionalProperties'})) {
                 $value_149 = $data->{'additionalProperties'};
@@ -134,12 +134,12 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (isset($data->{'items'})) {
             $value_153 = $data->{'items'};
             if (is_object($data->{'items'})) {
-                $value_153 = $this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $value_153 = $this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             if (is_array($data->{'items'})) {
                 $values_154 = [];
                 foreach ($data->{'items'} as $value_155) {
-                    $values_154[] = $this->serializer->deserialize($value_155, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                    $values_154[] = $this->serializer->deserialize($value_155, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
                 }
                 $value_153 = $values_154;
             }
@@ -148,14 +148,14 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (isset($data->{'allOf'})) {
             $values_156 = [];
             foreach ($data->{'allOf'} as $value_157) {
-                $values_156[] = $this->serializer->deserialize($value_157, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $values_156[] = $this->serializer->deserialize($value_157, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             $object->setAllOf($values_156);
         }
         if (isset($data->{'properties'})) {
             $values_158 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'properties'} as $key_160 => $value_159) {
-                $values_158[$key_160] = $this->serializer->deserialize($value_159, 'Joli\\Jane\\Swagger\\Model\\Schema', 'raw', $context);
+                $values_158[$key_160] = $this->serializer->deserialize($value_159, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             $object->setProperties($values_158);
         }
@@ -166,10 +166,10 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setReadOnly($data->{'readOnly'});
         }
         if (isset($data->{'xml'})) {
-            $object->setXml($this->serializer->deserialize($data->{'xml'}, 'Joli\\Jane\\Swagger\\Model\\Xml', 'raw', $context));
+            $object->setXml($this->serializer->deserialize($data->{'xml'}, 'Joli\\Jane\\OpenApi\\Model\\Xml', 'raw', $context));
         }
         if (isset($data->{'externalDocs'})) {
-            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\Swagger\\Model\\ExternalDocs', 'raw', $context));
+            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
         }
         if (isset($data->{'example'})) {
             $object->setExample($data->{'example'});

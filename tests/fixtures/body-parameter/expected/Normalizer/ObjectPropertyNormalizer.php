@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger\Tests\Expected\Normalizer;
+namespace Joli\Jane\OpenApi\Tests\Expected\Normalizer;
 
 use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -11,7 +11,7 @@ class ObjectPropertyNormalizer extends SerializerAwareNormalizer implements Deno
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\Swagger\\Tests\\Expected\\Model\\ObjectProperty') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty') {
             return false;
         }
 
@@ -20,7 +20,7 @@ class ObjectPropertyNormalizer extends SerializerAwareNormalizer implements Deno
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\Swagger\Tests\Expected\Model\ObjectProperty) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\ObjectProperty) {
             return true;
         }
 
@@ -35,7 +35,7 @@ class ObjectPropertyNormalizer extends SerializerAwareNormalizer implements Deno
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
         }
-        $object = new \Joli\Jane\Swagger\Tests\Expected\Model\ObjectProperty();
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\ObjectProperty();
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }

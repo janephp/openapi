@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\Swagger;
+namespace Joli\Jane\OpenApi;
 
 use Joli\Jane\Encoder\RawEncoder;
 use Joli\Jane\Generator\Context\Context;
@@ -9,11 +9,11 @@ use Joli\Jane\Generator\ModelGenerator;
 use Joli\Jane\Generator\Naming;
 use Joli\Jane\Generator\NormalizerGenerator;
 use Joli\Jane\Guesser\ChainGuesser;
-use Joli\Jane\Swagger\Generator\ClientGenerator;
-use Joli\Jane\Swagger\Generator\GeneratorFactory;
-use Joli\Jane\Swagger\Guesser\SwaggerSchema\GuesserFactory;
-use Joli\Jane\Swagger\Model\Swagger;
-use Joli\Jane\Swagger\Normalizer\NormalizerFactory;
+use Joli\Jane\OpenApi\Generator\ClientGenerator;
+use Joli\Jane\OpenApi\Generator\GeneratorFactory;
+use Joli\Jane\OpenApi\Guesser\OpenApiSchema\GuesserFactory;
+use Joli\Jane\OpenApi\Model\OpenApi;
+use Joli\Jane\OpenApi\Normalizer\NormalizerFactory;
 use PhpParser\PrettyPrinterAbstract;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -26,7 +26,7 @@ use Symfony\CS\Console\ConfigurationResolver;
 use Symfony\CS\Finder;
 use Symfony\CS\Fixer;
 
-class JaneSwagger
+class JaneOpenApi
 {
     /**
      * @var \Symfony\Component\Serializer\SerializerInterface
@@ -85,16 +85,16 @@ class JaneSwagger
     /**
      * Return a list of class guessed
      *
-     * @param string $swaggerSpec
+     * @param string $openApiSpec
      * @param string $name
      * @param string $namespace
      * @param string $directory
      *
      * @return Context
      */
-    public function createContext($swaggerSpec, $name, $namespace, $directory)
+    public function createContext($openApiSpec, $name, $namespace, $directory)
     {
-        $schema  = $this->serializer->deserialize(file_get_contents($swaggerSpec), 'Joli\Jane\Swagger\Model\Swagger', 'json');
+        $schema  = $this->serializer->deserialize(file_get_contents($openApiSpec), 'Joli\Jane\OpenApi\Model\OpenApi', 'json');
         $classes = $this->chainGuesser->guessClass($schema, $name);
 
         foreach ($classes as $class) {
@@ -113,16 +113,16 @@ class JaneSwagger
     /**
      * Generate a list of files
      *
-     * @param string $swaggerSpec Location of the specification
+     * @param string $openApiSpec Location of the specification
      * @param string $namespace   Namespace of the library
      * @param string $directory   Path for the root directory of the generated files
      *
      * @return File[]
      */
-    public function generate($swaggerSpec, $namespace, $directory)
+    public function generate($openApiSpec, $namespace, $directory)
     {
-        /** @var Swagger $swagger */
-        $context = $this->createContext($swaggerSpec, 'Client', $namespace, $directory);
+        /** @var OpenApi $openApi */
+        $context = $this->createContext($openApiSpec, 'Client', $namespace, $directory);
         $files   = [];
         $files   = array_merge($files, $this->modelGenerator->generate($context->getRootReference(), 'Client', $context));
         $files   = array_merge($files, $this->normalizerGenerator->generate($context->getRootReference(), 'Client', $context));

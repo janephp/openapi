@@ -1,15 +1,15 @@
 <?php
 
-namespace Joli\Jane\Swagger\Generator;
+namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Reference\Resolver;
-use Joli\Jane\Swagger\Generator\Parameter\BodyParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\FormDataParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\HeaderParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\PathParameterGenerator;
-use Joli\Jane\Swagger\Generator\Parameter\QueryParameterGenerator;
-use Joli\Jane\Swagger\Operation\Operation;
+use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\HeaderParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\PathParameterGenerator;
+use Joli\Jane\OpenApi\Generator\Parameter\QueryParameterGenerator;
+use Joli\Jane\OpenApi\Operation\Operation;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
@@ -113,4 +113,4 @@ class OperationGenerator
             'comments' => [new Comment\Doc(implode("\n", $documentation))]
         ]);
     }
-} 
+}
