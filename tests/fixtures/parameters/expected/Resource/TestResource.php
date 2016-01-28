@@ -134,9 +134,9 @@ class TestResource extends Resource
     {
         $queryParam = new QueryParam();
         $url        = '/test-path/{testString}/{testInteger}/{testFloat}';
-        $url        = str_replace('{testString}', $testString, $url);
-        $url        = str_replace('{testInteger}', $testInteger, $url);
-        $url        = str_replace('{testFloat}', $testFloat, $url);
+        $url        = str_replace('{testString}', urlencode($testString), $url);
+        $url        = str_replace('{testInteger}', urlencode($testInteger), $url);
+        $url        = str_replace('{testFloat}', urlencode($testFloat), $url);
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);

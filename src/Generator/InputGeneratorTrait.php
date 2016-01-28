@@ -151,7 +151,9 @@ trait InputGeneratorTrait
                     // $url = str_replace('{param}', $param, $url)
                     $statements[] = new Expr\Assign($urlVariable, new Expr\FuncCall(new Name('str_replace'), [
                         new Arg(new Scalar\String_('{' . $parameter->getName() . '}')),
-                        new Arg(new Expr\Variable(Inflector::camelize($parameter->getName()))),
+                        new Arg(new Expr\FuncCall(new Name('urlencode'), [
+                            new Arg(new Expr\Variable(Inflector::camelize($parameter->getName()))),
+                        ])),
                         new Arg($urlVariable)
                     ]));
                 }
