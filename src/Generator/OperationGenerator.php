@@ -3,6 +3,7 @@
 namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\Reference\Reference;
 use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
@@ -74,6 +75,10 @@ class OperationGenerator
         $outputTypes = ["\\Psr\\Http\\Message\\ResponseInterface"];
 
         foreach ($operation->getOperation()->getResponses() as $status => $response) {
+            if ($response instanceof Reference) {
+                $response = $this->resolver->resolve($response);
+            }
+
             list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement($status, $response->getSchema(), $context);
 
             if (null !== $outputType) {
