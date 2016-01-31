@@ -20,11 +20,11 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\CS\Config;
-use Symfony\CS\ConfigInterface;
-use Symfony\CS\Console\ConfigurationResolver;
-use Symfony\CS\Finder;
-use Symfony\CS\Fixer;
+use PhpCsFixer\Config;
+use PhpCsFixer\ConfigInterface;
+use PhpCsFixer\Console\ConfigurationResolver;
+use PhpCsFixer\Finder;
+use PhpCsFixer\Fixer;
 
 class JaneOpenApi
 {
@@ -165,7 +165,7 @@ class JaneOpenApi
      */
     protected function fix($directory)
     {
-        if (!class_exists('Symfony\CS\Config')) {
+        if (!class_exists('PhpCsFixer\Config')) {
             return;
         }
 
