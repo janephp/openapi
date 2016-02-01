@@ -10,12 +10,12 @@ class TestResource extends Resource
     /**
      * @param array $parameters {
      *
-     *     @var string $testString 
-     *     @var int $testInteger 
-     *     @var float $testFloat 
-     *     @var array $testArray 
-     *     @var string $testRequired 
-     *     @var string $testDefault 
+     *     @var string $testString
+     *     @var int $testInteger
+     *     @var float $testFloat
+     *     @var array $testArray
+     *     @var string $testRequired
+     *     @var string $testDefault
      * }
      *
      * @param string $fetch Fetch mode (object or response)
@@ -44,12 +44,12 @@ class TestResource extends Resource
     /**
      * @param array $parameters {
      *
-     *     @var string $testString 
-     *     @var int $testInteger 
-     *     @var float $testFloat 
-     *     @var array $testArray 
-     *     @var string $testRequired 
-     *     @var string $testDefault 
+     *     @var string $testString
+     *     @var int $testInteger
+     *     @var float $testFloat
+     *     @var array $testArray
+     *     @var string $testRequired
+     *     @var string $testDefault
      * }
      *
      * @param string $fetch Fetch mode (object or response)
@@ -84,12 +84,12 @@ class TestResource extends Resource
     /**
      * @param array $parameters {
      *
-     *     @var string $testString 
-     *     @var int $testInteger 
-     *     @var float $testFloat 
-     *     @var array $testArray 
-     *     @var string $testRequired 
-     *     @var string $testDefault 
+     *     @var string $testString
+     *     @var int $testInteger
+     *     @var float $testFloat
+     *     @var array $testArray
+     *     @var string $testRequired
+     *     @var string $testDefault
      * }
      *
      * @param string $fetch Fetch mode (object or response)

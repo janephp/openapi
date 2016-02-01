@@ -14,9 +14,9 @@ use PhpParser\Node\Scalar;
 trait OutputGeneratorTrait
 {
     /**
-     * @var Resolver
+     * @return Resolver
      */
-    protected $resolver;
+    abstract protected function getResolver();
 
     /**
      * @param         $status
@@ -31,11 +31,11 @@ trait OutputGeneratorTrait
         $array          = false;
 
         if ($schema instanceof Reference) {
-            $resolvedSchema = $this->resolver->resolve($schema);
+            $resolvedSchema = $this->getResolver()->resolve($schema);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            $resolvedSchema = $this->resolver->resolve($schema->getItems());
+            $resolvedSchema = $this->getResolver()->resolve($schema->getItems());
             $array          = true;
         }
 

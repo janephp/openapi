@@ -11,6 +11,7 @@ use Joli\Jane\OpenApi\Model\HeaderParameterSubSchema;
 use Joli\Jane\OpenApi\Model\PathParameterSubSchema;
 use Joli\Jane\OpenApi\Model\QueryParameterSubSchema;
 use Joli\Jane\OpenApi\Operation\Operation;
+use Joli\Jane\Reference\Resolver;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
@@ -45,6 +46,11 @@ trait InputGeneratorTrait
     protected $queryParameterGenerator;
 
     /**
+     * @return Resolver
+     */
+    abstract protected function getResolver();
+
+    /**
      * Create the query param statements and documentation
      *
      * @param Operation $operation
@@ -61,6 +67,10 @@ trait InputGeneratorTrait
 
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
+                if ($parameter instanceof Reference) {
+                    $parameter = $this->getResolver()->resolve($parameter);
+                }
+
                 if ($parameter instanceof FormDataParameterSubSchema) {
                     $queryParamStatements = array_merge($queryParamStatements, $this->formDataParameterGenerator->generateQueryParamStatements($parameter, $queryParamVariable));
                     $queryParamDocumentation[] = $this->formDataParameterGenerator->generateQueryDocParameter($parameter);
@@ -97,6 +107,10 @@ trait InputGeneratorTrait
 
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
+                if ($parameter instanceof Reference) {
+                    $parameter = $this->getResolver()->resolve($parameter);
+                }
+
                 if ($parameter instanceof PathParameterSubSchema) {
                     $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter, $context);
                     $documentationParams[] = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter, $context));
@@ -104,6 +118,10 @@ trait InputGeneratorTrait
             }
 
             foreach ($operation->getOperation()->getParameters() as $parameter) {
+                if ($parameter instanceof Reference) {
+                    $parameter = $this->getResolver()->resolve($parameter);
+                }
+
                 if ($parameter instanceof BodyParameter) {
                     $methodParameters[] = $this->bodyParameterGenerator->generateMethodParameter($parameter, $context);
                     $documentationParams[] = sprintf(' * @param %s', $this->bodyParameterGenerator->generateDocParameter($parameter, $context));
@@ -147,6 +165,10 @@ trait InputGeneratorTrait
 
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
+                if ($parameter instanceof Reference) {
+                    $parameter = $this->getResolver()->resolve($parameter);
+                }
+
                 if ($parameter instanceof PathParameterSubSchema) {
                     // $url = str_replace('{param}', $param, $url)
                     $statements[] = new Expr\Assign($urlVariable, new Expr\FuncCall(new Name('str_replace'), [
