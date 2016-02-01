@@ -11,7 +11,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\Schema
+     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\Schema|\Joli\Jane\OpenApi\Tests\Expected\Model\Error
      */
     public function getTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -25,6 +25,12 @@ class TestResource extends Resource
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
                 return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'json');
+            }
+            if ('400' == $response->getStatusCode()) {
+                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Error', 'json');
+            }
+            if ('404' == $response->getStatusCode()) {
+                return $this->serializer->deserialize($response->getBody()->getContents(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Error', 'json');
             }
         }
 

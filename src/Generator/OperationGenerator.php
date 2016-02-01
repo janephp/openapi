@@ -87,7 +87,10 @@ class OperationGenerator
             list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement($status, $response->getSchema(), $context);
 
             if (null !== $outputType) {
-                $outputTypes[] = $outputType;
+                if (!in_array($outputType, $outputTypes)) {
+                    $outputTypes[] = $outputType;
+                }
+
                 $outputStatements[] = $ifStatus;
             }
         }
