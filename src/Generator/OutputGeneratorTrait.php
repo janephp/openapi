@@ -60,7 +60,7 @@ trait OutputGeneratorTrait
                         new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
                         'deserialize',
                         [
-                            new Arg(new Expr\MethodCall(new Expr\MethodCall(new Expr\Variable('response'), 'getBody'), 'getContents')),
+                            new Arg(new Expr\Cast\String_(new Expr\MethodCall(new Expr\Variable('response'), 'getBody'))),
                             new Arg(new Scalar\String_($class)),
                             new Arg(new Scalar\String_('json'))
                         ]
