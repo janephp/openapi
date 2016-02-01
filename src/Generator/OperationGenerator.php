@@ -23,6 +23,11 @@ class OperationGenerator
     use OutputGeneratorTrait;
     use InputGeneratorTrait;
 
+    /**
+     * @var Resolver
+     */
+    protected $resolver;
+
     public function __construct(Resolver $resolver, BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
     {
         $this->resolver                   = $resolver;
@@ -117,5 +122,13 @@ class OperationGenerator
         ], [
             'comments' => [new Comment\Doc(implode("\n", $documentation))]
         ]);
+    }
+
+    /**
+     * @return Resolver
+     */
+    protected function getResolver()
+    {
+        return $this->resolver;
     }
 }

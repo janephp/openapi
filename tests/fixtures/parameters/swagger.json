@@ -1,5 +1,13 @@
 {
     "swagger": "2.0",
+    "parameters": {
+        "testString": {
+            "name": "testString",
+            "in": "path",
+            "type": "string",
+            "required": true
+        }
+    },
     "paths": {
         "/test-query": {
             "get": {
@@ -147,10 +155,7 @@
                 "operationId": "Test Path Parameters",
                 "parameters": [
                     {
-                        "name": "testString",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
+                        "$ref": "#/parameters/testString"
                     },
                     {
                         "name": "testInteger",
