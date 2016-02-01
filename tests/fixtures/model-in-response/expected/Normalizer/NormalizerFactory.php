@@ -14,6 +14,7 @@ class NormalizerFactory
         $normalizers[] = new NormalizerArray();
         $normalizers[] = new SchemaNormalizer();
         $normalizers[] = new ObjectPropertyNormalizer();
+        $normalizers[] = new ErrorNormalizer();
 
         return $normalizers;
     }
