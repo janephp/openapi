@@ -17,6 +17,7 @@ class GuesserFactory
         $resolver = new Resolver($serializer);
 
         $chainGuesser = new ChainGuesser();
+        $chainGuesser->addGuesser(new DateTimeGuesser());
         $chainGuesser->addGuesser(new ReferenceGuesser($resolver));
         $chainGuesser->addGuesser(new OpenApiGuesser());
         $chainGuesser->addGuesser(new SchemaGuesser($naming, $resolver));

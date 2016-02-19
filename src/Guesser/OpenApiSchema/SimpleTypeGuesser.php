@@ -8,10 +8,15 @@ use Joli\Jane\OpenApi\Model\Schema;
 class SimpleTypeGuesser extends BaseSimpleTypeGuesser
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportObject($object)
     {
-        return ($object instanceof Schema) && in_array($object->getType(), $this->typesSupported);
+        return ($object instanceof Schema)
+            &&
+            in_array($object->getType(), $this->typesSupported)
+            &&
+            !in_array($object->getFormat(), $this->excludeFormat)
+        ;
     }
 }

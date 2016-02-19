@@ -7,6 +7,10 @@
                 "stringProperty": {
                     "type": "string"
                 },
+                "dateProperty": {
+                    "type": "string",
+                    "format": "date-time"
+                },
                 "integerProperty": {
                     "type": "integer"
                 },

@@ -9,6 +9,10 @@ class Schema
      */
     protected $stringProperty;
     /**
+     * @var \DateTime
+     */
+    protected $dateProperty;
+    /**
      * @var int
      */
     protected $integerProperty;
@@ -49,6 +53,26 @@ class Schema
     public function setStringProperty($stringProperty = null)
     {
         $this->stringProperty = $stringProperty;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateProperty()
+    {
+        return $this->dateProperty;
+    }
+
+    /**
+     * @param \DateTime $dateProperty
+     *
+     * @return self
+     */
+    public function setDateProperty(\DateTime $dateProperty = null)
+    {
+        $this->dateProperty = $dateProperty;
 
         return $this;
     }

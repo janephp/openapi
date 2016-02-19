@@ -39,7 +39,7 @@ class ErrorNormalizer extends SerializerAwareNormalizer implements DenormalizerI
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'message'})) {
+        if (property_exists($data, 'message')) {
             $object->setMessage($data->{'message'});
         }
 

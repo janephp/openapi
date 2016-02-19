@@ -39,33 +39,33 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'stringProperty'})) {
+        if (property_exists($data, 'stringProperty')) {
             $object->setStringProperty($data->{'stringProperty'});
         }
-        if (isset($data->{'integerProperty'})) {
+        if (property_exists($data, 'integerProperty')) {
             $object->setIntegerProperty($data->{'integerProperty'});
         }
-        if (isset($data->{'floatProperty'})) {
+        if (property_exists($data, 'floatProperty')) {
             $object->setFloatProperty($data->{'floatProperty'});
         }
-        if (isset($data->{'arrayProperty'})) {
+        if (property_exists($data, 'arrayProperty')) {
             $values = [];
             foreach ($data->{'arrayProperty'} as $value) {
                 $values[] = $value;
             }
             $object->setArrayProperty($values);
         }
-        if (isset($data->{'mapProperty'})) {
-            $values_0 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+        if (property_exists($data, 'mapProperty')) {
+            $values_1 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'mapProperty'} as $key => $value_1) {
-                $values_0[$key] = $value_1;
+                $values_1[$key] = $value_1;
             }
-            $object->setMapProperty($values_0);
+            $object->setMapProperty($values_1);
         }
-        if (isset($data->{'objectProperty'})) {
+        if (property_exists($data, 'objectProperty')) {
             $object->setObjectProperty($this->serializer->deserialize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty', 'raw', $context));
         }
-        if (isset($data->{'objectRefProperty'})) {
+        if (property_exists($data, 'objectRefProperty')) {
             $object->setObjectRefProperty($this->serializer->deserialize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'raw', $context));
         }
 
@@ -85,18 +85,18 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $data->{'floatProperty'} = $object->getFloatProperty();
         }
         if (null !== $object->getArrayProperty()) {
-            $values_2 = [];
-            foreach ($object->getArrayProperty() as $value_3) {
-                $values_2[] = $value_3;
+            $values = [];
+            foreach ($object->getArrayProperty() as $value) {
+                $values[] = $value;
             }
-            $data->{'arrayProperty'} = $values_2;
+            $data->{'arrayProperty'} = $values;
         }
         if (null !== $object->getMapProperty()) {
-            $values_4 = new \stdClass();
-            foreach ($object->getMapProperty() as $key_6 => $value_5) {
-                $values_4->{$key_6} = $value_5;
+            $values_1 = new \stdClass();
+            foreach ($object->getMapProperty() as $key => $value_1) {
+                $values_1->{$key} = $value_1;
             }
-            $data->{'mapProperty'} = $values_4;
+            $data->{'mapProperty'} = $values_1;
         }
         if (null !== $object->getObjectProperty()) {
             $data->{'objectProperty'} = $this->serializer->serialize($object->getObjectProperty(), 'raw', $context);

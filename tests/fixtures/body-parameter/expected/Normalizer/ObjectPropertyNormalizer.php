@@ -39,7 +39,7 @@ class ObjectPropertyNormalizer extends SerializerAwareNormalizer implements Deno
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'stringProperty'})) {
+        if (property_exists($data, 'stringProperty')) {
             $object->setStringProperty($data->{'stringProperty'});
         }
 
