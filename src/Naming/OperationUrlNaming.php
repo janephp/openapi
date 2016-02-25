@@ -11,7 +11,7 @@ class OperationUrlNaming implements OperationNamingInterface
         $prefix = strtolower($operation->getMethod());
 
         $methodName = preg_replace_callback(
-            '/((?P<separator>[^a-zA-Z0-9])+(?P<part>[a-zA-Z0-9]*))/',
+            '/((?P<separator>[^a-zA-Z0-9{}])+(?P<part>[a-zA-Z0-9{}]*))/',
             function($matches) {
                 if ($matches['separator'] === '.') {
                     return '';
@@ -20,6 +20,14 @@ class OperationUrlNaming implements OperationNamingInterface
                 return ucfirst($matches['part']);
             },
             $operation->getPath()
+        );
+
+        $methodName = preg_replace_callback(
+            '/{(?P<parameter>[^{}]+)}/',
+            function($matches) {
+                return 'By' . ucfirst($matches['parameter']);
+            },
+            $methodName
         );
 
         return $prefix . $methodName;

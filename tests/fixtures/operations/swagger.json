@@ -20,6 +20,15 @@
                 }
             }
         },
+        "/test-operation-url/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
         "/test-operation-url-with-extension.php": {
             "get": {
                 "responses": {
