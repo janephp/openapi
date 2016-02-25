@@ -3,6 +3,8 @@
 namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Jane;
+use Joli\Jane\OpenApi\Naming\ChainOperationNaming;
+use Joli\Jane\OpenApi\Naming\OperationUrlNaming;
 use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
@@ -29,7 +31,11 @@ class GeneratorFactory
 
         $operation = new OperationGenerator($resolver, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
         $operationManager = new OperationManager();
-        $client = new ClientGenerator($operationManager, $operation, new OperationIdNaming());
+        $operationNaming = new ChainOperationNaming([
+            new OperationIdNaming(),
+            new OperationUrlNaming(),
+        ]);
+        $client = new ClientGenerator($operationManager, $operation, $operationNaming);
 
         return $client;
     }

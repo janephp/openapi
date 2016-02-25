@@ -11,6 +11,24 @@
                 }
             }
         },
+        "/test-operation-url": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
+        "/test-operation-url-with-extension.php": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
         "/test-get": {
             "get": {
                 "operationId": "Get Test",

@@ -9,27 +9,19 @@ class OperationUrlNaming implements OperationNamingInterface
     public function generateFunctionName(Operation $operation)
     {
         $prefix = strtolower($operation->getMethod());
-        $parts  = explode('/', $operation->getPath());
-        $parts  = array_filter($parts, function ($part) {
-            $part = trim($part);
 
-            if (empty($part)) {
-                return false;
-            }
+        $methodName = preg_replace_callback(
+            '/((?P<separator>[^a-zA-Z0-9])+(?P<part>[a-zA-Z0-9]*))/',
+            function($matches) {
+                if ($matches['separator'] === '.') {
+                    return '';
+                }
 
-            if (preg_match('/^{(.+?)}$/', $part)) {
-                return false;
-            }
+                return ucfirst($matches['part']);
+            },
+            $operation->getPath()
+        );
 
-            return true;
-        });
-
-        $parts = array_map(function ($part) {
-            $part = trim($part);
-
-            return ucfirst($part);
-        }, $parts);
-
-        return $prefix . implode('', $parts);
+        return $prefix . $methodName;
     }
 }
