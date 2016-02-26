@@ -2,6 +2,9 @@
 
 namespace Joli\Jane\OpenApi\Naming;
 
+use Doctrine\Common\Inflector\Inflector;
+use Joli\Jane\OpenApi\Model\Response;
+use Joli\Jane\OpenApi\Model\Schema;
 use Joli\Jane\OpenApi\Operation\Operation;
 
 class OperationUrlNaming implements OperationNamingInterface
@@ -10,26 +13,36 @@ class OperationUrlNaming implements OperationNamingInterface
     {
         $prefix = strtolower($operation->getMethod());
 
-        $methodName = preg_replace_callback(
-            '/((?P<separator>[^a-zA-Z0-9{}])+(?P<part>[a-zA-Z0-9{}]*))/',
-            function($matches) {
-                if ($matches['separator'] === '.') {
-                    return '';
+        $response = $operation->getOperation()->getResponses()[200];
+
+        $shouldSingularize = !($response instanceof Response && $response->getSchema() instanceof Schema && $response->getSchema()->getType() === 'array');
+
+        preg_match_all('/(?P<separator>[^a-zA-Z0-9{}])+(?P<part>[a-zA-Z0-9{}]*)/', $operation->getPath(), $matches);
+
+        $methodNameParts = [];
+        $lastNonParameterPartIndex = 0;
+
+        foreach ($matches[0] as $index => $match) {
+            if ($matches['separator'][$index] === '.') {
+                continue;
+            }
+
+            $part = $matches['part'][$index];
+
+            if (preg_match_all('/{(?P<parameter>[^{}]+)}/', $part, $parameterMatches)) {
+                foreach($parameterMatches[0] as $parameterIndex => $parameterMatch) {
+                    $methodNameParts[] =  'By' . ucfirst($parameterMatches['parameter'][$parameterIndex]);
                 }
+            } else {
+                $methodNameParts[] = ucfirst($part);
+                $lastNonParameterPartIndex = count($methodNameParts) - 1;
+            }
+        }
 
-                return ucfirst($matches['part']);
-            },
-            $operation->getPath()
-        );
+        if ($shouldSingularize && count($methodNameParts) > 0) {
+            $methodNameParts[$lastNonParameterPartIndex] = Inflector::singularize($methodNameParts[$lastNonParameterPartIndex]);
+        }
 
-        $methodName = preg_replace_callback(
-            '/{(?P<parameter>[^{}]+)}/',
-            function($matches) {
-                return 'By' . ucfirst($matches['parameter']);
-            },
-            $methodName
-        );
-
-        return $prefix . $methodName;
+        return $prefix . ucfirst(implode('', $methodNameParts));
     }
 }

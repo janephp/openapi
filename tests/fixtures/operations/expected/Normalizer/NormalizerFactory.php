@@ -12,6 +12,7 @@ class NormalizerFactory
         $normalizers   = [];
         $normalizers[] = new ReferenceNormalizer();
         $normalizers[] = new NormalizerArray();
+        $normalizers[] = new ThingNormalizer();
 
         return $normalizers;
     }

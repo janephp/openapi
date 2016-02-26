@@ -116,6 +116,70 @@
                     "Test"
                 ]
             }
+        },
+        "/things": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thing"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/things/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thing"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/another-things": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "$ref": "#/definitions/Thing"
+                        }
+                    }
+                }
+            }
+        },
+        "/another-things/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "$ref": "#/definitions/Thing"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Thing": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
         }
     }
 }
