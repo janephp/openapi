@@ -11,6 +11,33 @@
                 }
             }
         },
+        "/test-operation-url": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
+        "/test-operation-url/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
+        "/test-operation-url-with-extension.php": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                }
+            }
+        },
         "/test-get": {
             "get": {
                 "operationId": "Get Test",
@@ -88,6 +115,70 @@
                 "tags": [
                     "Test"
                 ]
+            }
+        },
+        "/things": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thing"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/things/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thing"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/another-things": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "$ref": "#/definitions/Thing"
+                        }
+                    }
+                }
+            }
+        },
+        "/another-things/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "no error",
+                        "schema": {
+                            "$ref": "#/definitions/Thing"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Thing": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
             }
         }
     }
