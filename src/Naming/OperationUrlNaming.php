@@ -13,9 +13,17 @@ class OperationUrlNaming implements OperationNamingInterface
     {
         $prefix = strtolower($operation->getMethod());
 
-        $response = $operation->getOperation()->getResponses()[200];
+        $shouldSingularize = true;
 
-        $shouldSingularize = !($response instanceof Response && $response->getSchema() instanceof Schema && $response->getSchema()->getType() === 'array');
+        $responses = $operation->getOperation()->getResponses();
+
+        if ($responses instanceof \ArrayObject && isset($responses[200])) {
+            $response = $responses[200];
+
+            if ($response instanceof Response && $response->getSchema() instanceof Schema && $response->getSchema()->getType() === 'array') {
+                $shouldSingularize = false;
+            }
+        }
 
         preg_match_all('/(?P<separator>[^a-zA-Z0-9{}])+(?P<part>[a-zA-Z0-9{}]*)/', $operation->getPath(), $matches);
 
