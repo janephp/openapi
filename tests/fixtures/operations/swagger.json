@@ -170,6 +170,15 @@
                     }
                 }
             }
+        },
+        "/no-200-things": {
+            "post": {
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
     },
     "definitions": {

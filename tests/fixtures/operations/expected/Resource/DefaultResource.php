@@ -178,4 +178,23 @@ class DefaultResource extends Resource
 
         return $response;
     }
+
+    /**
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function postNo200Thing($parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/no-200-things';
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $queryParam->buildFormDataString($parameters);
+        $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response   = $this->httpClient->sendRequest($request);
+
+        return $response;
+    }
 }
