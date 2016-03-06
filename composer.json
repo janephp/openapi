@@ -29,7 +29,7 @@
         "jane/jane": "^1.2.0",
         "php-http/httplug": "^1.0",
         "php-http/message-factory": "^1.0",
-        "nikic/php-parser": "^1.4",
+        "nikic/php-parser": "^1.4|^2.0",
         "symfony/options-resolver": "^2.7|^3.0",
         "symfony/console": "^2.3|^3.0",
         "doctrine/inflector": "^1.0"

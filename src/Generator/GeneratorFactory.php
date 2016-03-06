@@ -15,12 +15,18 @@ use Joli\Jane\OpenApi\Naming\OperationIdNaming;
 use Joli\Jane\OpenApi\Operation\OperationManager;
 use PhpParser\Lexer;
 use PhpParser\Parser;
+use PhpParser\ParserFactory;
 
 class GeneratorFactory
 {
     static public function build()
     {
-        $parser = new Parser(new Lexer());
+        if (class_exists('PhpParser\ParserFactory')) {
+            $parserFactory = new ParserFactory();
+            $parser = $parserFactory->create(ParserFactory::PREFER_PHP5);
+        } else {
+            $parser = new Parser(new Lexer());
+        }
 
         $resolver          = new Resolver(Jane::buildSerializer());
         $bodyParameter     = new BodyParameterGenerator($parser, $resolver);
