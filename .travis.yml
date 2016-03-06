@@ -4,7 +4,7 @@ sudo: false
 
 cache:
     directories:
-        - vendor
+        - ~/.composer/cache/files
 
 php:
     - 5.4
