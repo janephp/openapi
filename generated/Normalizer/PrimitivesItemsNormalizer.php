@@ -39,59 +39,59 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'type'})) {
+        if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
-        if (isset($data->{'format'})) {
+        if (property_exists($data, 'format')) {
             $object->setFormat($data->{'format'});
         }
-        if (isset($data->{'items'})) {
+        if (property_exists($data, 'items')) {
             $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems', 'raw', $context));
         }
-        if (isset($data->{'collectionFormat'})) {
+        if (property_exists($data, 'collectionFormat')) {
             $object->setCollectionFormat($data->{'collectionFormat'});
         }
-        if (isset($data->{'default'})) {
+        if (property_exists($data, 'default')) {
             $object->setDefault($data->{'default'});
         }
-        if (isset($data->{'maximum'})) {
+        if (property_exists($data, 'maximum')) {
             $object->setMaximum($data->{'maximum'});
         }
-        if (isset($data->{'exclusiveMaximum'})) {
+        if (property_exists($data, 'exclusiveMaximum')) {
             $object->setExclusiveMaximum($data->{'exclusiveMaximum'});
         }
-        if (isset($data->{'minimum'})) {
+        if (property_exists($data, 'minimum')) {
             $object->setMinimum($data->{'minimum'});
         }
-        if (isset($data->{'exclusiveMinimum'})) {
+        if (property_exists($data, 'exclusiveMinimum')) {
             $object->setExclusiveMinimum($data->{'exclusiveMinimum'});
         }
-        if (isset($data->{'maxLength'})) {
+        if (property_exists($data, 'maxLength')) {
             $object->setMaxLength($data->{'maxLength'});
         }
-        if (isset($data->{'minLength'})) {
+        if (property_exists($data, 'minLength')) {
             $object->setMinLength($data->{'minLength'});
         }
-        if (isset($data->{'pattern'})) {
+        if (property_exists($data, 'pattern')) {
             $object->setPattern($data->{'pattern'});
         }
-        if (isset($data->{'maxItems'})) {
+        if (property_exists($data, 'maxItems')) {
             $object->setMaxItems($data->{'maxItems'});
         }
-        if (isset($data->{'minItems'})) {
+        if (property_exists($data, 'minItems')) {
             $object->setMinItems($data->{'minItems'});
         }
-        if (isset($data->{'uniqueItems'})) {
+        if (property_exists($data, 'uniqueItems')) {
             $object->setUniqueItems($data->{'uniqueItems'});
         }
-        if (isset($data->{'enum'})) {
-            $values_181 = [];
-            foreach ($data->{'enum'} as $value_182) {
-                $values_181[] = $value_182;
+        if (property_exists($data, 'enum')) {
+            $values = [];
+            foreach ($data->{'enum'} as $value) {
+                $values[] = $value;
             }
-            $object->setEnum($values_181);
+            $object->setEnum($values);
         }
-        if (isset($data->{'multipleOf'})) {
+        if (property_exists($data, 'multipleOf')) {
             $object->setMultipleOf($data->{'multipleOf'});
         }
 
@@ -147,11 +147,11 @@ class PrimitivesItemsNormalizer extends SerializerAwareNormalizer implements Den
             $data->{'uniqueItems'} = $object->getUniqueItems();
         }
         if (null !== $object->getEnum()) {
-            $values_183 = [];
-            foreach ($object->getEnum() as $value_184) {
-                $values_183[] = $value_184;
+            $values = [];
+            foreach ($object->getEnum() as $value) {
+                $values[] = $value;
             }
-            $data->{'enum'} = $values_183;
+            $data->{'enum'} = $values;
         }
         if (null !== $object->getMultipleOf()) {
             $data->{'multipleOf'} = $object->getMultipleOf();

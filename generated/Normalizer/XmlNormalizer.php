@@ -39,19 +39,19 @@ class XmlNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'name'})) {
+        if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
-        if (isset($data->{'namespace'})) {
+        if (property_exists($data, 'namespace')) {
             $object->setNamespace($data->{'namespace'});
         }
-        if (isset($data->{'prefix'})) {
+        if (property_exists($data, 'prefix')) {
             $object->setPrefix($data->{'prefix'});
         }
-        if (isset($data->{'attribute'})) {
+        if (property_exists($data, 'attribute')) {
             $object->setAttribute($data->{'attribute'});
         }
-        if (isset($data->{'wrapped'})) {
+        if (property_exists($data, 'wrapped')) {
             $object->setWrapped($data->{'wrapped'});
         }
 

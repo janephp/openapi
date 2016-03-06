@@ -39,7 +39,7 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'$ref'})) {
+        if (property_exists($data, '$ref')) {
             $object->setDollarRef($data->{'$ref'});
         }
 

@@ -39,19 +39,19 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'name'})) {
+        if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
-        if (isset($data->{'in'})) {
+        if (property_exists($data, 'in')) {
             $object->setIn($data->{'in'});
         }
-        if (isset($data->{'required'})) {
+        if (property_exists($data, 'required')) {
             $object->setRequired($data->{'required'});
         }
-        if (isset($data->{'schema'})) {
+        if (property_exists($data, 'schema')) {
             $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context));
         }
 

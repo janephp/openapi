@@ -39,22 +39,22 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'title'})) {
+        if (property_exists($data, 'title')) {
             $object->setTitle($data->{'title'});
         }
-        if (isset($data->{'version'})) {
+        if (property_exists($data, 'version')) {
             $object->setVersion($data->{'version'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'termsOfService'})) {
+        if (property_exists($data, 'termsOfService')) {
             $object->setTermsOfService($data->{'termsOfService'});
         }
-        if (isset($data->{'contact'})) {
+        if (property_exists($data, 'contact')) {
             $object->setContact($this->serializer->deserialize($data->{'contact'}, 'Joli\\Jane\\OpenApi\\Model\\Contact', 'raw', $context));
         }
-        if (isset($data->{'license'})) {
+        if (property_exists($data, 'license')) {
             $object->setLicense($this->serializer->deserialize($data->{'license'}, 'Joli\\Jane\\OpenApi\\Model\\License', 'raw', $context));
         }
 

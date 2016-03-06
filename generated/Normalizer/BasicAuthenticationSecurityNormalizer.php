@@ -39,10 +39,10 @@ class BasicAuthenticationSecurityNormalizer extends SerializerAwareNormalizer im
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'type'})) {
+        if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
 

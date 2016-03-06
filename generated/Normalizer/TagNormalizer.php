@@ -39,13 +39,13 @@ class TagNormalizer extends SerializerAwareNormalizer implements DenormalizerInt
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'name'})) {
+        if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'externalDocs'})) {
+        if (property_exists($data, 'externalDocs')) {
             $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
         }
 

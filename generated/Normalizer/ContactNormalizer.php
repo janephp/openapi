@@ -39,13 +39,13 @@ class ContactNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'name'})) {
+        if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
-        if (isset($data->{'url'})) {
+        if (property_exists($data, 'url')) {
             $object->setUrl($data->{'url'});
         }
-        if (isset($data->{'email'})) {
+        if (property_exists($data, 'email')) {
             $object->setEmail($data->{'email'});
         }
 

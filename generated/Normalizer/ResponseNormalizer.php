@@ -39,32 +39,32 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'schema'})) {
-            $value_111 = $data->{'schema'};
+        if (property_exists($data, 'schema')) {
+            $value = $data->{'schema'};
             if (is_object($data->{'schema'})) {
-                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
+                $value = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
             }
             if (is_object($data->{'schema'}) and (isset($data->{'schema'}->{'type'}) and $data->{'schema'}->{'type'} == 'file')) {
-                $value_111 = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\FileSchema', 'raw', $context);
+                $value = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\FileSchema', 'raw', $context);
             }
-            $object->setSchema($value_111);
+            $object->setSchema($value);
         }
-        if (isset($data->{'headers'})) {
-            $values_112 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'headers'} as $key_114 => $value_113) {
-                $values_112[$key_114] = $this->serializer->deserialize($value_113, 'Joli\\Jane\\OpenApi\\Model\\Header', 'raw', $context);
+        if (property_exists($data, 'headers')) {
+            $values = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'headers'} as $key => $value_1) {
+                $values[$key] = $this->serializer->deserialize($value_1, 'Joli\\Jane\\OpenApi\\Model\\Header', 'raw', $context);
             }
-            $object->setHeaders($values_112);
+            $object->setHeaders($values);
         }
-        if (isset($data->{'examples'})) {
-            $values_115 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'examples'} as $key_117 => $value_116) {
-                $values_115[$key_117] = $value_116;
+        if (property_exists($data, 'examples')) {
+            $values_1 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'examples'} as $key_1 => $value_2) {
+                $values_1[$key_1] = $value_2;
             }
-            $object->setExamples($values_115);
+            $object->setExamples($values_1);
         }
 
         return $object;
@@ -77,28 +77,28 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'description'} = $object->getDescription();
         }
         if (null !== $object->getSchema()) {
-            $value_118 = $object->getSchema();
+            $value = $object->getSchema();
             if (is_object($object->getSchema())) {
-                $value_118 = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+                $value = $this->serializer->serialize($object->getSchema(), 'raw', $context);
             }
             if (is_object($object->getSchema())) {
-                $value_118 = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+                $value = $this->serializer->serialize($object->getSchema(), 'raw', $context);
             }
-            $data->{'schema'} = $value_118;
+            $data->{'schema'} = $value;
         }
         if (null !== $object->getHeaders()) {
-            $values_119 = new \stdClass();
-            foreach ($object->getHeaders() as $key_121 => $value_120) {
-                $values_119->{$key_121} = $this->serializer->serialize($value_120, 'raw', $context);
+            $values = new \stdClass();
+            foreach ($object->getHeaders() as $key => $value_1) {
+                $values->{$key} = $this->serializer->serialize($value_1, 'raw', $context);
             }
-            $data->{'headers'} = $values_119;
+            $data->{'headers'} = $values;
         }
         if (null !== $object->getExamples()) {
-            $values_122 = new \stdClass();
-            foreach ($object->getExamples() as $key_124 => $value_123) {
-                $values_122->{$key_124} = $value_123;
+            $values_1 = new \stdClass();
+            foreach ($object->getExamples() as $key_1 => $value_2) {
+                $values_1->{$key_1} = $value_2;
             }
-            $data->{'examples'} = $values_122;
+            $data->{'examples'} = $values_1;
         }
 
         return $data;

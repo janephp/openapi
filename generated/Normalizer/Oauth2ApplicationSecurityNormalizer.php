@@ -39,23 +39,23 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'type'})) {
+        if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
-        if (isset($data->{'flow'})) {
+        if (property_exists($data, 'flow')) {
             $object->setFlow($data->{'flow'});
         }
-        if (isset($data->{'scopes'})) {
-            $values_197 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'scopes'} as $key_199 => $value_198) {
-                $values_197[$key_199] = $value_198;
+        if (property_exists($data, 'scopes')) {
+            $values = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'scopes'} as $key => $value) {
+                $values[$key] = $value;
             }
-            $object->setScopes($values_197);
+            $object->setScopes($values);
         }
-        if (isset($data->{'tokenUrl'})) {
+        if (property_exists($data, 'tokenUrl')) {
             $object->setTokenUrl($data->{'tokenUrl'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
 
@@ -72,11 +72,11 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
             $data->{'flow'} = $object->getFlow();
         }
         if (null !== $object->getScopes()) {
-            $values_200 = new \stdClass();
-            foreach ($object->getScopes() as $key_202 => $value_201) {
-                $values_200->{$key_202} = $value_201;
+            $values = new \stdClass();
+            foreach ($object->getScopes() as $key => $value) {
+                $values->{$key} = $value;
             }
-            $data->{'scopes'} = $values_200;
+            $data->{'scopes'} = $values;
         }
         if (null !== $object->getTokenUrl()) {
             $data->{'tokenUrl'} = $object->getTokenUrl();

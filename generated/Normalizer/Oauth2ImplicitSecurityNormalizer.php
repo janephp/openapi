@@ -39,23 +39,23 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'type'})) {
+        if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
-        if (isset($data->{'flow'})) {
+        if (property_exists($data, 'flow')) {
             $object->setFlow($data->{'flow'});
         }
-        if (isset($data->{'scopes'})) {
-            $values_185 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'scopes'} as $key_187 => $value_186) {
-                $values_185[$key_187] = $value_186;
+        if (property_exists($data, 'scopes')) {
+            $values = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data->{'scopes'} as $key => $value) {
+                $values[$key] = $value;
             }
-            $object->setScopes($values_185);
+            $object->setScopes($values);
         }
-        if (isset($data->{'authorizationUrl'})) {
+        if (property_exists($data, 'authorizationUrl')) {
             $object->setAuthorizationUrl($data->{'authorizationUrl'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
 
@@ -72,11 +72,11 @@ class Oauth2ImplicitSecurityNormalizer extends SerializerAwareNormalizer impleme
             $data->{'flow'} = $object->getFlow();
         }
         if (null !== $object->getScopes()) {
-            $values_188 = new \stdClass();
-            foreach ($object->getScopes() as $key_190 => $value_189) {
-                $values_188->{$key_190} = $value_189;
+            $values = new \stdClass();
+            foreach ($object->getScopes() as $key => $value) {
+                $values->{$key} = $value;
             }
-            $data->{'scopes'} = $values_188;
+            $data->{'scopes'} = $values;
         }
         if (null !== $object->getAuthorizationUrl()) {
             $data->{'authorizationUrl'} = $object->getAuthorizationUrl();

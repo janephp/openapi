@@ -39,35 +39,35 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'format'})) {
+        if (property_exists($data, 'format')) {
             $object->setFormat($data->{'format'});
         }
-        if (isset($data->{'title'})) {
+        if (property_exists($data, 'title')) {
             $object->setTitle($data->{'title'});
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'default'})) {
+        if (property_exists($data, 'default')) {
             $object->setDefault($data->{'default'});
         }
-        if (isset($data->{'required'})) {
-            $values_177 = [];
-            foreach ($data->{'required'} as $value_178) {
-                $values_177[] = $value_178;
+        if (property_exists($data, 'required')) {
+            $values = [];
+            foreach ($data->{'required'} as $value) {
+                $values[] = $value;
             }
-            $object->setRequired($values_177);
+            $object->setRequired($values);
         }
-        if (isset($data->{'type'})) {
+        if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
-        if (isset($data->{'readOnly'})) {
+        if (property_exists($data, 'readOnly')) {
             $object->setReadOnly($data->{'readOnly'});
         }
-        if (isset($data->{'externalDocs'})) {
+        if (property_exists($data, 'externalDocs')) {
             $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
         }
-        if (isset($data->{'example'})) {
+        if (property_exists($data, 'example')) {
             $object->setExample($data->{'example'});
         }
 
@@ -90,11 +90,11 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $data->{'default'} = $object->getDefault();
         }
         if (null !== $object->getRequired()) {
-            $values_179 = [];
-            foreach ($object->getRequired() as $value_180) {
-                $values_179[] = $value_180;
+            $values = [];
+            foreach ($object->getRequired() as $value) {
+                $values[] = $value;
             }
-            $data->{'required'} = $values_179;
+            $data->{'required'} = $values;
         }
         if (null !== $object->getType()) {
             $data->{'type'} = $object->getType();

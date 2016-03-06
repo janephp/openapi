@@ -39,10 +39,10 @@ class ExternalDocsNormalizer extends SerializerAwareNormalizer implements Denorm
         if (!isset($context['rootSchema'])) {
             $context['rootSchema'] = $object;
         }
-        if (isset($data->{'description'})) {
+        if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
-        if (isset($data->{'url'})) {
+        if (property_exists($data, 'url')) {
             $object->setUrl($data->{'url'});
         }
 
