@@ -23,8 +23,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 use PhpCsFixer\Config;
 use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Console\ConfigurationResolver;
+use PhpCsFixer\Differ\NullDiffer;
+use PhpCsFixer\Error\ErrorsManager;
 use PhpCsFixer\Finder;
-use PhpCsFixer\Fixer;
+use PhpCsFixer\Linter\NullLinter;
+use PhpCsFixer\Runner\Runner;
 
 class JaneOpenApi
 {
@@ -200,9 +203,9 @@ class JaneOpenApi
         $finder->in($directory);
         $fixerConfig->finder($finder);
 
-        $fixer = new Fixer();
+        $runner = new Runner($fixerConfig, new NullDiffer(), null, new ErrorsManager(), new NullLinter(), false);
 
-        return $fixer->fix($fixerConfig);
+        return $runner->fix();
     }
 
     public static function build()
