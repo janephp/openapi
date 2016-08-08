@@ -2,6 +2,8 @@
 
 namespace Joli\Jane\OpenApi\Client;
 
+use Http\Client\Common\FlexibleHttpClient;
+use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -10,11 +12,12 @@ class Resource
 {
     const FETCH_RESPONSE = 'response';
     const FETCH_OBJECT   = 'object';
+    const FETCH_PROMISE  = 'promise';
 
     /**
-     * @var HttpClient
+     * @var HttpClient|HttpAsyncClient
      */
-    protected $httpClient;
+    protected $httpAsyncClient;
 
     /**
      * @var MessageFactory
@@ -26,9 +29,9 @@ class Resource
      */
     protected $serializer;
 
-    public function __construct(HttpClient $httpClient, MessageFactory $messageFactory, SerializerInterface $serializer)
+    public function __construct($httpClient, MessageFactory $messageFactory, SerializerInterface $serializer)
     {
-        $this->httpClient     = $httpClient;
+        $this->httpClient     = new FlexibleHttpClient($httpClient);
         $this->messageFactory = $messageFactory;
         $this->serializer     = $serializer;
     }

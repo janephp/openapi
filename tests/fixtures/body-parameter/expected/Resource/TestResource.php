@@ -22,7 +22,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $testString;
         $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
@@ -42,7 +46,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $this->serializer->serialize($testObject, 'json');
         $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
@@ -62,7 +70,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $testObjectList;
         $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }

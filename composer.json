@@ -29,6 +29,7 @@
         "jane/jane": "^1.2.0",
         "php-http/httplug": "^1.0",
         "php-http/message-factory": "^1.0",
+        "php-http/client-common": "^1.1",
         "nikic/php-parser": "^1.4|^2.0",
         "symfony/options-resolver": "^2.7|^3.0",
         "symfony/console": "^2.3|^3.0",
@@ -36,13 +37,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7",
-        "fabpot/php-cs-fixer": "^2.0@dev"
+        "friendsofphp/php-cs-fixer": "^2.0"
     },
     "conflict": {
-        "fabpot/php-cs-fixer": "<2.0"
+        "friendsofphp/php-cs-fixer": "<2.0"
     },
     "suggest": {
-        "fabpot/php-cs-fixer": "To have a nice formatting of the generated files"
+        "friendsofphp/php-cs-fixer": "To have a nice formatting of the generated files"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",

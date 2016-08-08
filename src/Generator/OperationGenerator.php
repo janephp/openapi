@@ -68,11 +68,24 @@ class OperationGenerator
                 ]
             )),
             // $response = $this->httpClient->sendRequest($request);
-            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(
+            new Expr\Assign(new Expr\Variable('promise'), new Expr\MethodCall(
                 new Expr\PropertyFetch(new Expr\Variable('this'), 'httpClient'),
-                'sendRequest',
+                'sendAsyncRequest',
                 [new Arg(new Expr\Variable('request'))]
-            ))
+            )),
+            // if ($fetch === self::FETCH_PROMISE) { return $promise }
+            new Stmt\If_(
+                new Expr\BinaryOp\Identical(new Expr\ConstFetch(new Name('self::FETCH_PROMISE')), new Expr\Variable('fetch')), [
+                    'stmts' => [
+                        new Stmt\Return_(new Expr\Variable('promise'))
+                    ]
+                ]
+            ),
+            // $response = $promise->wait();
+            new Expr\Assign(new Expr\Variable('response'), new Expr\MethodCall(
+                new Expr\Variable('promise'),
+                'wait'
+            )),
         ]);
 
         // Output

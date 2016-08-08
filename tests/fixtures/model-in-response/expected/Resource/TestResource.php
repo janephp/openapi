@@ -21,7 +21,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);
         $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
                 return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'json');
@@ -51,7 +55,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);
         $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
                 return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema[]', 'json');

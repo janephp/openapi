@@ -31,12 +31,16 @@ class TestResource extends Resource
         $queryParam->setDefault('testArray', null);
         $queryParam->setRequired('testRequired');
         $queryParam->setDefault('testDefault', 'test');
-        $url      = '/test-query';
-        $url      = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers  = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
-        $body     = $queryParam->buildFormDataString($parameters);
-        $request  = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $response = $this->httpClient->sendRequest($request);
+        $url     = '/test-query';
+        $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body    = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
@@ -71,12 +75,16 @@ class TestResource extends Resource
         $queryParam->setHeaderParameters(['testRequired']);
         $queryParam->setDefault('testDefault', 'test');
         $queryParam->setHeaderParameters(['testDefault']);
-        $url      = '/test-header';
-        $url      = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers  = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
-        $body     = $queryParam->buildFormDataString($parameters);
-        $request  = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $response = $this->httpClient->sendRequest($request);
+        $url     = '/test-header';
+        $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body    = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
@@ -111,12 +119,16 @@ class TestResource extends Resource
         $queryParam->setFormParameters(['testRequired']);
         $queryParam->setDefault('testDefault', 'test');
         $queryParam->setFormParameters(['testDefault']);
-        $url      = '/test-form';
-        $url      = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers  = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
-        $body     = $queryParam->buildFormDataString($parameters);
-        $request  = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $response = $this->httpClient->sendRequest($request);
+        $url     = '/test-form';
+        $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body    = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
@@ -141,7 +153,11 @@ class TestResource extends Resource
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);
         $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $response   = $this->httpClient->sendRequest($request);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
 
         return $response;
     }
