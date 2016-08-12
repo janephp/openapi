@@ -2,6 +2,9 @@
 
 namespace Joli\Jane\OpenApi;
 
+use Fitbug\SymfonySerializer\YamlEncoderDecoder\YamlDecode;
+use Fitbug\SymfonySerializer\YamlEncoderDecoder\YamlEncode;
+use Fitbug\SymfonySerializer\YamlEncoderDecoder\YamlEncoder;
 use Joli\Jane\Encoder\RawEncoder;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\Generator\File;
@@ -14,12 +17,7 @@ use Joli\Jane\OpenApi\Generator\GeneratorFactory;
 use Joli\Jane\OpenApi\Guesser\OpenApiSchema\GuesserFactory;
 use Joli\Jane\OpenApi\Model\OpenApi;
 use Joli\Jane\OpenApi\Normalizer\NormalizerFactory;
-use PhpParser\PrettyPrinterAbstract;
-use Symfony\Component\Serializer\Encoder\JsonDecode;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
+use Joli\Jane\OpenApi\SchemaParser\SchemaParser;
 use PhpCsFixer\Config;
 use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Console\ConfigurationResolver;
@@ -28,16 +26,21 @@ use PhpCsFixer\Error\ErrorsManager;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Linter\NullLinter;
 use PhpCsFixer\Runner\Runner;
+use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;
+use PhpParser\PrettyPrinterAbstract;
+use Symfony\Component\Serializer\Encoder\JsonDecode;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
 
 class JaneOpenApi
 {
     const VERSION = '1.0.x';
 
     /**
-     * @var \Symfony\Component\Serializer\SerializerInterface
+     * @var SchemaParser
      */
-    private $serializer;
-
+    private $schemaParser;
     /**
      * @var Generator\ClientGenerator
      */
@@ -68,8 +71,19 @@ class JaneOpenApi
      */
     private $fixerConfig;
 
+    /**
+     * JaneOpenApi constructor.
+     *
+     * @param SchemaParser          $schemaParser
+     * @param ChainGuesser          $chainGuesser
+     * @param ModelGenerator        $modelGenerator
+     * @param NormalizerGenerator   $normalizerGenerator
+     * @param ClientGenerator       $clientGenerator
+     * @param PrettyPrinterAbstract $prettyPrinter
+     * @param ConfigInterface|null  $fixerConfig
+     */
     public function __construct(
-        SerializerInterface $serializer,
+        SchemaParser $schemaParser,
         ChainGuesser $chainGuesser,
         ModelGenerator $modelGenerator,
         NormalizerGenerator $normalizerGenerator,
@@ -78,7 +92,7 @@ class JaneOpenApi
         ConfigInterface $fixerConfig = null
     )
     {
-        $this->serializer          = $serializer;
+        $this->schemaParser        = $schemaParser;
         $this->clientGenerator     = $clientGenerator;
         $this->prettyPrinter       = $prettyPrinter;
         $this->modelGenerator      = $modelGenerator;
@@ -99,7 +113,8 @@ class JaneOpenApi
      */
     public function createContext($openApiSpec, $name, $namespace, $directory)
     {
-        $schema  = $this->serializer->deserialize(file_get_contents($openApiSpec), 'Joli\Jane\OpenApi\Model\OpenApi', 'json');
+        $schema = $this->schemaParser->parseSchema($openApiSpec);
+
         $classes = $this->chainGuesser->guessClass($schema, $name);
 
         foreach ($classes as $class) {
@@ -210,15 +225,33 @@ class JaneOpenApi
 
     public static function build()
     {
-        $encoders        = [new JsonEncoder(new JsonEncode(), new JsonDecode(false)), new RawEncoder()];
+        $encoders        = [
+            new JsonEncoder(
+                new JsonEncode(),
+                new JsonDecode(false)
+            ),
+            new YamlEncoder(
+                new YamlEncode(),
+                new YamlDecode(false, true, true, true)
+            ),
+            new RawEncoder(),
+        ];
         $normalizers     = NormalizerFactory::create();
         $serializer      = new Serializer($normalizers, $encoders);
+        $schemaParser    = new SchemaParser($serializer);
         $clientGenerator = GeneratorFactory::build();
-        $prettyPrinter   = new \PhpParser\PrettyPrinter\Standard();
+        $prettyPrinter   = new StandardPrettyPrinter();
         $naming          = new Naming();
         $modelGenerator  = new ModelGenerator($naming);
         $normGenerator   = new NormalizerGenerator($naming);
 
-        return new self($serializer, GuesserFactory::create($serializer), $modelGenerator, $normGenerator, $clientGenerator, $prettyPrinter);
+        return new self(
+            $schemaParser,
+            GuesserFactory::create($serializer),
+            $modelGenerator,
+            $normGenerator,
+            $clientGenerator,
+            $prettyPrinter
+        );
     }
 }

@@ -26,7 +26,7 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
         // 2. Generate
         $OpenApi = JaneOpenApi::build();
         $files   = $OpenApi->generate(
-            $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'swagger.json',
+            glob($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'swagger.*')[0],
             'Joli\Jane\OpenApi\Tests\Expected',
             $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated'
         );
