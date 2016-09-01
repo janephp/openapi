@@ -2,7 +2,7 @@
 
 [![Latest Version](https://img.shields.io/github/release/janephp/openapi.svg?style=flat-square)](https://github.com/janephp/openapi/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/janephp/jane-openapi.svg?style=flat-square)](https://travis-ci.org/janephp/openapi)
+[![Build Status](https://img.shields.io/travis/janephp/openapi.svg?style=flat-square)](https://travis-ci.org/janephp/openapi)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/janephp/openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/janephp/openapi)
 [![Quality Score](https://img.shields.io/scrutinizer/g/janephp/openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/janephp/openapi)
 [![Total Downloads](https://img.shields.io/packagist/dt/jane/open-api.svg?style=flat-square)](https://packagist.org/packages/jane/open-api)
