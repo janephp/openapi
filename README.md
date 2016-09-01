@@ -1,10 +1,10 @@
 # Jane Open Api
 
-[![Latest Version](https://img.shields.io/github/release/jolicode/jane-openapi.svg?style=flat-square)](https://github.com/jolicode/jane-openapi/releases)
+[![Latest Version](https://img.shields.io/github/release/janephp/openapi.svg?style=flat-square)](https://github.com/janephp/openapi/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/jolicode/jane-openapi.svg?style=flat-square)](https://travis-ci.org/jolicode/jane-openapi)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/jolicode/jane-openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/jolicode/jane-openapi)
-[![Quality Score](https://img.shields.io/scrutinizer/g/jolicode/jane-openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/jolicode/jane-openapi)
+[![Build Status](https://img.shields.io/travis/janephp/jane-openapi.svg?style=flat-square)](https://travis-ci.org/janephp/openapi)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/janephp/openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/janephp/openapi)
+[![Quality Score](https://img.shields.io/scrutinizer/g/janephp/openapi.svg?style=flat-square)](https://scrutinizer-ci.com/g/janephp/openapi)
 [![Total Downloads](https://img.shields.io/packagist/dt/jane/open-api.svg?style=flat-square)](https://packagist.org/packages/jane/open-api)
 
 Generate a PHP Client API (PSR7 compatible) given a [OpenApi (Swagger) specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
@@ -64,7 +64,8 @@ Here is a quick presentation on how this library transforms a Json Schema file i
 
 ## Credits
 
-* [All contributors](https://github.com/jolicode/jane-openapi/graphs/contributors)
+* [All contributors](https://github.com/janephp/openapi/graphs/contributors)
+* [JoliCode](https://jolicode.com) for giving me time on my work to maintain this library
 
 ## License
 
