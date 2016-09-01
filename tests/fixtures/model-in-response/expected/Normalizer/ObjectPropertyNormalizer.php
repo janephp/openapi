@@ -2,7 +2,7 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Normalizer;
 
-use Joli\Jane\Reference\Reference;
+use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
