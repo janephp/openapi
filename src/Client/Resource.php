@@ -2,37 +2,11 @@
 
 namespace Joli\Jane\OpenApi\Client;
 
-use Http\Client\Common\FlexibleHttpClient;
-use Http\Client\HttpAsyncClient;
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Symfony\Component\Serializer\SerializerInterface;
+@trigger_error('Resource is deprecated since 1.3 and will be removed in 2.0, please use Joli\Jane\OpenApi\Runtime\Client\Resource instead.', E_USER_DEPRECATED);
 
-class Resource
+/**
+ * @deprecated Resource is deprecated since 1.3 and will be removed in 2.0, please use Joli\Jane\OpenApi\Runtime\Client\Resource instead.
+ */
+class Resource extends \Joli\Jane\OpenApi\Runtime\Client\Resource
 {
-    const FETCH_RESPONSE = 'response';
-    const FETCH_OBJECT   = 'object';
-    const FETCH_PROMISE  = 'promise';
-
-    /**
-     * @var HttpClient|HttpAsyncClient
-     */
-    protected $httpAsyncClient;
-
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
-
-    /**
-     * @var SerializerInterface
-     */
-    protected $serializer;
-
-    public function __construct($httpClient, MessageFactory $messageFactory, SerializerInterface $serializer)
-    {
-        $this->httpClient     = new FlexibleHttpClient($httpClient);
-        $this->messageFactory = $messageFactory;
-        $this->serializer     = $serializer;
-    }
 }

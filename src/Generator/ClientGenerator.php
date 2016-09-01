@@ -71,8 +71,8 @@ class ClientGenerator
         }
 
         return $factory->namespace($namespace . "\\Resource")
-            ->addStmt($factory->use('Joli\Jane\OpenApi\Client\QueryParam'))
-            ->addStmt($factory->use('Joli\Jane\OpenApi\Client\Resource'))
+            ->addStmt($factory->use('Joli\Jane\OpenApi\Runtime\Client\QueryParam'))
+            ->addStmt($factory->use('Joli\Jane\OpenApi\Runtime\Client\Resource'))
             ->addStmt($class)
             ->getNode();
     }

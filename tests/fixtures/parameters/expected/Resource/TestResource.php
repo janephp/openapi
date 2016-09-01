@@ -2,8 +2,8 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Resource;
 
-use Joli\Jane\OpenApi\Client\QueryParam;
-use Joli\Jane\OpenApi\Client\Resource;
+use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
+use Joli\Jane\OpenApi\Runtime\Client\Resource;
 
 class TestResource extends Resource
 {
