@@ -261,12 +261,56 @@ trait InputGeneratorTrait
     {
         $headerVariable = new Expr\Variable('headers');
 
+        $headers = [
+            new Expr\ArrayItem(
+                new Scalar\String_($operation->getHost()), new Scalar\String_('Host')
+            ),
+        ];
+
+        $produces = $operation->getOperation()->getProduces();
+
+        if ($produces && in_array("application/json", $produces)) {
+            $headers[]
+                = new Expr\ArrayItem(
+                new Expr\Array_(
+                    [
+                        new Expr\ArrayItem(
+                            new Scalar\String_("application/json")
+                        ),
+                    ]
+                ),
+                new Scalar\String_('Accept')
+            );
+        }
+
+        $consumes = $operation->getOperation()->getProduces();
+
+        if ($operation->getOperation()->getParameters() && $consumes) {
+            $bodyParameters = array_filter(
+                $operation->getOperation()->getParameters(), function ($parameter) {
+                return $parameter instanceof BodyParameter;
+            }
+            );
+
+            if (count($bodyParameters) > 0 && in_array("application/json", $consumes)) {
+                $headers[]
+                    = new Expr\ArrayItem(
+                    new Scalar\String_("application/json"),
+                    new Scalar\String_('Content-Type')
+                );
+            }
+        }
+
         return [
             [
                 new Expr\Assign(
                     $headerVariable,
                     new Expr\FuncCall(new Name('array_merge'), [
-                        new Arg(new Expr\Array_([new Expr\ArrayItem(new Scalar\String_($operation->getHost()), new Scalar\String_('Host'))])),
+                        new Arg(
+                            new Expr\Array_(
+                                $headers
+                            )
+                        ),
                         new Arg(new Expr\MethodCall($queryParamVariable, 'buildHeaders', [new Arg(new Expr\Variable('parameters'))]))
                     ])
                 )
