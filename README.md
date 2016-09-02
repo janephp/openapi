@@ -28,7 +28,7 @@ This will generate, in the `src/Name/Space`, a Resource, a Model and a Normalize
 
 ## Example
 
-The [Docker PHP](https://github.com/stage1/docker-php) library has been built on this, you can see there a complete example of using this library.
+The [Docker PHP](https://github.com/docker-php/docker-php) library has been built on this, you can see there a complete example of using this library.
 
 ## Installation
 
