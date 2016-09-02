@@ -46,6 +46,10 @@ return [
 ]
 ```
 
+### Tutorial
+
+See [USAGE documentation](USAGE.md) for a more complete tutorial.
+
 ## Example
 
 The [Docker PHP](https://github.com/docker-php/docker-php) library has been built on this, you can see there a complete example of using this library.
