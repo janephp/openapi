@@ -26,7 +26,7 @@
         "bin/jane-openapi"
     ],
     "require": {
-        "jane/jane": "^1.4",
+        "jane/jane": "^1.5",
         "jane/openapi-runtime": "^1.0",
         "nikic/php-parser": "^1.4|^2.0",
         "symfony/console": "^2.3|^3.0",

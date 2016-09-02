@@ -223,7 +223,7 @@ class JaneOpenApi
         return $runner->fix();
     }
 
-    public static function build()
+    public static function build(array $options = [])
     {
         $encoders        = [
             new JsonEncoder(
@@ -243,7 +243,7 @@ class JaneOpenApi
         $prettyPrinter   = new StandardPrettyPrinter();
         $naming          = new Naming();
         $modelGenerator  = new ModelGenerator($naming);
-        $normGenerator   = new NormalizerGenerator($naming);
+        $normGenerator   = new NormalizerGenerator($naming, isset($options['reference']) ? $options['reference'] : false);
 
         return new self(
             $schemaParser,

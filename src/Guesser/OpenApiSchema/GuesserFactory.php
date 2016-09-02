@@ -6,18 +6,18 @@ use Joli\Jane\Generator\Naming;
 use Joli\Jane\Guesser\ChainGuesser;
 use Joli\Jane\Guesser\ReferenceGuesser;
 use Joli\Jane\Reference\Resolver;
-
 use Symfony\Component\Serializer\SerializerInterface;
 
 class GuesserFactory
 {
-    public static function create(SerializerInterface $serializer)
+    public static function create(SerializerInterface $serializer, array $options = [])
     {
         $naming = new Naming();
         $resolver = new Resolver($serializer);
+        $dateFormat = isset($options['date-format']) ? $options['date-format'] : \DateTime::RFC3339;
 
         $chainGuesser = new ChainGuesser();
-        $chainGuesser->addGuesser(new DateTimeGuesser());
+        $chainGuesser->addGuesser(new DateTimeGuesser($dateFormat));
         $chainGuesser->addGuesser(new ReferenceGuesser($resolver));
         $chainGuesser->addGuesser(new OpenApiGuesser());
         $chainGuesser->addGuesser(new SchemaGuesser($naming, $resolver));

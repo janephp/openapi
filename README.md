@@ -26,6 +26,26 @@ This will generate, in the `src/Name/Space`, a Resource, a Model and a Normalize
  * Model directory will contain all Model used in the API;
  * Normalizer directory will contain a normalizer service class for each of the model class generated.
 
+### Using a config file
+
+Since 1.3 you can now use a config file for generating your library, this avoid remember the same options each time and track change over the
+generation configuration.
+
+For that you need to create a `.jane-openapi` at the root of your repository (you can also use a different name but you
+will need to indicate the location of this file to the generate command):
+
+```php
+<?php
+
+return [
+    'openapi-file' => __DIR__ . '/swagger.json', // Location of our OpenAPI Specification
+    'namespace' => 'Namespace\Prefix', // namespace of the generated code
+    'directory' => __DIR__ . '/src/Namespace/Prefix', // directory where the code will be output
+    'date-format' => \DateTime::RFC3339, // format of the date that your use (you should not set it unless you have to deal with a non compliant specification)
+    'reference' => true, // Add the JSON Reference specification to the generated library (so data on the API can use reference like described in https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
+]
+```
+
 ## Example
 
 The [Docker PHP](https://github.com/docker-php/docker-php) library has been built on this, you can see there a complete example of using this library.

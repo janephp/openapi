@@ -2,7 +2,10 @@
 
 namespace Joli\Jane\OpenApi\Tests;
 
+use Joli\Jane\OpenApi\Command\GenerateCommand;
 use Joli\Jane\OpenApi\JaneOpenApi;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -24,14 +27,9 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
         $filesystem->mkdir($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
 
         // 2. Generate
-        $OpenApi = JaneOpenApi::build();
-        $files   = $OpenApi->generate(
-            glob($testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'swagger.*')[0],
-            'Joli\Jane\OpenApi\Tests\Expected',
-            $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated'
-        );
-
-        $OpenApi->printFiles($files, $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . 'generated');
+        $command = new GenerateCommand();
+        $input = new ArrayInput(['--config-file' => $testDirectory->getRealPath() . DIRECTORY_SEPARATOR . '.jane-openapi'], $command->getDefinition());
+        $command->execute($input, new NullOutput());
 
         // 3. Compare
         $expectedFinder = new Finder();
