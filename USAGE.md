@@ -259,7 +259,7 @@ deserialize json into value objects.
 
 The recommended way to create this service is to use the following code:
 
-```
+```php
 use Joli\Jane\Runtime\Encoder\RawEncoder;
 use My\API\Client\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
@@ -295,7 +295,7 @@ However there is some things that you need to be aware of:
 
 So your setup will look at something like this:
 
-```
+```php
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
@@ -325,7 +325,7 @@ $fooResource = new FooResource($httpClient, $requestFactory, $serializer);
 
 To get all of your `Foo` objects you just need to do the following call:
 
-```
+```php
 $foos = $fooResource->all();
 
 foreach ($foos as $foo) {
@@ -335,7 +335,7 @@ foreach ($foos as $foo) {
 
 You can also create a `Foo`:
 
-```
+```php
 $newFoo = new Foo();
 $newFoo->setBar('bar_value');
 
@@ -344,7 +344,7 @@ $fooResource->create($newFoo);
 
 Or get a specific `Foo`:
 
-```
+```php
 echo $fooResource->get(15)->getBar();
 ```
 
@@ -364,7 +364,7 @@ but if you need the value objets you will have to use the serializer yourself:
 
 #### Get a PSR7 ResponseInterface
 
-```
+```php
 $response = $fooResource->all([], FooResource::FETCH_RESPONSE);
 
 $foos = $serializer->deserialize($response, Foo::class, 'json');
@@ -372,7 +372,7 @@ $foos = $serializer->deserialize($response, Foo::class, 'json');
 
 #### Make an async call and get a Promise (as defined by HTTPlug Async interface)
 
-```
+```php
 $promise = $fooResource->all([], FooResource::FETCH_PROMISE);
 
 ...
