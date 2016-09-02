@@ -50,7 +50,14 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
             $this->assertArrayHasKey($expectedFile->getRelativePathname(), $generatedData);
 
             if ($expectedFile->isFile()) {
-                $this->assertEquals(file_get_contents($expectedFile->getRealPath()), file_get_contents($generatedData[$expectedFile->getRelativePathname()]));
+                $expectedPath = $expectedFile->getRealPath();
+                $actualPath   = $generatedData[ $expectedFile->getRelativePathname() ];
+
+                $this->assertEquals(
+                    file_get_contents($expectedPath),
+                    file_get_contents($actualPath),
+                    "Expected " . $expectedPath . " got " . $actualPath
+                );
             }
         }
     }
