@@ -2,16 +2,13 @@
 
 namespace Joli\Jane\OpenApi\Normalizer;
 
-use Joli\Jane\Normalizer\NormalizerArray;
-use Joli\Jane\Normalizer\ReferenceNormalizer;
-
 class NormalizerFactory
 {
     public static function create()
     {
         $normalizers   = [];
-        $normalizers[] = new ReferenceNormalizer();
-        $normalizers[] = new NormalizerArray();
+        $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ReferenceNormalizer();
+        $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
         $normalizers[] = new OpenApiNormalizer();
         $normalizers[] = new InfoNormalizer();
         $normalizers[] = new ContactNormalizer();

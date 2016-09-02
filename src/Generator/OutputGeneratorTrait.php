@@ -3,7 +3,7 @@
 namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Generator\Context\Context;
-use Joli\Jane\Reference\Reference;
+use Joli\Jane\Runtime\Reference;
 use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Model\Schema;
 use PhpParser\Node\Arg;
