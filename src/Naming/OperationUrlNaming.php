@@ -25,7 +25,7 @@ class OperationUrlNaming implements OperationNamingInterface
             }
         }
 
-        preg_match_all('/(?P<separator>[^a-zA-Z0-9{}])+(?P<part>[a-zA-Z0-9{}]*)/', $operation->getPath(), $matches);
+        preg_match_all('/(?P<separator>[^a-zA-Z0-9_{}])+(?P<part>[a-zA-Z0-9_{}]*)/', $operation->getPath(), $matches);
 
         $methodNameParts = [];
         $lastNonParameterPartIndex = 0;
@@ -39,7 +39,13 @@ class OperationUrlNaming implements OperationNamingInterface
 
             if (preg_match_all('/{(?P<parameter>[^{}]+)}/', $part, $parameterMatches)) {
                 foreach($parameterMatches[0] as $parameterIndex => $parameterMatch) {
-                    $methodNameParts[] =  'By' . ucfirst($parameterMatches['parameter'][$parameterIndex]);
+                    $withoutSnakes = preg_replace_callback(
+                        '/(^|_|\.)+(.)/', function ($match) {
+                        return ('.' === $match[1] ? '_' : '') . strtoupper($match[2]);
+                    }, $parameterMatches['parameter'][ $parameterIndex ]
+                    );
+
+                    $methodNameParts[] = 'By' . ucfirst($withoutSnakes);
                 }
             } else {
                 $methodNameParts[] = ucfirst($part);

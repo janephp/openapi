@@ -179,6 +179,26 @@
                     "Test"
                 ]
             }
+        },
+        "/{test_integer}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "test_integer",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
         }
     }
 }
