@@ -19,7 +19,7 @@ use PhpParser\ParserFactory;
 
 class GeneratorFactory
 {
-    static public function build()
+    public static function build()
     {
         if (class_exists('PhpParser\ParserFactory')) {
             $parserFactory = new ParserFactory();

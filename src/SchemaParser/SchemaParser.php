@@ -47,9 +47,10 @@ class SchemaParser
 
         try {
             $schema = $this->serializer->deserialize(
-                $openApiSpecContents, $schemaClass, self::CONTENT_TYPE_JSON
+                $openApiSpecContents,
+                $schemaClass,
+                self::CONTENT_TYPE_JSON
             );
-
         } catch (\Exception $exception) {
             $jsonException = $exception;
         }
@@ -57,7 +58,9 @@ class SchemaParser
         if (!$schema) {
             try {
                 $schema = $this->serializer->deserialize(
-                    $openApiSpecContents, $schemaClass, self::CONTENT_TYPE_YAML
+                    $openApiSpecContents,
+                    $schemaClass,
+                    self::CONTENT_TYPE_YAML
                 );
             } catch (\Exception $exception) {
                 $yamlException = $exception;

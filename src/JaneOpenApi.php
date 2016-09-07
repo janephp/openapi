@@ -90,8 +90,7 @@ class JaneOpenApi
         ClientGenerator $clientGenerator,
         PrettyPrinterAbstract $prettyPrinter,
         ConfigInterface $fixerConfig = null
-    )
-    {
+    ) {
         $this->schemaParser        = $schemaParser;
         $this->clientGenerator     = $clientGenerator;
         $this->prettyPrinter       = $prettyPrinter;

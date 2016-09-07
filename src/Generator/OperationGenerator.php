@@ -60,7 +60,8 @@ class OperationGenerator
             // $request = $this->messageFactory->createRequest('method', $url, $headers, $body);
             new Expr\Assign(new Expr\Variable('request'), new Expr\MethodCall(
                 new Expr\PropertyFetch(new Expr\Variable('this'), 'messageFactory'),
-                'createRequest', [
+                'createRequest',
+                [
                     new Arg(new Scalar\String_($operation->getMethod())),
                     new Arg($urlVariable),
                     new Arg($headerVariable),
@@ -75,7 +76,8 @@ class OperationGenerator
             )),
             // if ($fetch === self::FETCH_PROMISE) { return $promise }
             new Stmt\If_(
-                new Expr\BinaryOp\Identical(new Expr\ConstFetch(new Name('self::FETCH_PROMISE')), new Expr\Variable('fetch')), [
+                new Expr\BinaryOp\Identical(new Expr\ConstFetch(new Name('self::FETCH_PROMISE')), new Expr\Variable('fetch')),
+                [
                     'stmts' => [
                         new Stmt\Return_(new Expr\Variable('promise'))
                     ]
@@ -110,7 +112,8 @@ class OperationGenerator
 
         if (!empty($outputStatements)) {
             $statements[] = new Stmt\If_(
-                new Expr\BinaryOp\Equal(new Expr\ConstFetch(new Name('self::FETCH_OBJECT')), new Expr\Variable('fetch')), [
+                new Expr\BinaryOp\Equal(new Expr\ConstFetch(new Name('self::FETCH_OBJECT')), new Expr\Variable('fetch')),
+                [
                     'stmts' => $outputStatements
                 ]
             );
@@ -118,7 +121,8 @@ class OperationGenerator
 
         // return $response
         $statements[] = new Stmt\Return_(new Expr\Variable('response'));
-        $documentation = array_merge([
+        $documentation = array_merge(
+            [
                 '/**',
                 sprintf(" * %s", $operation->getOperation()->getDescription()),
                 ' *',
