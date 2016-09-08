@@ -161,4 +161,29 @@ class TestResource extends Resource
 
         return $response;
     }
+
+    /**
+     * @param int    $testInteger
+     * @param array  $parameters  List of parameters
+     * @param string $fetch       Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getByTestInteger($testInteger, $parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/{test_integer}';
+        $url        = str_replace('{test_integer}', urlencode($testInteger), $url);
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $queryParam->buildFormDataString($parameters);
+        $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+
+        return $response;
+    }
 }
