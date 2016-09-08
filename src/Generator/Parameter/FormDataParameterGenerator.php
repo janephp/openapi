@@ -20,5 +20,4 @@ class FormDataParameterGenerator extends NonBodyParameterGenerator
 
         return $statements;
     }
-
 }

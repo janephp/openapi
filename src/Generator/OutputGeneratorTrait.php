@@ -54,7 +54,8 @@ trait OutputGeneratorTrait
             new Expr\BinaryOp\Equal(
                 new Scalar\String_($status),
                 new Expr\MethodCall(new Expr\Variable('response'), 'getStatusCode')
-            ), [
+            ),
+            [
                 'stmts' => [
                     new Stmt\Return_(new Expr\MethodCall(
                         new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),

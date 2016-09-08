@@ -38,11 +38,13 @@ class OperationUrlNaming implements OperationNamingInterface
             $part = $matches['part'][$index];
 
             if (preg_match_all('/{(?P<parameter>[^{}]+)}/', $part, $parameterMatches)) {
-                foreach($parameterMatches[0] as $parameterIndex => $parameterMatch) {
+                foreach ($parameterMatches[0] as $parameterIndex => $parameterMatch) {
                     $withoutSnakes = preg_replace_callback(
-                        '/(^|_|\.)+(.)/', function ($match) {
-                        return ('.' === $match[1] ? '_' : '') . strtoupper($match[2]);
-                    }, $parameterMatches['parameter'][ $parameterIndex ]
+                        '/(^|_|\.)+(.)/',
+                        function ($match) {
+                            return ('.' === $match[1] ? '_' : '') . strtoupper($match[2]);
+                        },
+                        $parameterMatches['parameter'][ $parameterIndex ]
                     );
 
                     $methodNameParts[] = 'By' . ucfirst($withoutSnakes);

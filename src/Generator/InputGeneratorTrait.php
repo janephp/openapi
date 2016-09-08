@@ -263,7 +263,8 @@ trait InputGeneratorTrait
 
         $headers = [
             new Expr\ArrayItem(
-                new Scalar\String_($operation->getHost()), new Scalar\String_('Host')
+                new Scalar\String_($operation->getHost()),
+                new Scalar\String_('Host')
             ),
         ];
 
@@ -272,32 +273,33 @@ trait InputGeneratorTrait
         if ($produces && in_array("application/json", $produces)) {
             $headers[]
                 = new Expr\ArrayItem(
-                new Expr\Array_(
-                    [
+                    new Expr\Array_(
+                        [
                         new Expr\ArrayItem(
                             new Scalar\String_("application/json")
                         ),
-                    ]
-                ),
-                new Scalar\String_('Accept')
-            );
+                        ]
+                    ),
+                    new Scalar\String_('Accept')
+                );
         }
 
         $consumes = $operation->getOperation()->getProduces();
 
         if ($operation->getOperation()->getParameters() && $consumes) {
             $bodyParameters = array_filter(
-                $operation->getOperation()->getParameters(), function ($parameter) {
-                return $parameter instanceof BodyParameter;
-            }
+                $operation->getOperation()->getParameters(),
+                function ($parameter) {
+                    return $parameter instanceof BodyParameter;
+                }
             );
 
             if (count($bodyParameters) > 0 && in_array("application/json", $consumes)) {
                 $headers[]
                     = new Expr\ArrayItem(
-                    new Scalar\String_("application/json"),
-                    new Scalar\String_('Content-Type')
-                );
+                        new Scalar\String_("application/json"),
+                        new Scalar\String_('Content-Type')
+                    );
             }
         }
 
