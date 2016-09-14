@@ -58,6 +58,12 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         if (property_exists($data, 'objectRefProperty')) {
             $object->setObjectRefProperty($this->serializer->deserialize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'raw', $context));
         }
+        if (property_exists($data, 'inheritedProperty1')) {
+            $object->setInheritedProperty1($data->{'inheritedProperty1'});
+        }
+        if (property_exists($data, 'inheritedProperty2')) {
+            $object->setInheritedProperty2($data->{'inheritedProperty2'});
+        }
 
         return $object;
     }
@@ -93,6 +99,12 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
         }
         if (null !== $object->getObjectRefProperty()) {
             $data->{'objectRefProperty'} = $this->serializer->serialize($object->getObjectRefProperty(), 'raw', $context);
+        }
+        if (null !== $object->getInheritedProperty1()) {
+            $data->{'inheritedProperty1'} = $object->getInheritedProperty1();
+        }
+        if (null !== $object->getInheritedProperty2()) {
+            $data->{'inheritedProperty2'} = $object->getInheritedProperty2();
         }
 
         return $data;
