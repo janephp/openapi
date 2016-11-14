@@ -112,6 +112,34 @@
                     "Test"
                 ]
             }
+        },
+        "/test-object-schema-type-object": {
+            "post": {
+                "operationId": "Test Body Parameter With Object Schema Type",
+                "parameters": [
+                    {
+                        "name": "testObjectSchemaType",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "exampleProperty": {
+                                    "type" : "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
         }
     }
 }
