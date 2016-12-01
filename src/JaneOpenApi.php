@@ -193,20 +193,20 @@ class JaneOpenApi
         if (null === $fixerConfig) {
             $fixerConfig = Config::create()
                 ->setRiskyAllowed(true)
-                ->setRules(array(
-                    '@Symfony' => true,
-                    'array_syntax' => array('syntax' => 'short'),
-                    'simplified_null_return' => false,
-                    'ordered_imports' => true,
-                    'phpdoc_order' => true,
-                    'binary_operator_spaces' => array('align_equals'=>true),
-                    'concat_space' => false
-                ))
-            ;
-
-            $resolverOptions = array('allow-risky' => true);
-            $resolver = new ConfigurationResolver($fixerConfig, $resolverOptions, $directory);
+                ->setRules(
+                    array(
+                        '@Symfony' => true,
+                        'array_syntax' => array('syntax' => 'short'),
+                        'simplified_null_return' => false,
+                        'ordered_imports' => true,
+                        'phpdoc_order' => true,
+                        'binary_operator_spaces' => array('align_equals'=>true),
+                        'concat_space' => false
+                    )
+                );
         }
+        $resolverOptions = array('allow-risky' => true);
+        $resolver = new ConfigurationResolver($fixerConfig, $resolverOptions, $directory);
 
         $finder = new Finder();
         $finder->in($directory);
