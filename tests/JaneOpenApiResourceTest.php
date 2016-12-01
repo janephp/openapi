@@ -3,7 +3,6 @@
 namespace Joli\Jane\OpenApi\Tests;
 
 use Joli\Jane\OpenApi\Command\GenerateCommand;
-use Joli\Jane\OpenApi\JaneOpenApi;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Filesystem\Filesystem;
