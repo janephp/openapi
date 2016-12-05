@@ -42,6 +42,9 @@
     "suggest": {
         "friendsofphp/php-cs-fixer": "To have a nice formatting of the generated files"
     },
+    "config": {
+        "process-timeout": 1200
+    },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
