@@ -86,10 +86,15 @@ Here is a quick presentation on how this library transforms a Json Schema file i
  4. Then the AST is written into PHP files.
  5. Optionally, if php-cs-fixer is present, it is used to format the generated code
 
+## Sponsor
+
+[![Jolicode](https://jolicode.com/bundles/jolisite/images/logo.svg?19)](https://jolicode.com)
+
+Open Source time sponsored by JoliCode
+
 ## Credits
 
 * [All contributors](https://github.com/janephp/openapi/graphs/contributors)
-* [JoliCode](https://jolicode.com) for giving me time on my work to maintain this library
 
 ## License
 
