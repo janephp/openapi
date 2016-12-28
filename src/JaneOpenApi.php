@@ -24,7 +24,6 @@ use PhpCsFixer\Console\ConfigurationResolver;
 use PhpCsFixer\Differ\NullDiffer;
 use PhpCsFixer\Error\ErrorsManager;
 use PhpCsFixer\Finder;
-use PhpCsFixer\Linter\NullLinter;
 use PhpCsFixer\Runner\Runner;
 use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;
 use PhpParser\PrettyPrinterAbstract;
@@ -32,6 +31,8 @@ use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
+use PhpCsFixer\Cache\NullCacheManager;
+use PhpCsFixer\Linter\Linter;
 
 class JaneOpenApi
 {
@@ -192,32 +193,35 @@ class JaneOpenApi
         if (null === $fixerConfig) {
             $fixerConfig = Config::create()
                 ->setRiskyAllowed(true)
-                ->setRules(array(
-                    '@Symfony' => true,
-                    'simplified_null_return' => false,
-                    'concat_without_spaces' => false,
-                    'double_arrow_multiline_whitespaces' => false,
-                    'unalign_equals' => false,
-                    'unalign_double_arrow' => false,
-                    'align_double_arrow' => true,
-                    'align_equals' => true,
-                    'concat_with_spaces' => true,
-                    'ordered_imports' => true,
-                    'phpdoc_order' => true,
-                    'short_array_syntax' => true,
-                ))
-            ;
-
-            $resolver = new ConfigurationResolver();
-            $resolver->setDefaultConfig($fixerConfig);
-            $resolver->resolve();
+                ->setRules(
+                    array(
+                        '@Symfony' => true,
+                        'array_syntax' => array('syntax' => 'short'),
+                        'simplified_null_return' => false,
+                        'ordered_imports' => true,
+                        'phpdoc_order' => true,
+                        'binary_operator_spaces' => array('align_equals'=>true),
+                        'concat_space' => false
+                    )
+                );
         }
+        $resolverOptions = array('allow-risky' => true);
+        $resolver = new ConfigurationResolver($fixerConfig, $resolverOptions, $directory);
 
         $finder = new Finder();
         $finder->in($directory);
-        $fixerConfig->finder($finder);
+        $fixerConfig->setFinder($finder);
 
-        $runner = new Runner($fixerConfig, new NullDiffer(), null, new ErrorsManager(), new NullLinter(), false);
+        $runner = new Runner(
+            $resolver->getConfig()->getFinder(),
+            $resolver->getFixers(),
+            new NullDiffer(),
+            null,
+            new ErrorsManager(),
+            new Linter(),
+            false,
+            new NullCacheManager()
+        );
 
         return $runner->fix();
     }
