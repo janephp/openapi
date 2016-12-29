@@ -10,6 +10,7 @@ class NormalizerFactory
         $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
         $normalizers[] = new SchemaNormalizer();
         $normalizers[] = new ObjectPropertyNormalizer();
+        $normalizers[] = new Inherited1Normalizer();
         $normalizers[] = new ErrorNormalizer();
 
         return $normalizers;

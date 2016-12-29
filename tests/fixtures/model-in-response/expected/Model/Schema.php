@@ -32,6 +32,14 @@ class Schema
      * @var Schema
      */
     protected $objectRefProperty;
+    /**
+     * @var string
+     */
+    protected $inheritedProperty1;
+    /**
+     * @var string
+     */
+    protected $inheritedProperty2;
 
     /**
      * @return string
@@ -169,6 +177,46 @@ class Schema
     public function setObjectRefProperty(Schema $objectRefProperty = null)
     {
         $this->objectRefProperty = $objectRefProperty;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInheritedProperty1()
+    {
+        return $this->inheritedProperty1;
+    }
+
+    /**
+     * @param string $inheritedProperty1
+     *
+     * @return self
+     */
+    public function setInheritedProperty1($inheritedProperty1 = null)
+    {
+        $this->inheritedProperty1 = $inheritedProperty1;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInheritedProperty2()
+    {
+        return $this->inheritedProperty2;
+    }
+
+    /**
+     * @param string $inheritedProperty2
+     *
+     * @return self
+     */
+    public function setInheritedProperty2($inheritedProperty2 = null)
+    {
+        $this->inheritedProperty2 = $inheritedProperty2;
 
         return $this;
     }

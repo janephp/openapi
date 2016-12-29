@@ -3,6 +3,19 @@
     "definitions": {
         "Schema": {
             "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Inherited1"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "inheritedProperty2": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ],
             "properties": {
                 "stringProperty": {
                     "type": "string"
@@ -32,6 +45,14 @@
                 },
                 "objectRefProperty": {
                     "$ref": "#/definitions/Schema"
+                }
+            }
+        },
+        "Inherited1": {
+            "type": "object",
+            "properties": {
+                "inheritedProperty1": {
+                    "type": "string"
                 }
             }
         },
