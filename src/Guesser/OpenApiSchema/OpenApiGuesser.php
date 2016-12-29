@@ -73,7 +73,7 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
         }
 
         $classes = [];
-        $classes = array_merge($classes, $this->getClassFromParameters($name, $operation->getParameters()));
+        $classes = array_merge($classes, $this->getClassFromParameters($name, $operation->getParameters(), $operation));
 
         foreach ($operation->getResponses() as $response) {
             if ($response instanceof Response) {
@@ -89,10 +89,11 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
      *
      * @param $name
      * @param $parameters
+     * @param $operation
      *
      * @return array
      */
-    protected function getClassFromParameters($name, $parameters)
+    protected function getClassFromParameters($name, $parameters, $operation = null)
     {
         if ($parameters === null) {
             return [];
@@ -102,7 +103,11 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
 
         foreach ($parameters as $parameterName => $parameter) {
             if ($parameter instanceof BodyParameter) {
-                $classes = array_merge($classes, $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName));
+                if (!is_numeric($parameterName)) {
+                    $classes = array_merge($classes, $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName));
+                } else if ($operation !== null) {
+                    $classes = array_merge($classes, $this->chainGuesser->guessClass($parameter->getSchema(), $operation->getOperationId() . 'Body'));
+                }
             }
         }
 
