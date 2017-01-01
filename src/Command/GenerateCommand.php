@@ -3,6 +3,8 @@
 namespace Joli\Jane\OpenApi\Command;
 
 use Joli\Jane\OpenApi\JaneOpenApi;
+use Joli\Jane\Registry;
+use Joli\Jane\Schema;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -69,10 +71,19 @@ class GenerateCommand extends Command
         }
 
         $options = $this->resolveConfiguration($options);
+        $registry = new Registry();
+
+        if (array_key_exists('openapi-file', $options)) {
+            $registry->addSchema($this->resolveSchema($options['openapi-file'], $options));
+        } else {
+            foreach ($options['mapping'] as $schema => $schemaOptions) {
+                $registry->addSchema($this->resolveSchema($schema, $schemaOptions));
+            }
+        }
 
         $janeOpenApi = JaneOpenApi::build($options);
-        $files       = $janeOpenApi->generate($options['openapi-file'], $options['namespace'], $options['directory']);
-        $janeOpenApi->printFiles($files, $options['directory']);
+        $files       = $janeOpenApi->generate($registry);
+        $janeOpenApi->printFiles($files, $registry);
 
         foreach ($files as $file) {
             $output->writeln(sprintf("Generate %s", $file->getFilename()));
@@ -87,12 +98,39 @@ class GenerateCommand extends Command
             'date-format' => \DateTime::RFC3339,
         ]);
 
-        $optionsResolver->setRequired([
+        if (array_key_exists('openapi-file', $options)) {
+            $optionsResolver->setRequired([
+                'openapi-file',
+                'namespace',
+                'directory',
+            ]);
+        } else {
+            $optionsResolver->setRequired([
+                'mapping'
+            ]);
+        }
+
+        return $optionsResolver->resolve($options);
+    }
+
+    protected function resolveSchema($schema, array $options = [])
+    {
+        $optionsResolver = new OptionsResolver();
+
+        // To support old schema
+        $optionsResolver->setDefined([
             'openapi-file',
+            'reference',
+            'date-format',
+        ]);
+
+        $optionsResolver->setRequired([
             'namespace',
             'directory',
         ]);
 
-        return $optionsResolver->resolve($options);
+        $options = $optionsResolver->resolve($options);
+
+        return new Schema($schema, $options['namespace'], $options['directory'], '');
     }
 }

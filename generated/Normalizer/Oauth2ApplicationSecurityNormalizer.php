@@ -30,12 +30,9 @@ class Oauth2ApplicationSecurityNormalizer extends SerializerAwareNormalizer impl
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
+            return new Reference($data->{'$ref'}, $context['document-origin']);
         }
         $object = new \Joli\Jane\OpenApi\Model\Oauth2ApplicationSecurity();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }

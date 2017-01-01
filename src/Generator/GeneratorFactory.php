@@ -5,7 +5,6 @@ namespace Joli\Jane\OpenApi\Generator;
 use Joli\Jane\Jane;
 use Joli\Jane\OpenApi\Naming\ChainOperationNaming;
 use Joli\Jane\OpenApi\Naming\OperationUrlNaming;
-use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\HeaderParameterGenerator;
@@ -19,7 +18,7 @@ use PhpParser\ParserFactory;
 
 class GeneratorFactory
 {
-    public static function build()
+    public static function build($serializer)
     {
         if (class_exists('PhpParser\ParserFactory')) {
             $parserFactory = new ParserFactory();
@@ -28,14 +27,13 @@ class GeneratorFactory
             $parser = new Parser(new Lexer());
         }
 
-        $resolver          = new Resolver(Jane::buildSerializer());
-        $bodyParameter     = new BodyParameterGenerator($parser, $resolver);
+        $bodyParameter     = new BodyParameterGenerator($parser, $serializer);
         $pathParameter     = new PathParameterGenerator($parser);
         $formDataParameter = new FormDataParameterGenerator($parser);
         $headerParameter   = new HeaderParameterGenerator($parser);
         $queryParameter    = new QueryParameterGenerator($parser);
 
-        $operation = new OperationGenerator($resolver, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
+        $operation = new OperationGenerator($serializer, $bodyParameter, $formDataParameter, $headerParameter, $pathParameter, $queryParameter);
         $operationManager = new OperationManager();
         $operationNaming = new ChainOperationNaming([
             new OperationIdNaming(),

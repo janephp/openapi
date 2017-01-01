@@ -30,12 +30,9 @@ class ApiKeySecurityNormalizer extends SerializerAwareNormalizer implements Deno
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
+            return new Reference($data->{'$ref'}, $context['document-origin']);
         }
         $object = new \Joli\Jane\OpenApi\Model\ApiKeySecurity();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }

@@ -49,7 +49,10 @@ class SchemaParser
             $schema = $this->serializer->deserialize(
                 $openApiSpecContents,
                 $schemaClass,
-                self::CONTENT_TYPE_JSON
+                self::CONTENT_TYPE_JSON,
+                [
+                    'document-origin' => $openApiSpec
+                ]
             );
         } catch (\Exception $exception) {
             $jsonException = $exception;
@@ -60,7 +63,10 @@ class SchemaParser
                 $schema = $this->serializer->deserialize(
                     $openApiSpecContents,
                     $schemaClass,
-                    self::CONTENT_TYPE_YAML
+                    self::CONTENT_TYPE_YAML,
+                    [
+                        'document-origin' => $openApiSpec
+                    ]
                 );
             } catch (\Exception $exception) {
                 $yamlException = $exception;

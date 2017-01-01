@@ -10,41 +10,43 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 trait OutputGeneratorTrait
 {
     /**
-     * @return Resolver
+     * @return DenormalizerInterface
      */
-    abstract protected function getResolver();
+    abstract protected function getDenormalizer();
 
     /**
      * @param         $status
      * @param         $schema
      * @param Context $context
      *
-     * @return null|Stmt\If_
+     * @return [string, null|Stmt\If_]
      */
     protected function createResponseDenormalizationStatement($status, $schema, Context $context)
     {
         $resolvedSchema = null;
+        $reference      = null;
         $array          = false;
 
         if ($schema instanceof Reference) {
-            $resolvedSchema = $this->getResolver()->resolve($schema);
+            list($reference, $resolvedSchema) = $this->resolve($schema, Schema::class);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            $resolvedSchema = $this->getResolver()->resolve($schema->getItems());
-            $array          = true;
+            list($reference, $resolvedSchema) = $this->resolve($schema->getItems(), Schema::class);
+            $array = true;
         }
 
         if ($resolvedSchema === null) {
             return [null, null];
         }
 
-        $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
-        $class = $context->getNamespace() . "\\Model\\" . $class->getName();
+        $class = $context->getRegistry()->getClass($reference);
+        $class = $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $class->getName();
 
         if ($array) {
             $class .= "[]";
@@ -69,5 +71,27 @@ trait OutputGeneratorTrait
                 ]
             ]
         )];
+    }
+
+    /**
+     * @param Reference $reference
+     * @param $class
+     *
+     * @return mixed
+     */
+    private function resolve(Reference $reference, $class)
+    {
+        $result    = $reference;
+
+        do {
+            $refString = (string) $reference->getMergedUri();
+            $result = $result->resolve(function ($data) use($result, $class) {
+                return $this->getDenormalizer()->denormalize($data, $class, 'json', [
+                    'document-origin' => (string) $result->getMergedUri()->withFragment('')
+                ]);
+            });
+        } while ($result instanceof Reference);
+
+        return [$refString, $result];
     }
 }

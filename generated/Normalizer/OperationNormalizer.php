@@ -30,12 +30,9 @@ class OperationNormalizer extends SerializerAwareNormalizer implements Denormali
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
+            return new Reference($data->{'$ref'}, $context['document-origin']);
         }
         $object = new \Joli\Jane\OpenApi\Model\Operation();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'tags')) {
             $values = [];
             foreach ($data->{'tags'} as $value) {

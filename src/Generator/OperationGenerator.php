@@ -3,6 +3,7 @@
 namespace Joli\Jane\OpenApi\Generator;
 
 use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\OpenApi\Model\Response;
 use Joli\Jane\Runtime\Reference;
 use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
@@ -17,6 +18,7 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar;
 use PhpParser\Comment;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class OperationGenerator
 {
@@ -24,13 +26,13 @@ class OperationGenerator
     use InputGeneratorTrait;
 
     /**
-     * @var Resolver
+     * @var DenormalizerInterface
      */
-    protected $resolver;
+    protected $denormalizer;
 
-    public function __construct(Resolver $resolver, BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
+    public function __construct(DenormalizerInterface $denormalizer, BodyParameterGenerator $bodyParameterGenerator, FormDataParameterGenerator $formDataParameterGenerator, HeaderParameterGenerator $headerParameterGenerator, PathParameterGenerator $pathParameterGenerator, QueryParameterGenerator $queryParameterGenerator)
     {
-        $this->resolver                   = $resolver;
+        $this->denormalizer               = $denormalizer;
         $this->bodyParameterGenerator     = $bodyParameterGenerator;
         $this->formDataParameterGenerator = $formDataParameterGenerator;
         $this->headerParameterGenerator   = $headerParameterGenerator;
@@ -96,7 +98,7 @@ class OperationGenerator
 
         foreach ($operation->getOperation()->getResponses() as $status => $response) {
             if ($response instanceof Reference) {
-                $response = $this->resolver->resolve($response);
+                list(, $response) = $this->resolve($response, Response::class);
             }
 
             list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement($status, $response->getSchema(), $context);
@@ -145,10 +147,10 @@ class OperationGenerator
     }
 
     /**
-     * @return Resolver
+     * @return DenormalizerInterface
      */
-    protected function getResolver()
+    protected function getDenormalizer()
     {
-        return $this->resolver;
+        return $this->denormalizer;
     }
 }

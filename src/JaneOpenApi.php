@@ -18,6 +18,8 @@ use Joli\Jane\OpenApi\Guesser\OpenApiSchema\GuesserFactory;
 use Joli\Jane\OpenApi\Model\OpenApi;
 use Joli\Jane\OpenApi\Normalizer\NormalizerFactory;
 use Joli\Jane\OpenApi\SchemaParser\SchemaParser;
+use Joli\Jane\Registry;
+use Joli\Jane\Schema;
 use PhpCsFixer\Config;
 use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Console\ConfigurationResolver;
@@ -104,52 +106,61 @@ class JaneOpenApi
     /**
      * Return a list of class guessed
      *
-     * @param string $openApiSpec
+     * @param Registry $registry A registry
      * @param string $name
-     * @param string $namespace
-     * @param string $directory
      *
      * @return Context
      */
-    public function createContext($openApiSpec, $name, $namespace, $directory)
+    public function createContext(Registry $registry, $name)
     {
-        $schema = $this->schemaParser->parseSchema($openApiSpec);
+        $schemas = array_values($registry->getSchemas());
 
-        $classes = $this->chainGuesser->guessClass($schema, $name);
-
-        foreach ($classes as $class) {
-            $properties = $this->chainGuesser->guessProperties($class->getObject(), $name, $classes);
-
-            foreach ($properties as $property) {
-                $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $classes));
-            }
-
-            $class->setProperties($properties);
+        /** @var Schema $schema */
+        foreach ($schemas as $schema) {
+            $openApiSpec = $this->schemaParser->parseSchema($schema->getOrigin());
+            $this->chainGuesser->guessClass($openApiSpec, $schema->getRootName(), $schema->getOrigin() . '#', $registry);
+            $schema->setParsed($openApiSpec);
         }
 
-        return new Context($schema, $namespace, $directory, $classes);
+        foreach ($registry->getSchemas() as $schema) {
+            foreach ($schema->getClasses() as $class) {
+                $properties = $this->chainGuesser->guessProperties($class->getObject(), $schema->getRootName(), $registry);
+
+                foreach ($properties as $property) {
+                    $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $registry, $schema));
+                }
+
+                $class->setProperties($properties);
+            }
+        }
+
+        return new Context($registry);
     }
 
     /**
      * Generate a list of files
      *
-     * @param string $openApiSpec Location of the specification
-     * @param string $namespace   Namespace of the library
-     * @param string $directory   Path for the root directory of the generated files
+     * @param Registry $registry A registry
      *
      * @return File[]
      */
-    public function generate($openApiSpec, $namespace, $directory)
+    public function generate(Registry $registry)
     {
         /** @var OpenApi $openApi */
-        $context = $this->createContext($openApiSpec, 'Client', $namespace, $directory);
-        $files   = [];
-        $files   = array_merge($files, $this->modelGenerator->generate($context->getRootReference(), 'Client', $context));
-        $files   = array_merge($files, $this->normalizerGenerator->generate($context->getRootReference(), 'Client', $context));
-        $clients = $this->clientGenerator->generate($context->getRootReference(), $namespace, $context);
+        $context = $this->createContext($registry, 'Client');
 
-        foreach ($clients as $node) {
-            $files[] = new File($directory . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[2]->name . '.php', $node, '');
+        $files   = [];
+
+        foreach ($registry->getSchemas() as $schema) {
+            $context->setCurrentSchema($schema);
+
+            $files = array_merge($files, $this->modelGenerator->generate($schema, $schema->getRootName(), $context));
+            $files = array_merge($files, $this->normalizerGenerator->generate($schema, $schema->getRootName(), $context));
+            $clients = $this->clientGenerator->generate($schema->getParsed(), $schema->getNamespace(), $context);
+
+            foreach ($clients as $node) {
+                $files[] = new File($schema->getDirectory() . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[2]->name . '.php', $node, '');
+            }
         }
 
         return $files;
@@ -159,9 +170,9 @@ class JaneOpenApi
      * Print files
      *
      * @param File[] $files
-     * @param string $directory
+     * @param Registry $registry
      */
-    public function printFiles($files, $directory)
+    public function printFiles($files, $registry)
     {
         foreach ($files as $file) {
             if (!file_exists(dirname($file->getFilename()))) {
@@ -171,7 +182,9 @@ class JaneOpenApi
             file_put_contents($file->getFilename(), $this->prettyPrinter->prettyPrintFile([$file->getNode()]));
         }
 
-        $this->fix($directory);
+        foreach ($registry->getSchemas() as $schema) {
+            $this->fix($schema->getDirectory());
+        }
     }
 
     /**
@@ -242,7 +255,7 @@ class JaneOpenApi
         $normalizers     = NormalizerFactory::create();
         $serializer      = new Serializer($normalizers, $encoders);
         $schemaParser    = new SchemaParser($serializer);
-        $clientGenerator = GeneratorFactory::build();
+        $clientGenerator = GeneratorFactory::build($serializer);
         $prettyPrinter   = new StandardPrettyPrinter();
         $naming          = new Naming();
         $modelGenerator  = new ModelGenerator($naming);
@@ -250,7 +263,7 @@ class JaneOpenApi
 
         return new self(
             $schemaParser,
-            GuesserFactory::create($serializer),
+            GuesserFactory::create($serializer, $options),
             $modelGenerator,
             $normGenerator,
             $clientGenerator,

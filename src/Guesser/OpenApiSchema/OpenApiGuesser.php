@@ -11,6 +11,7 @@ use Joli\Jane\OpenApi\Model\Operation;
 use Joli\Jane\OpenApi\Model\PathItem;
 use Joli\Jane\OpenApi\Model\Response;
 use Joli\Jane\OpenApi\Model\OpenApi;
+use Joli\Jane\Registry;
 
 class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGuesserAwareInterface
 {
@@ -29,31 +30,29 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
      *
      * @param OpenApi $object
      */
-    public function guessClass($object, $name)
+    public function guessClass($object, $name, $reference, Registry $registry)
     {
-        $classes = [];
-
         if ($object->getDefinitions() !== null) {
             foreach ($object->getDefinitions() as $key => $definition) {
-                $classes = array_merge($classes, $this->chainGuesser->guessClass($definition, $key));
+                $this->chainGuesser->guessClass($definition, $key, $reference . '/definitions/' . $key, $registry);
             }
         }
 
         foreach ($object->getPaths() as $pathName => $path) {
             if ($path instanceof PathItem) {
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getDelete()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getGet()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getHead()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getOptions()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getPatch()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getPost()));
-                $classes = array_merge($classes, $this->getClassFromOperation($pathName, $path->getPut()));
+                $this->getClassFromOperation($pathName, $path->getDelete(), $reference . '/' . $pathName . '/delete', $registry);
+                $this->getClassFromOperation($pathName, $path->getGet(), $reference . '/' . $pathName . '/get', $registry);
+                $this->getClassFromOperation($pathName, $path->getHead(), $reference . '/' . $pathName . '/head', $registry);
+                $this->getClassFromOperation($pathName, $path->getOptions(), $reference . '/' . $pathName . '/options', $registry);
+                $this->getClassFromOperation($pathName, $path->getPatch(), $reference . '/' . $pathName . '/patch', $registry);
+                $this->getClassFromOperation($pathName, $path->getPost(), $reference . '/' . $pathName . '/post', $registry);
+                $this->getClassFromOperation($pathName, $path->getPut(), $reference . '/' . $pathName . '/put', $registry);
 
-                $classes = array_merge($classes, $this->getClassFromParameters($pathName, $path->getParameters()));
+                $this->getClassFromParameters($pathName, $path->getParameters(), $reference . '/' . $pathName . '/parameters', $registry);
             }
         }
 
-        $classes = array_merge($classes, $this->getClassFromParameters($name, $object->getParameters()));
+        $classes = $this->getClassFromParameters($name, $object->getParameters(), $reference . '/parameters', $registry);
 
         return $classes;
     }
@@ -63,25 +62,22 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
      *
      * @param $name
      * @param Operation $operation
-     *
-     * @return array
+     * @param string $reference
+     * @param Registry $registry
      */
-    protected function getClassFromOperation($name, Operation $operation = null)
+    protected function getClassFromOperation($name, Operation $operation = null, $reference, $registry)
     {
         if ($operation === null) {
-            return [];
+            return;
         }
 
-        $classes = [];
-        $classes = array_merge($classes, $this->getClassFromParameters($name, $operation->getParameters()));
+        $this->getClassFromParameters($name, $operation->getParameters(), $reference . '/parameters', $registry);
 
-        foreach ($operation->getResponses() as $response) {
+        foreach ($operation->getResponses() as $status => $response) {
             if ($response instanceof Response) {
-                $classes = array_merge($classes, $this->chainGuesser->guessClass($response->getSchema(), $name.'Response'));
+                $this->chainGuesser->guessClass($response->getSchema(), $name.'Response'.$status, $reference . '/responses/' . $status, $registry);
             }
         }
-
-        return $classes;
     }
 
     /**
@@ -89,23 +85,19 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
      *
      * @param $name
      * @param $parameters
-     *
-     * @return array
+     * @param string $reference
+     * @param Registry $registry
      */
-    protected function getClassFromParameters($name, $parameters)
+    protected function getClassFromParameters($name, $parameters, $reference, $registry)
     {
         if ($parameters === null) {
-            return [];
+            return;
         }
-
-        $classes = [];
 
         foreach ($parameters as $parameterName => $parameter) {
             if ($parameter instanceof BodyParameter) {
-                $classes = array_merge($classes, $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName));
+                $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName, $reference . '/' . $parameterName,  $registry);
             }
         }
-
-        return $classes;
     }
 }

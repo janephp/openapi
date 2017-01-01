@@ -1,17 +1,16 @@
 <?php
 
-namespace Joli\Jane\OpenApi\Normalizer;
+namespace Joli\Jane\OpenApi\Tests\Expected\Api1\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class JsonReferenceNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class BodyNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\OpenApi\\Model\\JsonReference') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Api1\\Model\\Body') {
             return false;
         }
 
@@ -20,7 +19,7 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\OpenApi\Model\JsonReference) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Api1\Model\Body) {
             return true;
         }
 
@@ -29,12 +28,9 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['document-origin']);
-        }
-        $object = new \Joli\Jane\OpenApi\Model\JsonReference();
-        if (property_exists($data, '$ref')) {
-            $object->setDollarRef($data->{'$ref'});
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Api1\Model\Body();
+        if (property_exists($data, 'foo')) {
+            $object->setFoo($data->{'foo'});
         }
 
         return $object;
@@ -43,8 +39,8 @@ class JsonReferenceNormalizer extends SerializerAwareNormalizer implements Denor
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getDollarRef()) {
-            $data->{'$ref'} = $object->getDollarRef();
+        if (null !== $object->getFoo()) {
+            $data->{'foo'} = $object->getFoo();
         }
 
         return $data;

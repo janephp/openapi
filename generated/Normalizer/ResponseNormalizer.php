@@ -30,12 +30,9 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
+            return new Reference($data->{'$ref'}, $context['document-origin']);
         }
         $object = new \Joli\Jane\OpenApi\Model\Response();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }

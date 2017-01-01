@@ -14,4 +14,12 @@ class AllOfGuesser extends BaseAllOfGuesser
     {
         return (($object instanceof Schema) && is_array($object->getAllOf()) && count($object->getAllOf()) > 0);
     }
+
+    /**
+     * @return string
+     */
+    protected function getSchemaClass()
+    {
+        return Schema::class;
+    }
 }

@@ -14,4 +14,12 @@ class SchemaGuesser extends ObjectGuesser
     {
         return (($object instanceof Schema) && $object->getType() === 'object' && $object->getProperties() !== null);
     }
+
+    /**
+     * @return string
+     */
+    protected function getSchemaClass()
+    {
+        return Schema::class;
+    }
 }

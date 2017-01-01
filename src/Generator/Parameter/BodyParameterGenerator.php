@@ -10,19 +10,20 @@ use Joli\Jane\OpenApi\Model\BodyParameter;
 use Joli\Jane\OpenApi\Model\Schema;
 use PhpParser\Node;
 use PhpParser\Parser;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class BodyParameterGenerator extends ParameterGenerator
 {
     /**
-     * @var Resolver
+     * @var DenormalizerInterface
      */
-    private $resolver;
+    private $denormalizer;
 
-    public function __construct(Parser $parser, Resolver $resolver)
+    public function __construct(Parser $parser, DenormalizerInterface $denormalizer)
     {
         parent::__construct($parser);
 
-        $this->resolver = $resolver;
+        $this->denormalizer = $denormalizer;
     }
 
     /**
@@ -72,15 +73,16 @@ class BodyParameterGenerator extends ParameterGenerator
     protected function getClass(BodyParameter $parameter, Context $context)
     {
         $resolvedSchema = null;
+        $reference      = null;
         $array          = false;
         $schema         = $parameter->getSchema();
 
         if ($schema instanceof Reference) {
-            $resolvedSchema = $this->resolver->resolve($schema);
+            list($reference, $resolvedSchema) = $this->resolveSchema($schema, Schema::class);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            $resolvedSchema = $this->resolver->resolve($schema->getItems());
+            list($reference, $resolvedSchema) = $this->resolveSchema($schema->getItems(), Schema::class);
             $array          = true;
         }
 
@@ -88,13 +90,35 @@ class BodyParameterGenerator extends ParameterGenerator
             return [$schema->getType(), null];
         }
 
-        $class = $context->getObjectClassMap()[spl_object_hash($resolvedSchema)];
-        $class = "\\" . $context->getNamespace() . "\\Model\\" . $class->getName();
+        $class = $context->getRegistry()->getClass($reference);
+        $class = "\\" . $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $class->getName();
 
         if ($array) {
             $class .= "[]";
         }
 
         return [$class, $array];
+    }
+
+    /**
+     * @param Reference $reference
+     * @param $class
+     *
+     * @return mixed
+     */
+    private function resolveSchema(Reference $reference, $class)
+    {
+        $result    = $reference;
+
+        do {
+            $refString = (string) $reference->getMergedUri();
+            $result = $result->resolve(function ($data) use($result, $class) {
+                return $this->denormalizer->denormalize($data, $class, 'json', [
+                    'document-origin' => (string) $result->getMergedUri()->withFragment('')
+                ]);
+            });
+        } while ($result instanceof Reference);
+
+        return [$refString, $result];
     }
 }

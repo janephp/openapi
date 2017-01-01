@@ -30,12 +30,9 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
+            return new Reference($data->{'$ref'}, $context['document-origin']);
         }
         $object = new \Joli\Jane\OpenApi\Model\PathItem();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, '$ref')) {
             $object->setDollarRef($data->{'$ref'});
         }

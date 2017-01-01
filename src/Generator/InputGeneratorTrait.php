@@ -17,6 +17,7 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Scalar;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 trait InputGeneratorTrait
 {
@@ -46,9 +47,9 @@ trait InputGeneratorTrait
     protected $queryParameterGenerator;
 
     /**
-     * @return Resolver
+     * @return DenormalizerInterface
      */
-    abstract protected function getResolver();
+    abstract protected function getDenormalizer();
 
     /**
      * Create the query param statements and documentation
@@ -68,7 +69,7 @@ trait InputGeneratorTrait
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
                 if ($parameter instanceof Reference) {
-                    $parameter = $this->getResolver()->resolve($parameter);
+                    $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof FormDataParameterSubSchema) {
@@ -108,7 +109,7 @@ trait InputGeneratorTrait
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
                 if ($parameter instanceof Reference) {
-                    $parameter = $this->getResolver()->resolve($parameter);
+                    $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof PathParameterSubSchema) {
@@ -119,7 +120,7 @@ trait InputGeneratorTrait
 
             foreach ($operation->getOperation()->getParameters() as $parameter) {
                 if ($parameter instanceof Reference) {
-                    $parameter = $this->getResolver()->resolve($parameter);
+                    $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof BodyParameter) {
@@ -166,7 +167,7 @@ trait InputGeneratorTrait
         if ($operation->getOperation()->getParameters()) {
             foreach ($operation->getOperation()->getParameters() as $parameter) {
                 if ($parameter instanceof Reference) {
-                    $parameter = $this->getResolver()->resolve($parameter);
+                    $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof PathParameterSubSchema) {
@@ -319,5 +320,33 @@ trait InputGeneratorTrait
             ],
             $headerVariable
         ];
+    }
+
+    /**
+     * @param Reference $parameter
+     *
+     * @return BodyParameter|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema|PathParameterSubSchema
+     */
+    protected function resolveParameter(Reference $parameter)
+    {
+        return $parameter->resolve(function ($value) {
+            if (isset($value->{'in'}) and $value->{'in'} == 'body') {
+                return $this->getDenormalizer()->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter');
+            }
+            if (isset($value->{'in'}) and $value->{'in'} == 'header') {
+                return $this->getDenormalizer()->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema');
+            }
+            if (isset($value->{'in'}) and $value->{'in'} == 'formData') {
+                return $this->getDenormalizer()->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema');
+            }
+            if (isset($value->{'in'}) and $value->{'in'} == 'query') {
+                return $this->getDenormalizer()->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema');
+            }
+            if (isset($value->{'in'}) and $value->{'in'} == 'path') {
+                return $this->getDenormalizer()->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema');
+            }
+
+            return $value;
+        });
     }
 }
