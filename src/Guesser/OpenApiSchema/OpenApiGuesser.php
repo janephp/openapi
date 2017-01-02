@@ -38,23 +38,25 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
             }
         }
 
-        foreach ($object->getPaths() as $pathName => $path) {
-            if ($path instanceof PathItem) {
-                $this->getClassFromOperation($pathName, $path->getDelete(), $reference . '/' . $pathName . '/delete', $registry);
-                $this->getClassFromOperation($pathName, $path->getGet(), $reference . '/' . $pathName . '/get', $registry);
-                $this->getClassFromOperation($pathName, $path->getHead(), $reference . '/' . $pathName . '/head', $registry);
-                $this->getClassFromOperation($pathName, $path->getOptions(), $reference . '/' . $pathName . '/options', $registry);
-                $this->getClassFromOperation($pathName, $path->getPatch(), $reference . '/' . $pathName . '/patch', $registry);
-                $this->getClassFromOperation($pathName, $path->getPost(), $reference . '/' . $pathName . '/post', $registry);
-                $this->getClassFromOperation($pathName, $path->getPut(), $reference . '/' . $pathName . '/put', $registry);
+        if ($object->getPaths()) {
+            foreach ($object->getPaths() as $pathName => $path) {
+                if ($path instanceof PathItem) {
+                    $this->getClassFromOperation($pathName, $path->getDelete(), $reference . '/' . $pathName . '/delete', $registry);
+                    $this->getClassFromOperation($pathName, $path->getGet(), $reference . '/' . $pathName . '/get', $registry);
+                    $this->getClassFromOperation($pathName, $path->getHead(), $reference . '/' . $pathName . '/head', $registry);
+                    $this->getClassFromOperation($pathName, $path->getOptions(), $reference . '/' . $pathName . '/options', $registry);
+                    $this->getClassFromOperation($pathName, $path->getPatch(), $reference . '/' . $pathName . '/patch', $registry);
+                    $this->getClassFromOperation($pathName, $path->getPost(), $reference . '/' . $pathName . '/post', $registry);
+                    $this->getClassFromOperation($pathName, $path->getPut(), $reference . '/' . $pathName . '/put', $registry);
 
-                $this->getClassFromParameters($pathName, $path->getParameters(), $reference . '/' . $pathName . '/parameters', $registry);
+                    $this->getClassFromParameters($pathName, $path->getParameters(), $reference . '/' . $pathName . '/parameters', $registry);
+                }
             }
+
+            $classes = $this->getClassFromParameters($name, $object->getParameters(), $reference . '/parameters', $registry);
+
+            return $classes;
         }
-
-        $classes = $this->getClassFromParameters($name, $object->getParameters(), $reference . '/parameters', $registry);
-
-        return $classes;
     }
 
     /**

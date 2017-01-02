@@ -11,18 +11,17 @@ use Joli\Jane\OpenApi\Model\QueryParameterSubSchema;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Scalar;
-use PhpParser\Node\Stmt;
 
 abstract class NonBodyParameterGenerator extends ParameterGenerator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
     public function generateMethodParameter($parameter, Context $context)
     {
-        $name            = Inflector::camelize($parameter->getName());
+        $name = Inflector::camelize($parameter->getName());
         $methodParameter = new Node\Param($name);
 
         if (!$parameter->getRequired() || $parameter->getDefault() !== null) {
@@ -33,7 +32,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
@@ -44,7 +43,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
         if (!$parameter->getRequired() || $parameter->getDefault() !== null) {
             $statements[] = new Expr\MethodCall($queryParamVariable, 'setDefault', [
                 new Node\Arg(new Scalar\String_($parameter->getName())),
-                new Node\Arg($this->getDefaultAsExpr($parameter))
+                new Node\Arg($this->getDefaultAsExpr($parameter)),
             ]);
         }
 
@@ -56,7 +55,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
     }
 
     /**
-     * Generate a default value as an Expr
+     * Generate a default value as an Expr.
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      *
@@ -64,11 +63,11 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
      */
     protected function getDefaultAsExpr($parameter)
     {
-        return $this->parser->parse("<?php " . var_export($parameter->getDefault(), true) . ";")[0];
+        return $this->parser->parse('<?php '.var_export($parameter->getDefault(), true).';')[0];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
@@ -90,11 +89,12 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
     public function convertParameterType($type)
     {
         $convertArray = [
-            "string" => "string",
-            "number" => "float",
-            "boolean" => "bool",
-            "integer" => "int",
-            "array" => "array"
+            'string' => 'string',
+            'number' => 'float',
+            'boolean' => 'bool',
+            'integer' => 'int',
+            'array' => 'array',
+            'file' => '\Psr\Http\Message\StreamInterface',
         ];
 
         return $convertArray[$type];
