@@ -208,7 +208,7 @@ You can notice that your API depends on 3 specifics objects:
 `$httpClient` is a implementation of the `HttpClient` and/or the `HttpAsyncClient` interface
 from [HTTPlug](http://httplug.io/).
 
-This allow use to most of the client implementations availble in PHP (guzzle, react, zend, cakephp, ...).
+This allow use to most of the client implementations available in PHP (guzzle, react, zend, cakephp, ...).
 
 To read more about this consult the [HTTPlug documentation](http://docs.php-http.org/en/latest/httplug/introduction.html).
 
