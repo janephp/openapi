@@ -1,24 +1,24 @@
 # Usage
 
-This documentation provide a full example to create and use a API Client generated with this library.
+This documentation provides a full example of creating and using an API Client generated with this library.
 
-Be aware that this documentation reflect features that are only available from 1.3.0, please upgrade or
-use this version if you want to follow the following example.
+Be aware that this documentation uses features that are only available in version 1.3.0 or later. Please
+upgrade to at least this version if you want to follow the following example.
 
 ## Installation
 
-First step is to install this package:
+The first step is to install this package:
 
 ```
 composer require --dev jane/open-api
 ```
 
-We install this library as a dev one, as there is no need for your user or the runtime environment to
-be aware of the generation stuff.
+We install this library as a dev dependency, as there is no need for your user or the runtime
+environment to be aware of the generation stuff.
 
-However the generated library will have some dependencies on other package and class on jane/open-api.
-For that Jane OpenAPI offer a runtime library that you MUST depend on by requiring into your non-dev
-dependencies:
+However the generated library will have some dependencies on other packages and classes in jane/open-api.
+For that, Jane OpenAPI offers a runtime library that you MUST depend on by requiring the following
+(into your non-dev dependencies):
 
 ```
 composer require jane/openapi-runtime
@@ -26,7 +26,7 @@ composer require jane/openapi-runtime
 
 ## Creating your schema
 
-You may need to create an OpenAPI Specification if the API doesn't give you one, for that
+You may need to create an OpenAPI Specification if the API doesn't give you one. For that
 please refer to this documentation on how to create it: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
 
 For this example we will assume that you have a `swagger.json` file at the root of your
@@ -105,13 +105,13 @@ repository with the following content:
 }
 ```
 
-This API define 3 endpoints:
+This API defines 3 endpoints:
 
  * GET `/foo` which returns a collection of `Foo`
  * POST `/foo` which creates a `Foo`
  * GET `/foo/{id}` which returns a `Foo` given an `id`
 
-The `Foo` consist of an object having a property `bar` (typehint as a string).
+The `Foo` consists of an object having a property `bar` (typehint as a string).
 
 ## Generating the code
 
@@ -139,12 +139,12 @@ Available parameters:
  * `namespace`: Namespace prefix of the generated files
  * `directory`: Location of the generated files
 
-It is highly recommanded to generate the file in a other directory than
-your sources to not tempt user to modify these files.
+It is highly recommanded that you generate the file in a different directory than
+your sources to not tempt users to modify these files.
 
 ### Executing the command
 
-Then you can generate the library by using the following command:
+You can then generate the library using the following command:
 
 ```
 ./vendor/bin/jane-openapi generate
@@ -155,9 +155,9 @@ project:
 
  * The `Model` directory will contain all the value objects used by your API (`Foo` class in this example)
  * The `Normalizer` directory will contain normalizers that are able to normalize and denormalize all value
- objects created (`FooNormalizer` here) and also a `NormalizerFactory` which allow to get all the created
+ objects created (`FooNormalizer` here) and also a `NormalizerFactory` which lets you get all the created
  normalizers.
- * The `Resource` directory will contain class that are able to call all endpoints
+ * The `Resource` directory will contain classes that are able to call all endpoints
  specified in the API.
 
 ### Resource Naming
@@ -194,14 +194,14 @@ you must add this directory to the autoload section of your composer file:
 
 Now that the library is generated, you can use it.
 
-To use this library, you will use the generated `Resource` classes,
-in our example we will use the `FooResource`.
+To use this library, you will use the generated `Resource` classes.
+In our example we will use the `FooResource`.
 
 ```
 $resource = new My\API\Client\Resource\FooResource($httpClient, $requestFactory, $serializer);
 ```
 
-You can notice that your API depends on 3 specifics objects:
+You can notice that your API depends on 3 specific objects:
 
 ### HTTP Client
 
