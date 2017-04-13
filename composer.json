@@ -30,7 +30,7 @@
         "jane/jane": "dev-master",
         "jane/runtime": "dev-master as 1.1",
         "jane/openapi-runtime": "^1.0",
-        "nikic/php-parser": "^1.4|^2.0",
+        "nikic/php-parser": "^1.4|^2.0|^3.0",
         "symfony/console": "^2.3|^3.0",
         "doctrine/inflector": "^1.0",
         "symfony/yaml": "^2.8.2 | ^3.0",
