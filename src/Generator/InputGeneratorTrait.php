@@ -159,9 +159,9 @@ trait InputGeneratorTrait
     protected function createUrlStatements(Operation $operation, $queryParamVariable)
     {
         $urlVariable = new Expr\Variable('url');
-        // url = /path
+        // url = scheme://host/path
         $statements = [
-            new Expr\Assign($urlVariable, new Scalar\String_($operation->getPath()))
+            new Expr\Assign($urlVariable, new Scalar\String_($operation->getScheme() . '://' . $operation->getHost() . $operation->getPath()))
         ];
 
         if ($operation->getOperation()->getParameters()) {

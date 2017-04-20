@@ -31,7 +31,7 @@ class TestResource extends Resource
         $queryParam->setDefault('testArray', null);
         $queryParam->setRequired('testRequired');
         $queryParam->setDefault('testDefault', 'test');
-        $url     = '/test-query';
+        $url     = 'http://localhost/test-query';
         $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body    = $queryParam->buildFormDataString($parameters);
@@ -75,7 +75,7 @@ class TestResource extends Resource
         $queryParam->setHeaderParameters(['testRequired']);
         $queryParam->setDefault('testDefault', 'test');
         $queryParam->setHeaderParameters(['testDefault']);
-        $url     = '/test-header';
+        $url     = 'http://localhost/test-header';
         $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body    = $queryParam->buildFormDataString($parameters);
@@ -119,7 +119,7 @@ class TestResource extends Resource
         $queryParam->setFormParameters(['testRequired']);
         $queryParam->setDefault('testDefault', 'test');
         $queryParam->setFormParameters(['testDefault']);
-        $url     = '/test-form';
+        $url     = 'http://localhost/test-form';
         $url     = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
         $body    = $queryParam->buildFormDataString($parameters);
@@ -145,7 +145,7 @@ class TestResource extends Resource
     public function testPathParameters($testString, $testInteger, $testFloat, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = '/test-path/{testString}/{testInteger}/{testFloat}';
+        $url        = 'http://localhost/test-path/{testString}/{testInteger}/{testFloat}';
         $url        = str_replace('{testString}', urlencode($testString), $url);
         $url        = str_replace('{testInteger}', urlencode($testInteger), $url);
         $url        = str_replace('{testFloat}', urlencode($testFloat), $url);
@@ -172,7 +172,7 @@ class TestResource extends Resource
     public function getByTestInteger($testInteger, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = '/{test_integer}';
+        $url        = 'http://localhost/{test_integer}';
         $url        = str_replace('{test_integer}', urlencode($testInteger), $url);
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));

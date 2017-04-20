@@ -29,12 +29,23 @@ class Operation
      */
     private $method;
 
-    public function __construct(OpenApiOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
+    /**
+     * @var string
+     */
+    private $host;
+
+    /**
+     * @var string
+     */
+    private $scheme;
+
+    public function __construct(OpenApiOperation $operation, $path, $method, $basePath = "", $host = 'localhost', $scheme = 'http')
     {
         $this->operation = $operation;
         $this->path      = $basePath . $path;
         $this->method    = $method;
         $this->host      = $host;
+        $this->scheme    = $scheme;
     }
 
     /**
@@ -67,5 +78,13 @@ class Operation
     public function getHost()
     {
         return $this->host;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScheme()
+    {
+        return $this->scheme;
     }
 }

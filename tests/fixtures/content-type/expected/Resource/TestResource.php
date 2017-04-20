@@ -17,7 +17,7 @@ class TestResource extends Resource
     public function bodyParameterTriggersContentTypeBeingSet($testString, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = '/test-simple';
+        $url        = 'http://localhost/test-simple';
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost', 'Accept' => ['application/json'], 'Content-Type' => 'application/json'], $queryParam->buildHeaders($parameters));
         $body       = $testString;
@@ -40,7 +40,7 @@ class TestResource extends Resource
     public function producesTriggersAcceptBeingSet($parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = '/test-object';
+        $url        = 'http://localhost/test-object';
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost', 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);

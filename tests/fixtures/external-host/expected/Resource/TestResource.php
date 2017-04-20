@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\Jane\OpenApi\Tests\Expected\Api2\Resource;
+namespace Joli\Jane\OpenApi\Tests\Expected\Resource;
 
 use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
 use Joli\Jane\OpenApi\Runtime\Client\Resource;
@@ -11,14 +11,14 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Api1\Model\Body
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function testReferenceResponse($parameters = [], $fetch = self::FETCH_OBJECT)
+    public function testNonDefaultHostAndScheme($parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url        = 'http://localhost/test-query';
+        $url        = 'https://api.domain.org/test-query';
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $headers    = array_merge(['Host' => 'api.domain.org'], $queryParam->buildHeaders($parameters));
         $body       = $queryParam->buildFormDataString($parameters);
         $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise    = $this->httpClient->sendAsyncRequest($request);
@@ -26,11 +26,6 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
-        if (self::FETCH_OBJECT == $fetch) {
-            if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Api1\\Model\\Body', 'json');
-            }
-        }
 
         return $response;
     }

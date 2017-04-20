@@ -1,0 +1,25 @@
+{
+    "swagger": "2.0",
+    "responses": {
+        "200": {
+            "description": "no error"
+        }
+    },
+    "host": "api.domain.org",
+    "schemes": ["https"],
+    "paths": {
+        "/test-query": {
+            "get": {
+                "operationId": "Test non default host and scheme",
+                "responses": {
+                    "200": {
+                        "description": "no error"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
+        }
+    }
+}
