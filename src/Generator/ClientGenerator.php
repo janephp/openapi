@@ -2,7 +2,6 @@
 
 namespace Joli\Jane\OpenApi\Generator;
 
-use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\OpenApi\Model\OpenApi;
 use Joli\Jane\OpenApi\Naming\OperationNamingInterface;
@@ -62,9 +61,7 @@ class ClientGenerator
     protected function generateClass($group, $operations, $namespace, Context $context, $suffix = 'Resource')
     {
         $factory    = new BuilderFactory();
-        $name       = $group === 0 ? 'Default' : $group;
-        $name       = preg_replace('/[^a-z0-9 ]+/iu', '', $name);
-        $class      = $factory->class(Inflector::classify($name . $suffix));
+        $class      = $factory->class($group . $suffix);
         $class->extend('Resource');
 
         foreach ($operations as $operation) {
