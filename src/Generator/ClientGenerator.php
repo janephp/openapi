@@ -63,6 +63,7 @@ class ClientGenerator
     {
         $factory    = new BuilderFactory();
         $name       = $group === 0 ? 'Default' : $group;
+        $name       = preg_replace('/[^a-z0-9 ]+/iu', '', $name);
         $class      = $factory->class(Inflector::classify($name . $suffix));
         $class->extend('Resource');
 
