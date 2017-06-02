@@ -1,5 +1,6 @@
 {
     "swagger": "2.0",
+    "basePath": "/",
     "paths": {
         "/test-no-tag": {
             "get": {

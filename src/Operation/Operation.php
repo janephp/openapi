@@ -32,7 +32,7 @@ class Operation
     public function __construct(OpenApiOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
     {
         $this->operation = $operation;
-        $this->path      = $basePath . $path;
+        $this->path      = preg_replace('#^/+#', '/', $basePath . $path);
         $this->method    = $method;
         $this->host      = $host;
     }
