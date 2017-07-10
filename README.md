@@ -88,7 +88,7 @@ Here is a quick presentation on how this library transforms a Json Schema file i
 
 ## Sponsor
 
-[![Jolicode](https://jolicode.com/images/logo.svg)](https://jolicode.com)
+[![JoliCode](https://jolicode.com/images/logo.svg)](https://jolicode.com)
 
 Open Source time sponsored by JoliCode
 
