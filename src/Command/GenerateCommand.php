@@ -21,7 +21,7 @@ class GenerateCommand extends Command
     {
         $this->setName('generate');
         $this->setDescription('Generate an api client: class, normalizers and resources given a specific Json OpenApi file');
-        $this->addOption('config-file', 'c', InputOption::VALUE_OPTIONAL, 'File to use for Jane OpenAPI configuration', '.jane-openapi');
+        $this->addOption('config-file', 'c', InputOption::VALUE_OPTIONAL, 'File to use for Jane OpenAPI configuration');
         $this->addOption('reference', null, InputOption::VALUE_NONE, 'Use the JSON Reference specification in your generated library');
         $this->addOption('date-format', 'd', InputOption::VALUE_OPTIONAL, 'Date time format to use for date time field');
         $this->addArgument('openapi-file', InputArgument::OPTIONAL, 'Location of the OpenApi (Swagger) Schema file');
@@ -36,7 +36,15 @@ class GenerateCommand extends Command
     {
         $options = [];
 
-        if ($input->hasOption('config-file')) {
+        $configFile = null;
+
+        if (!$input->hasOption('config-file') && file_exists('.jane-openapi')) {
+            $configFile = '.jane-openapi';
+        } elseif($input->hasOption('config-file') && null !== $input->getOption('config-file')) {
+            $configFile = $input->getOption('config-file');
+        }
+
+        if ($configFile) {
             $configFile = $input->getOption('config-file');
 
             if (!file_exists($configFile)) {
