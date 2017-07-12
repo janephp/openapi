@@ -2,12 +2,19 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Normalizer;
 
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class SchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class SchemaNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema') {
@@ -28,6 +35,9 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\Schema();
         if (property_exists($data, 'stringProperty')) {
             $object->setStringProperty($data->{'stringProperty'});
@@ -53,10 +63,10 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $object->setMapProperty($values_1);
         }
         if (property_exists($data, 'objectProperty')) {
-            $object->setObjectProperty($this->serializer->deserialize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty', 'raw', $context));
+            $object->setObjectProperty($this->denormalizer->denormalize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty', 'json', $context));
         }
         if (property_exists($data, 'objectRefProperty')) {
-            $object->setObjectRefProperty($this->serializer->deserialize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'raw', $context));
+            $object->setObjectRefProperty($this->denormalizer->denormalize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'json', $context));
         }
 
         return $object;
@@ -89,10 +99,10 @@ class SchemaNormalizer extends SerializerAwareNormalizer implements Denormalizer
             $data->{'mapProperty'} = $values_1;
         }
         if (null !== $object->getObjectProperty()) {
-            $data->{'objectProperty'} = $this->serializer->serialize($object->getObjectProperty(), 'raw', $context);
+            $data->{'objectProperty'} = $this->normalizer->normalize($object->getObjectProperty(), 'json', $context);
         }
         if (null !== $object->getObjectRefProperty()) {
-            $data->{'objectRefProperty'} = $this->serializer->serialize($object->getObjectRefProperty(), 'raw', $context);
+            $data->{'objectRefProperty'} = $this->normalizer->normalize($object->getObjectRefProperty(), 'json', $context);
         }
 
         return $data;

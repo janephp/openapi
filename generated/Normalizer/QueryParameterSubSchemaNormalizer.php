@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class QueryParameterSubSchemaNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema') {
@@ -29,6 +36,9 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -55,7 +65,7 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
             $object->setFormat($data->{'format'});
         }
         if (property_exists($data, 'items')) {
-            $object->setItems($this->serializer->deserialize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems', 'raw', $context));
+            $object->setItems($this->denormalizer->denormalize($data->{'items'}, 'Joli\\Jane\\OpenApi\\Model\\PrimitivesItems', 'json', $context));
         }
         if (property_exists($data, 'collectionFormat')) {
             $object->setCollectionFormat($data->{'collectionFormat'});
@@ -132,7 +142,7 @@ class QueryParameterSubSchemaNormalizer extends SerializerAwareNormalizer implem
             $data->{'format'} = $object->getFormat();
         }
         if (null !== $object->getItems()) {
-            $data->{'items'} = $this->serializer->serialize($object->getItems(), 'raw', $context);
+            $data->{'items'} = $this->normalizer->normalize($object->getItems(), 'json', $context);
         }
         if (null !== $object->getCollectionFormat()) {
             $data->{'collectionFormat'} = $object->getCollectionFormat();

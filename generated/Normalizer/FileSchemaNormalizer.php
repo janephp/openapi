@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class FileSchemaNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class FileSchemaNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\FileSchema') {
@@ -29,6 +36,9 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -59,7 +69,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $object->setReadOnly($data->{'readOnly'});
         }
         if (property_exists($data, 'externalDocs')) {
-            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
+            $object->setExternalDocs($this->denormalizer->denormalize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'json', $context));
         }
         if (property_exists($data, 'example')) {
             $object->setExample($data->{'example'});
@@ -97,7 +107,7 @@ class FileSchemaNormalizer extends SerializerAwareNormalizer implements Denormal
             $data->{'readOnly'} = $object->getReadOnly();
         }
         if (null !== $object->getExternalDocs()) {
-            $data->{'externalDocs'} = $this->serializer->serialize($object->getExternalDocs(), 'raw', $context);
+            $data->{'externalDocs'} = $this->normalizer->normalize($object->getExternalDocs(), 'json', $context);
         }
         if (null !== $object->getExample()) {
             $data->{'example'} = $object->getExample();

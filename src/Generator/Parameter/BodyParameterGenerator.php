@@ -91,6 +91,12 @@ class BodyParameterGenerator extends ParameterGenerator
         }
 
         $class = $context->getRegistry()->getClass($reference);
+
+        // Happens when reference resolve to a none object
+        if ($class === null) {
+            return [$schema->getType(), null];
+        }
+
         $class = "\\" . $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $class->getName();
 
         if ($array) {

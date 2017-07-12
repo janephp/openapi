@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class ResponseNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ResponseNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Response') {
@@ -29,6 +36,9 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -39,17 +49,17 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (property_exists($data, 'schema')) {
             $value = $data->{'schema'};
             if (is_object($data->{'schema'})) {
-                $value = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
+                $value = $this->denormalizer->denormalize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'json', $context);
             }
             if (is_object($data->{'schema'}) and (isset($data->{'schema'}->{'type'}) and $data->{'schema'}->{'type'} == 'file')) {
-                $value = $this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\FileSchema', 'raw', $context);
+                $value = $this->denormalizer->denormalize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\FileSchema', 'json', $context);
             }
             $object->setSchema($value);
         }
         if (property_exists($data, 'headers')) {
             $values = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'headers'} as $key => $value_1) {
-                $values[$key] = $this->serializer->deserialize($value_1, 'Joli\\Jane\\OpenApi\\Model\\Header', 'raw', $context);
+                $values[$key] = $this->denormalizer->denormalize($value_1, 'Joli\\Jane\\OpenApi\\Model\\Header', 'json', $context);
             }
             $object->setHeaders($values);
         }
@@ -73,17 +83,17 @@ class ResponseNormalizer extends SerializerAwareNormalizer implements Denormaliz
         if (null !== $object->getSchema()) {
             $value = $object->getSchema();
             if (is_object($object->getSchema())) {
-                $value = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+                $value = $this->normalizer->normalize($object->getSchema(), 'json', $context);
             }
             if (is_object($object->getSchema())) {
-                $value = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+                $value = $this->normalizer->normalize($object->getSchema(), 'json', $context);
             }
             $data->{'schema'} = $value;
         }
         if (null !== $object->getHeaders()) {
             $values = new \stdClass();
             foreach ($object->getHeaders() as $key => $value_1) {
-                $values->{$key} = $this->serializer->serialize($value_1, 'raw', $context);
+                $values->{$key} = $this->normalizer->normalize($value_1, 'json', $context);
             }
             $data->{'headers'} = $values;
         }

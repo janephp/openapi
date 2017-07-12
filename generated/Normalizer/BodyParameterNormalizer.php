@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class BodyParameterNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class BodyParameterNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\BodyParameter') {
@@ -29,6 +36,9 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -46,7 +56,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
             $object->setRequired($data->{'required'});
         }
         if (property_exists($data, 'schema')) {
-            $object->setSchema($this->serializer->deserialize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context));
+            $object->setSchema($this->denormalizer->denormalize($data->{'schema'}, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'json', $context));
         }
 
         return $object;
@@ -68,7 +78,7 @@ class BodyParameterNormalizer extends SerializerAwareNormalizer implements Denor
             $data->{'required'} = $object->getRequired();
         }
         if (null !== $object->getSchema()) {
-            $data->{'schema'} = $this->serializer->serialize($object->getSchema(), 'raw', $context);
+            $data->{'schema'} = $this->normalizer->normalize($object->getSchema(), 'json', $context);
         }
 
         return $data;

@@ -250,7 +250,6 @@ class JaneOpenApi
                 new YamlEncode(),
                 new YamlDecode(false, true, true, true)
             ),
-            new RawEncoder(),
         ];
         $normalizers     = NormalizerFactory::create();
         $serializer      = new Serializer($normalizers, $encoders);

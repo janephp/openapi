@@ -6,8 +6,7 @@ class NormalizerFactory
 {
     public static function create()
     {
-        $normalizers   = [];
-        $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
+        $normalizers = [];
 
         return $normalizers;
     }

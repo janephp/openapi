@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class InfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\Info') {
@@ -29,6 +36,9 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -46,10 +56,10 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
             $object->setTermsOfService($data->{'termsOfService'});
         }
         if (property_exists($data, 'contact')) {
-            $object->setContact($this->serializer->deserialize($data->{'contact'}, 'Joli\\Jane\\OpenApi\\Model\\Contact', 'raw', $context));
+            $object->setContact($this->denormalizer->denormalize($data->{'contact'}, 'Joli\\Jane\\OpenApi\\Model\\Contact', 'json', $context));
         }
         if (property_exists($data, 'license')) {
-            $object->setLicense($this->serializer->deserialize($data->{'license'}, 'Joli\\Jane\\OpenApi\\Model\\License', 'raw', $context));
+            $object->setLicense($this->denormalizer->denormalize($data->{'license'}, 'Joli\\Jane\\OpenApi\\Model\\License', 'json', $context));
         }
 
         return $object;
@@ -71,10 +81,10 @@ class InfoNormalizer extends SerializerAwareNormalizer implements DenormalizerIn
             $data->{'termsOfService'} = $object->getTermsOfService();
         }
         if (null !== $object->getContact()) {
-            $data->{'contact'} = $this->serializer->serialize($object->getContact(), 'raw', $context);
+            $data->{'contact'} = $this->normalizer->normalize($object->getContact(), 'json', $context);
         }
         if (null !== $object->getLicense()) {
-            $data->{'license'} = $this->serializer->serialize($object->getLicense(), 'raw', $context);
+            $data->{'license'} = $this->normalizer->normalize($object->getLicense(), 'json', $context);
         }
 
         return $data;

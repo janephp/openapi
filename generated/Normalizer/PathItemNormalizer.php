@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class PathItemNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class PathItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\PathItem') {
@@ -29,6 +36,9 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -37,47 +47,47 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $object->setDollarRef($data->{'$ref'});
         }
         if (property_exists($data, 'get')) {
-            $object->setGet($this->serializer->deserialize($data->{'get'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setGet($this->denormalizer->denormalize($data->{'get'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'put')) {
-            $object->setPut($this->serializer->deserialize($data->{'put'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setPut($this->denormalizer->denormalize($data->{'put'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'post')) {
-            $object->setPost($this->serializer->deserialize($data->{'post'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setPost($this->denormalizer->denormalize($data->{'post'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'delete')) {
-            $object->setDelete($this->serializer->deserialize($data->{'delete'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setDelete($this->denormalizer->denormalize($data->{'delete'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'options')) {
-            $object->setOptions($this->serializer->deserialize($data->{'options'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setOptions($this->denormalizer->denormalize($data->{'options'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'head')) {
-            $object->setHead($this->serializer->deserialize($data->{'head'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setHead($this->denormalizer->denormalize($data->{'head'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'patch')) {
-            $object->setPatch($this->serializer->deserialize($data->{'patch'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'raw', $context));
+            $object->setPatch($this->denormalizer->denormalize($data->{'patch'}, 'Joli\\Jane\\OpenApi\\Model\\Operation', 'json', $context));
         }
         if (property_exists($data, 'parameters')) {
             $values = [];
             foreach ($data->{'parameters'} as $value) {
                 $value_1 = $value;
                 if (is_object($value) and isset($value->{'name'}) and (isset($value->{'in'}) and $value->{'in'} == 'body') and isset($value->{'schema'})) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter', 'json', $context);
                 }
                 if (is_object($value) and (isset($value->{'in'}) and $value->{'in'} == 'header') and isset($value->{'name'}) and (isset($value->{'type'}) and ($value->{'type'} == 'string' or $value->{'type'} == 'number' or $value->{'type'} == 'boolean' or $value->{'type'} == 'integer' or $value->{'type'} == 'array'))) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value) and (isset($value->{'in'}) and $value->{'in'} == 'formData') and isset($value->{'name'}) and (isset($value->{'type'}) and ($value->{'type'} == 'string' or $value->{'type'} == 'number' or $value->{'type'} == 'boolean' or $value->{'type'} == 'integer' or $value->{'type'} == 'array' or $value->{'type'} == 'file'))) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value) and (isset($value->{'in'}) and $value->{'in'} == 'query') and isset($value->{'name'}) and (isset($value->{'type'}) and ($value->{'type'} == 'string' or $value->{'type'} == 'number' or $value->{'type'} == 'boolean' or $value->{'type'} == 'integer' or $value->{'type'} == 'array'))) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value) and (isset($value->{'required'}) and $value->{'required'} == '1') and (isset($value->{'in'}) and $value->{'in'} == 'path') and isset($value->{'name'}) and (isset($value->{'type'}) and ($value->{'type'} == 'string' or $value->{'type'} == 'number' or $value->{'type'} == 'boolean' or $value->{'type'} == 'integer' or $value->{'type'} == 'array'))) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value) and isset($value->{'$ref'})) {
-                    $value_1 = $this->serializer->deserialize($value, 'Joli\\Jane\\OpenApi\\Model\\JsonReference', 'raw', $context);
+                    $value_1 = $this->denormalizer->denormalize($value, 'Joli\\Jane\\OpenApi\\Model\\JsonReference', 'json', $context);
                 }
                 $values[] = $value_1;
             }
@@ -94,47 +104,47 @@ class PathItemNormalizer extends SerializerAwareNormalizer implements Denormaliz
             $data->{'$ref'} = $object->getDollarRef();
         }
         if (null !== $object->getGet()) {
-            $data->{'get'} = $this->serializer->serialize($object->getGet(), 'raw', $context);
+            $data->{'get'} = $this->normalizer->normalize($object->getGet(), 'json', $context);
         }
         if (null !== $object->getPut()) {
-            $data->{'put'} = $this->serializer->serialize($object->getPut(), 'raw', $context);
+            $data->{'put'} = $this->normalizer->normalize($object->getPut(), 'json', $context);
         }
         if (null !== $object->getPost()) {
-            $data->{'post'} = $this->serializer->serialize($object->getPost(), 'raw', $context);
+            $data->{'post'} = $this->normalizer->normalize($object->getPost(), 'json', $context);
         }
         if (null !== $object->getDelete()) {
-            $data->{'delete'} = $this->serializer->serialize($object->getDelete(), 'raw', $context);
+            $data->{'delete'} = $this->normalizer->normalize($object->getDelete(), 'json', $context);
         }
         if (null !== $object->getOptions()) {
-            $data->{'options'} = $this->serializer->serialize($object->getOptions(), 'raw', $context);
+            $data->{'options'} = $this->normalizer->normalize($object->getOptions(), 'json', $context);
         }
         if (null !== $object->getHead()) {
-            $data->{'head'} = $this->serializer->serialize($object->getHead(), 'raw', $context);
+            $data->{'head'} = $this->normalizer->normalize($object->getHead(), 'json', $context);
         }
         if (null !== $object->getPatch()) {
-            $data->{'patch'} = $this->serializer->serialize($object->getPatch(), 'raw', $context);
+            $data->{'patch'} = $this->normalizer->normalize($object->getPatch(), 'json', $context);
         }
         if (null !== $object->getParameters()) {
             $values = [];
             foreach ($object->getParameters() as $value) {
                 $value_1 = $value;
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 if (is_object($value)) {
-                    $value_1 = $this->serializer->serialize($value, 'raw', $context);
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
                 }
                 $values[] = $value_1;
             }

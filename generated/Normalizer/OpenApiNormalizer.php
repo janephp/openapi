@@ -3,12 +3,19 @@
 namespace Joli\Jane\OpenApi\Normalizer;
 
 use Joli\Jane\Runtime\Reference;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
 
-class OpenApiNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class OpenApiNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'Joli\\Jane\\OpenApi\\Model\\OpenApi') {
@@ -29,6 +36,9 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (!is_object($data)) {
+            throw new InvalidArgumentException();
+        }
         if (isset($data->{'$ref'})) {
             return new Reference($data->{'$ref'}, $context['document-origin']);
         }
@@ -37,7 +47,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             $object->setSwagger($data->{'swagger'});
         }
         if (property_exists($data, 'info')) {
-            $object->setInfo($this->serializer->deserialize($data->{'info'}, 'Joli\\Jane\\OpenApi\\Model\\Info', 'raw', $context));
+            $object->setInfo($this->denormalizer->denormalize($data->{'info'}, 'Joli\\Jane\\OpenApi\\Model\\Info', 'json', $context));
         }
         if (property_exists($data, 'host')) {
             $object->setHost($data->{'host'});
@@ -74,7 +84,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
                     continue;
                 }
                 if (preg_match('/^\//', $key) && is_object($value_3)) {
-                    $values_3[$key] = $this->serializer->deserialize($value_3, 'Joli\\Jane\\OpenApi\\Model\\PathItem', 'raw', $context);
+                    $values_3[$key] = $this->denormalizer->denormalize($value_3, 'Joli\\Jane\\OpenApi\\Model\\PathItem', 'json', $context);
                     continue;
                 }
             }
@@ -83,7 +93,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (property_exists($data, 'definitions')) {
             $values_4 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'definitions'} as $key_1 => $value_4) {
-                $values_4[$key_1] = $this->serializer->deserialize($value_4, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'raw', $context);
+                $values_4[$key_1] = $this->denormalizer->denormalize($value_4, 'Joli\\Jane\\OpenApi\\Model\\Schema', 'json', $context);
             }
             $object->setDefinitions($values_4);
         }
@@ -92,19 +102,19 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             foreach ($data->{'parameters'} as $key_2 => $value_5) {
                 $value_6 = $value_5;
                 if (is_object($value_5) and isset($value_5->{'name'}) and (isset($value_5->{'in'}) and $value_5->{'in'} == 'body') and isset($value_5->{'schema'})) {
-                    $value_6 = $this->serializer->deserialize($value_5, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter', 'raw', $context);
+                    $value_6 = $this->denormalizer->denormalize($value_5, 'Joli\\Jane\\OpenApi\\Model\\BodyParameter', 'json', $context);
                 }
                 if (is_object($value_5) and (isset($value_5->{'in'}) and $value_5->{'in'} == 'header') and isset($value_5->{'name'}) and (isset($value_5->{'type'}) and ($value_5->{'type'} == 'string' or $value_5->{'type'} == 'number' or $value_5->{'type'} == 'boolean' or $value_5->{'type'} == 'integer' or $value_5->{'type'} == 'array'))) {
-                    $value_6 = $this->serializer->deserialize($value_5, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema', 'raw', $context);
+                    $value_6 = $this->denormalizer->denormalize($value_5, 'Joli\\Jane\\OpenApi\\Model\\HeaderParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value_5) and (isset($value_5->{'in'}) and $value_5->{'in'} == 'formData') and isset($value_5->{'name'}) and (isset($value_5->{'type'}) and ($value_5->{'type'} == 'string' or $value_5->{'type'} == 'number' or $value_5->{'type'} == 'boolean' or $value_5->{'type'} == 'integer' or $value_5->{'type'} == 'array' or $value_5->{'type'} == 'file'))) {
-                    $value_6 = $this->serializer->deserialize($value_5, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema', 'raw', $context);
+                    $value_6 = $this->denormalizer->denormalize($value_5, 'Joli\\Jane\\OpenApi\\Model\\FormDataParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value_5) and (isset($value_5->{'in'}) and $value_5->{'in'} == 'query') and isset($value_5->{'name'}) and (isset($value_5->{'type'}) and ($value_5->{'type'} == 'string' or $value_5->{'type'} == 'number' or $value_5->{'type'} == 'boolean' or $value_5->{'type'} == 'integer' or $value_5->{'type'} == 'array'))) {
-                    $value_6 = $this->serializer->deserialize($value_5, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema', 'raw', $context);
+                    $value_6 = $this->denormalizer->denormalize($value_5, 'Joli\\Jane\\OpenApi\\Model\\QueryParameterSubSchema', 'json', $context);
                 }
                 if (is_object($value_5) and (isset($value_5->{'required'}) and $value_5->{'required'} == '1') and (isset($value_5->{'in'}) and $value_5->{'in'} == 'path') and isset($value_5->{'name'}) and (isset($value_5->{'type'}) and ($value_5->{'type'} == 'string' or $value_5->{'type'} == 'number' or $value_5->{'type'} == 'boolean' or $value_5->{'type'} == 'integer' or $value_5->{'type'} == 'array'))) {
-                    $value_6 = $this->serializer->deserialize($value_5, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema', 'raw', $context);
+                    $value_6 = $this->denormalizer->denormalize($value_5, 'Joli\\Jane\\OpenApi\\Model\\PathParameterSubSchema', 'json', $context);
                 }
                 $values_5[$key_2] = $value_6;
             }
@@ -113,7 +123,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (property_exists($data, 'responses')) {
             $values_6 = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
             foreach ($data->{'responses'} as $key_3 => $value_7) {
-                $values_6[$key_3] = $this->serializer->deserialize($value_7, 'Joli\\Jane\\OpenApi\\Model\\Response', 'raw', $context);
+                $values_6[$key_3] = $this->denormalizer->denormalize($value_7, 'Joli\\Jane\\OpenApi\\Model\\Response', 'json', $context);
             }
             $object->setResponses($values_6);
         }
@@ -137,22 +147,22 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             foreach ($data->{'securityDefinitions'} as $key_5 => $value_11) {
                 $value_12 = $value_11;
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'basic')) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\BasicAuthenticationSecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\BasicAuthenticationSecurity', 'json', $context);
                 }
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'apiKey') and isset($value_11->{'name'}) and (isset($value_11->{'in'}) and ($value_11->{'in'} == 'header' or $value_11->{'in'} == 'query'))) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\ApiKeySecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\ApiKeySecurity', 'json', $context);
                 }
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'oauth2') and (isset($value_11->{'flow'}) and $value_11->{'flow'} == 'implicit') and isset($value_11->{'authorizationUrl'})) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2ImplicitSecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2ImplicitSecurity', 'json', $context);
                 }
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'oauth2') and (isset($value_11->{'flow'}) and $value_11->{'flow'} == 'password') and isset($value_11->{'tokenUrl'})) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2PasswordSecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2PasswordSecurity', 'json', $context);
                 }
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'oauth2') and (isset($value_11->{'flow'}) and $value_11->{'flow'} == 'application') and isset($value_11->{'tokenUrl'})) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2ApplicationSecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2ApplicationSecurity', 'json', $context);
                 }
                 if (is_object($value_11) and (isset($value_11->{'type'}) and $value_11->{'type'} == 'oauth2') and (isset($value_11->{'flow'}) and $value_11->{'flow'} == 'accessCode') and isset($value_11->{'authorizationUrl'}) and isset($value_11->{'tokenUrl'})) {
-                    $value_12 = $this->serializer->deserialize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2AccessCodeSecurity', 'raw', $context);
+                    $value_12 = $this->denormalizer->denormalize($value_11, 'Joli\\Jane\\OpenApi\\Model\\Oauth2AccessCodeSecurity', 'json', $context);
                 }
                 $values_10[$key_5] = $value_12;
             }
@@ -161,12 +171,12 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (property_exists($data, 'tags')) {
             $values_11 = [];
             foreach ($data->{'tags'} as $value_13) {
-                $values_11[] = $this->serializer->deserialize($value_13, 'Joli\\Jane\\OpenApi\\Model\\Tag', 'raw', $context);
+                $values_11[] = $this->denormalizer->denormalize($value_13, 'Joli\\Jane\\OpenApi\\Model\\Tag', 'json', $context);
             }
             $object->setTags($values_11);
         }
         if (property_exists($data, 'externalDocs')) {
-            $object->setExternalDocs($this->serializer->deserialize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'raw', $context));
+            $object->setExternalDocs($this->denormalizer->denormalize($data->{'externalDocs'}, 'Joli\\Jane\\OpenApi\\Model\\ExternalDocs', 'json', $context));
         }
 
         return $object;
@@ -179,7 +189,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             $data->{'swagger'} = $object->getSwagger();
         }
         if (null !== $object->getInfo()) {
-            $data->{'info'} = $this->serializer->serialize($object->getInfo(), 'raw', $context);
+            $data->{'info'} = $this->normalizer->normalize($object->getInfo(), 'json', $context);
         }
         if (null !== $object->getHost()) {
             $data->{'host'} = $object->getHost();
@@ -216,7 +226,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
                     continue;
                 }
                 if (preg_match('/^\//', $key) && is_object($value_3)) {
-                    $values_3->{$key} = $this->serializer->serialize($value_3, 'raw', $context);
+                    $values_3->{$key} = $this->normalizer->normalize($value_3, 'json', $context);
                     continue;
                 }
             }
@@ -225,7 +235,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (null !== $object->getDefinitions()) {
             $values_4 = new \stdClass();
             foreach ($object->getDefinitions() as $key_1 => $value_4) {
-                $values_4->{$key_1} = $this->serializer->serialize($value_4, 'raw', $context);
+                $values_4->{$key_1} = $this->normalizer->normalize($value_4, 'json', $context);
             }
             $data->{'definitions'} = $values_4;
         }
@@ -234,19 +244,19 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             foreach ($object->getParameters() as $key_2 => $value_5) {
                 $value_6 = $value_5;
                 if (is_object($value_5)) {
-                    $value_6 = $this->serializer->serialize($value_5, 'raw', $context);
+                    $value_6 = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 if (is_object($value_5)) {
-                    $value_6 = $this->serializer->serialize($value_5, 'raw', $context);
+                    $value_6 = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 if (is_object($value_5)) {
-                    $value_6 = $this->serializer->serialize($value_5, 'raw', $context);
+                    $value_6 = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 if (is_object($value_5)) {
-                    $value_6 = $this->serializer->serialize($value_5, 'raw', $context);
+                    $value_6 = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 if (is_object($value_5)) {
-                    $value_6 = $this->serializer->serialize($value_5, 'raw', $context);
+                    $value_6 = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 $values_5->{$key_2} = $value_6;
             }
@@ -255,7 +265,7 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (null !== $object->getResponses()) {
             $values_6 = new \stdClass();
             foreach ($object->getResponses() as $key_3 => $value_7) {
-                $values_6->{$key_3} = $this->serializer->serialize($value_7, 'raw', $context);
+                $values_6->{$key_3} = $this->normalizer->normalize($value_7, 'json', $context);
             }
             $data->{'responses'} = $values_6;
         }
@@ -279,22 +289,22 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
             foreach ($object->getSecurityDefinitions() as $key_5 => $value_11) {
                 $value_12 = $value_11;
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 if (is_object($value_11)) {
-                    $value_12 = $this->serializer->serialize($value_11, 'raw', $context);
+                    $value_12 = $this->normalizer->normalize($value_11, 'json', $context);
                 }
                 $values_10->{$key_5} = $value_12;
             }
@@ -303,12 +313,12 @@ class OpenApiNormalizer extends SerializerAwareNormalizer implements Denormalize
         if (null !== $object->getTags()) {
             $values_11 = [];
             foreach ($object->getTags() as $value_13) {
-                $values_11[] = $this->serializer->serialize($value_13, 'raw', $context);
+                $values_11[] = $this->normalizer->normalize($value_13, 'json', $context);
             }
             $data->{'tags'} = $values_11;
         }
         if (null !== $object->getExternalDocs()) {
-            $data->{'externalDocs'} = $this->serializer->serialize($object->getExternalDocs(), 'raw', $context);
+            $data->{'externalDocs'} = $this->normalizer->normalize($object->getExternalDocs(), 'json', $context);
         }
 
         return $data;
