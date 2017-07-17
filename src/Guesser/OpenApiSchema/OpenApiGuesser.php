@@ -49,13 +49,23 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
                     $this->getClassFromOperation($pathName, $path->getPost(), $reference . '/' . $pathName . '/post', $registry);
                     $this->getClassFromOperation($pathName, $path->getPut(), $reference . '/' . $pathName . '/put', $registry);
 
-                    $this->getClassFromParameters($pathName, $path->getParameters(), $reference . '/' . $pathName . '/parameters', $registry);
+                    if ($path->getParameters()) {
+                        foreach ($path->getParameters() as $key => $parameter) {
+                            if ($parameter instanceof BodyParameter) {
+                                $this->chainGuesser->guessClass($parameter->getSchema(), $pathName . 'Body' . $key, $reference . '/' . $pathName . '/parameters/' . $key,  $registry);
+                            }
+                        }
+                    }
                 }
             }
+        }
 
-            $classes = $this->getClassFromParameters($name, $object->getParameters(), $reference . '/parameters', $registry);
-
-            return $classes;
+        if ($object->getParameters()) {
+            foreach ($object->getParameters() as $parameterName => $parameter) {
+                if ($parameter instanceof BodyParameter) {
+                    $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName, $reference . '/parameters/' . $parameterName,  $registry);
+                }
+            }
         }
     }
 
@@ -73,32 +83,19 @@ class OpenApiGuesser implements GuesserInterface, ClassGuesserInterface, ChainGu
             return;
         }
 
-        $this->getClassFromParameters($name, $operation->getParameters(), $reference . '/parameters', $registry);
-
-        foreach ($operation->getResponses() as $status => $response) {
-            if ($response instanceof Response) {
-                $this->chainGuesser->guessClass($response->getSchema(), $name.'Response'.$status, $reference . '/responses/' . $status, $registry);
+        if ($operation->getParameters()) {
+            foreach ($operation->getParameters() as $key => $parameter) {
+                if ($parameter instanceof BodyParameter) {
+                    $this->chainGuesser->guessClass($parameter->getSchema(), $name . 'Body', $reference . '/parameters/' . $key,  $registry);
+                }
             }
         }
-    }
 
-    /**
-     * Discover class in parameters
-     *
-     * @param $name
-     * @param $parameters
-     * @param string $reference
-     * @param Registry $registry
-     */
-    protected function getClassFromParameters($name, $parameters, $reference, $registry)
-    {
-        if ($parameters === null) {
-            return;
-        }
-
-        foreach ($parameters as $parameterName => $parameter) {
-            if ($parameter instanceof BodyParameter) {
-                $this->chainGuesser->guessClass($parameter->getSchema(), $parameterName, $reference . '/' . $parameterName,  $registry);
+        if ($operation->getResponses()) {
+            foreach ($operation->getResponses() as $status => $response) {
+                if ($response instanceof Response) {
+                    $this->chainGuesser->guessClass($response->getSchema(), $name.'Response'.$status, $reference . '/responses/' . $status, $registry);
+                }
             }
         }
     }

@@ -41,14 +41,15 @@ class ClientGenerator
      *
      * @param OpenApi $openApi
      * @param string  $namespace
-     * @param string  $suffix
      * @param Context $context
+     * @param string  $reference
+     * @param string  $suffix
      *
      * @return Node[]
      */
-    public function generate(OpenApi $openApi, $namespace, Context $context, $suffix = 'Resource')
+    public function generate(OpenApi $openApi, $namespace, Context $context, $reference, $suffix = 'Resource')
     {
-        $operationsGrouped = $this->operationManager->buildOperationCollection($openApi);
+        $operationsGrouped = $this->operationManager->buildOperationCollection($openApi, $reference);
         $nodes             = [];
 
         foreach ($operationsGrouped as $group => $operations) {

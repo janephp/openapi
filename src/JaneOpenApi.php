@@ -156,7 +156,7 @@ class JaneOpenApi
 
             $files = array_merge($files, $this->modelGenerator->generate($schema, $schema->getRootName(), $context));
             $files = array_merge($files, $this->normalizerGenerator->generate($schema, $schema->getRootName(), $context));
-            $clients = $this->clientGenerator->generate($schema->getParsed(), $schema->getNamespace(), $context);
+            $clients = $this->clientGenerator->generate($schema->getParsed(), $schema->getNamespace(), $context, $schema->getOrigin() . '#');
 
             foreach ($clients as $node) {
                 $files[] = new File($schema->getDirectory() . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[2]->name . '.php', $node, '');
