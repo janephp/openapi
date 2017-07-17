@@ -8,13 +8,14 @@ class NormalizerFactory
     {
         $normalizers   = [];
         $normalizers[] = new SwarmSpecNormalizer();
-        $normalizers[] = new OrchestrationNormalizer();
-        $normalizers[] = new RaftNormalizer();
-        $normalizers[] = new DispatcherNormalizer();
-        $normalizers[] = new CAConfigNormalizer();
-        $normalizers[] = new EncryptionConfigNormalizer();
-        $normalizers[] = new TaskDefaultsNormalizer();
-        $normalizers[] = new LogDriverNormalizer();
+        $normalizers[] = new SwarmSpecOrchestrationNormalizer();
+        $normalizers[] = new SwarmSpecRaftNormalizer();
+        $normalizers[] = new SwarmSpecDispatcherNormalizer();
+        $normalizers[] = new SwarmSpecCAConfigNormalizer();
+        $normalizers[] = new SwarmSpecCAConfigExternalCAsItemNormalizer();
+        $normalizers[] = new SwarmSpecEncryptionConfigNormalizer();
+        $normalizers[] = new SwarmSpecTaskDefaultsNormalizer();
+        $normalizers[] = new SwarmSpecTaskDefaultsLogDriverNormalizer();
         $normalizers[] = new SwarmInitBodyNormalizer();
 
         return $normalizers;

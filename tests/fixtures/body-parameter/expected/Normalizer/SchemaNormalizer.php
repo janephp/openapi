@@ -66,7 +66,7 @@ class SchemaNormalizer implements DenormalizerInterface, NormalizerInterface, De
             $object->setMapProperty($values_1);
         }
         if (property_exists($data, 'objectProperty')) {
-            $object->setObjectProperty($this->denormalizer->denormalize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty', 'json', $context));
+            $object->setObjectProperty($this->denormalizer->denormalize($data->{'objectProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SchemaobjectProperty', 'json', $context));
         }
         if (property_exists($data, 'objectRefProperty')) {
             $object->setObjectRefProperty($this->denormalizer->denormalize($data->{'objectRefProperty'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Schema', 'json', $context));

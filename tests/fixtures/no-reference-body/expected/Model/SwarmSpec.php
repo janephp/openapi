@@ -13,27 +13,27 @@ class SwarmSpec
      */
     protected $labels;
     /**
-     * @var Orchestration
+     * @var SwarmSpecOrchestration
      */
     protected $orchestration;
     /**
-     * @var Raft
+     * @var SwarmSpecRaft
      */
     protected $raft;
     /**
-     * @var Dispatcher
+     * @var SwarmSpecDispatcher
      */
     protected $dispatcher;
     /**
-     * @var CAConfig
+     * @var SwarmSpecCAConfig
      */
     protected $cAConfig;
     /**
-     * @var EncryptionConfig
+     * @var SwarmSpecEncryptionConfig
      */
     protected $encryptionConfig;
     /**
-     * @var TaskDefaults
+     * @var SwarmSpecTaskDefaults
      */
     protected $taskDefaults;
 
@@ -78,7 +78,7 @@ class SwarmSpec
     }
 
     /**
-     * @return Orchestration
+     * @return SwarmSpecOrchestration
      */
     public function getOrchestration()
     {
@@ -86,11 +86,11 @@ class SwarmSpec
     }
 
     /**
-     * @param Orchestration $orchestration
+     * @param SwarmSpecOrchestration $orchestration
      *
      * @return self
      */
-    public function setOrchestration(Orchestration $orchestration = null)
+    public function setOrchestration(SwarmSpecOrchestration $orchestration = null)
     {
         $this->orchestration = $orchestration;
 
@@ -98,7 +98,7 @@ class SwarmSpec
     }
 
     /**
-     * @return Raft
+     * @return SwarmSpecRaft
      */
     public function getRaft()
     {
@@ -106,11 +106,11 @@ class SwarmSpec
     }
 
     /**
-     * @param Raft $raft
+     * @param SwarmSpecRaft $raft
      *
      * @return self
      */
-    public function setRaft(Raft $raft = null)
+    public function setRaft(SwarmSpecRaft $raft = null)
     {
         $this->raft = $raft;
 
@@ -118,7 +118,7 @@ class SwarmSpec
     }
 
     /**
-     * @return Dispatcher
+     * @return SwarmSpecDispatcher
      */
     public function getDispatcher()
     {
@@ -126,11 +126,11 @@ class SwarmSpec
     }
 
     /**
-     * @param Dispatcher $dispatcher
+     * @param SwarmSpecDispatcher $dispatcher
      *
      * @return self
      */
-    public function setDispatcher(Dispatcher $dispatcher = null)
+    public function setDispatcher(SwarmSpecDispatcher $dispatcher = null)
     {
         $this->dispatcher = $dispatcher;
 
@@ -138,7 +138,7 @@ class SwarmSpec
     }
 
     /**
-     * @return CAConfig
+     * @return SwarmSpecCAConfig
      */
     public function getCAConfig()
     {
@@ -146,11 +146,11 @@ class SwarmSpec
     }
 
     /**
-     * @param CAConfig $cAConfig
+     * @param SwarmSpecCAConfig $cAConfig
      *
      * @return self
      */
-    public function setCAConfig(CAConfig $cAConfig = null)
+    public function setCAConfig(SwarmSpecCAConfig $cAConfig = null)
     {
         $this->cAConfig = $cAConfig;
 
@@ -158,7 +158,7 @@ class SwarmSpec
     }
 
     /**
-     * @return EncryptionConfig
+     * @return SwarmSpecEncryptionConfig
      */
     public function getEncryptionConfig()
     {
@@ -166,11 +166,11 @@ class SwarmSpec
     }
 
     /**
-     * @param EncryptionConfig $encryptionConfig
+     * @param SwarmSpecEncryptionConfig $encryptionConfig
      *
      * @return self
      */
-    public function setEncryptionConfig(EncryptionConfig $encryptionConfig = null)
+    public function setEncryptionConfig(SwarmSpecEncryptionConfig $encryptionConfig = null)
     {
         $this->encryptionConfig = $encryptionConfig;
 
@@ -178,7 +178,7 @@ class SwarmSpec
     }
 
     /**
-     * @return TaskDefaults
+     * @return SwarmSpecTaskDefaults
      */
     public function getTaskDefaults()
     {
@@ -186,11 +186,11 @@ class SwarmSpec
     }
 
     /**
-     * @param TaskDefaults $taskDefaults
+     * @param SwarmSpecTaskDefaults $taskDefaults
      *
      * @return self
      */
-    public function setTaskDefaults(TaskDefaults $taskDefaults = null)
+    public function setTaskDefaults(SwarmSpecTaskDefaults $taskDefaults = null)
     {
         $this->taskDefaults = $taskDefaults;
 

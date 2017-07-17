@@ -50,22 +50,22 @@ class SwarmSpecNormalizer implements DenormalizerInterface, NormalizerInterface,
             $object->setLabels($values);
         }
         if (property_exists($data, 'Orchestration')) {
-            $object->setOrchestration($this->denormalizer->denormalize($data->{'Orchestration'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Orchestration', 'json', $context));
+            $object->setOrchestration($this->denormalizer->denormalize($data->{'Orchestration'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecOrchestration', 'json', $context));
         }
         if (property_exists($data, 'Raft')) {
-            $object->setRaft($this->denormalizer->denormalize($data->{'Raft'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Raft', 'json', $context));
+            $object->setRaft($this->denormalizer->denormalize($data->{'Raft'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecRaft', 'json', $context));
         }
         if (property_exists($data, 'Dispatcher')) {
-            $object->setDispatcher($this->denormalizer->denormalize($data->{'Dispatcher'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Dispatcher', 'json', $context));
+            $object->setDispatcher($this->denormalizer->denormalize($data->{'Dispatcher'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecDispatcher', 'json', $context));
         }
         if (property_exists($data, 'CAConfig')) {
-            $object->setCAConfig($this->denormalizer->denormalize($data->{'CAConfig'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\CAConfig', 'json', $context));
+            $object->setCAConfig($this->denormalizer->denormalize($data->{'CAConfig'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecCAConfig', 'json', $context));
         }
         if (property_exists($data, 'EncryptionConfig')) {
-            $object->setEncryptionConfig($this->denormalizer->denormalize($data->{'EncryptionConfig'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\EncryptionConfig', 'json', $context));
+            $object->setEncryptionConfig($this->denormalizer->denormalize($data->{'EncryptionConfig'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecEncryptionConfig', 'json', $context));
         }
         if (property_exists($data, 'TaskDefaults')) {
-            $object->setTaskDefaults($this->denormalizer->denormalize($data->{'TaskDefaults'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TaskDefaults', 'json', $context));
+            $object->setTaskDefaults($this->denormalizer->denormalize($data->{'TaskDefaults'}, 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\SwarmSpecTaskDefaults', 'json', $context));
         }
 
         return $object;

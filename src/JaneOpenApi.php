@@ -124,10 +124,10 @@ class JaneOpenApi
 
         foreach ($registry->getSchemas() as $schema) {
             foreach ($schema->getClasses() as $class) {
-                $properties = $this->chainGuesser->guessProperties($class->getObject(), $schema->getRootName(), $registry);
+                $properties = $this->chainGuesser->guessProperties($class->getObject(), $schema->getRootName(), $class->getReference(), $registry);
 
                 foreach ($properties as $property) {
-                    $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $registry, $schema));
+                    $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $property->getReference(), $registry));
                 }
 
                 $class->setProperties($properties);
