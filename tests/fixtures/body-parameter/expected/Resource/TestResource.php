@@ -12,7 +12,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function testSimpleBodyParameter($testString, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -27,6 +27,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -36,7 +41,7 @@ class TestResource extends Resource
      * @param array                                          $parameters List of parameters
      * @param string                                         $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function testObjectBodyParameter(\Joli\Jane\OpenApi\Tests\Expected\Model\Schema $testObject, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -51,6 +56,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -60,7 +70,7 @@ class TestResource extends Resource
      * @param array  $parameters     List of parameters
      * @param string $fetch          Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function testObjectListBodyParameter(array $testObjectList, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -75,6 +85,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }

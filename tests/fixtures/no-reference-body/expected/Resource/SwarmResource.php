@@ -12,7 +12,7 @@ class SwarmResource extends Resource
      * @param array                                                 $parameters List of parameters
      * @param string                                                $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function swarmInit(\Joli\Jane\OpenApi\Tests\Expected\Model\SwarmInitBody $body, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -27,6 +27,11 @@ class SwarmResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }

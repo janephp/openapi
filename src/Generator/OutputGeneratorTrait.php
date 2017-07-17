@@ -8,6 +8,7 @@ use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Model\Schema;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -28,53 +29,54 @@ trait OutputGeneratorTrait
      */
     protected function createResponseDenormalizationStatement($status, $schema, Context $context, $reference)
     {
-        $resolvedSchema = null;
-        $jsonReference  = null;
+        $jsonReference  = $reference;
         $array          = false;
 
         if ($schema instanceof Reference) {
-            list($jsonReference, $resolvedSchema) = $this->resolve($schema, Schema::class);
+            list($jsonReference, $schema) = $this->resolve($schema, Schema::class);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            list($jsonReference, $resolvedSchema) = $this->resolve($schema->getItems(), Schema::class);
+            list($jsonReference, $schema) = $this->resolve($schema->getItems(), Schema::class);
             $array = true;
-        }
-
-        if ($resolvedSchema === null) {
-            $jsonReference = $reference;
         }
 
         $class = $context->getRegistry()->getClass($jsonReference);
 
         // Happens when reference resolve to a none object
         if ($class === null) {
-            return [null, null];
+            $returnType = 'null';
+            $returnStmt = new Stmt\Return_(new Expr\ConstFetch(new Name('null')));
+        } else {
+            $class = $context->getRegistry()->getSchema($jsonReference)->getNamespace() . "\\Model\\" . $class->getName();
+
+            if ($array) {
+                $class .= "[]";
+            }
+
+            $returnType = "\\" . $class;
+            $returnStmt = new Stmt\Return_(new Expr\MethodCall(
+                new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
+                'deserialize',
+                [
+                    new Arg(new Expr\Cast\String_(new Expr\MethodCall(new Expr\Variable('response'), 'getBody'))),
+                    new Arg(new Scalar\String_($class)),
+                    new Arg(new Scalar\String_('json'))
+                ]
+            ));
         }
 
-        $class = $context->getRegistry()->getSchema($jsonReference)->getNamespace() . "\\Model\\" . $class->getName();
-
-        if ($array) {
-            $class .= "[]";
+        if ($status === 'default') {
+            return [$returnType, $returnStmt];
         }
 
-        return ["\\" . $class, new Stmt\If_(
+        return [$returnType, new Stmt\If_(
             new Expr\BinaryOp\Equal(
                 new Scalar\String_($status),
                 new Expr\MethodCall(new Expr\Variable('response'), 'getStatusCode')
             ),
             [
-                'stmts' => [
-                    new Stmt\Return_(new Expr\MethodCall(
-                        new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
-                        'deserialize',
-                        [
-                            new Arg(new Expr\Cast\String_(new Expr\MethodCall(new Expr\Variable('response'), 'getBody'))),
-                            new Arg(new Scalar\String_($class)),
-                            new Arg(new Scalar\String_('json'))
-                        ]
-                    ))
-                ]
+                'stmts' => [$returnStmt]
             ]
         )];
     }

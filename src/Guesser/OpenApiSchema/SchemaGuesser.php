@@ -12,7 +12,7 @@ class SchemaGuesser extends ObjectGuesser
      */
     public function supportObject($object)
     {
-        return (($object instanceof Schema) && $object->getType() === 'object' && $object->getProperties() !== null);
+        return (($object instanceof Schema) && ($object->getType() === 'object' || $object->getType() === null) && $object->getProperties() !== null);
     }
 
     /**

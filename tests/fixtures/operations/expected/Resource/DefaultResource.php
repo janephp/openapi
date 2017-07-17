@@ -11,7 +11,7 @@ class DefaultResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function testNoTag($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -26,6 +26,11 @@ class DefaultResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -34,7 +39,7 @@ class DefaultResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getTestOperationUrl($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -49,6 +54,11 @@ class DefaultResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -57,7 +67,7 @@ class DefaultResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getTestOperationUrlById($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -72,6 +82,11 @@ class DefaultResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -80,7 +95,7 @@ class DefaultResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getTestOperationUrlWithExtension($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -95,6 +110,11 @@ class DefaultResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -215,7 +235,7 @@ class DefaultResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function postNo200Thing($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -230,6 +250,11 @@ class DefaultResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('204' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }

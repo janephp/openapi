@@ -11,7 +11,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function deleteTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -26,6 +26,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -34,7 +39,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -49,6 +54,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -57,7 +67,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function headTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -72,6 +82,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -80,7 +95,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function optionsTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -95,6 +110,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -103,7 +123,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function patchTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -118,6 +138,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -126,7 +151,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function postTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -141,6 +166,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
@@ -149,7 +179,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function putTest($parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -164,6 +194,11 @@ class TestResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return null;
+            }
+        }
 
         return $response;
     }
