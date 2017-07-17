@@ -1,4 +1,8 @@
-preset: psr2
+preset: symfony
+
+enabled:
+  - short_array_syntax
+
 
 finder:
   exclude:

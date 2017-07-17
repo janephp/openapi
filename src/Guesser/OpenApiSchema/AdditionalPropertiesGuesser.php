@@ -26,4 +26,12 @@ class AdditionalPropertiesGuesser extends BaseAdditionalPropertiesGuesser
 
         return true;
     }
+
+    /**
+     * @return string
+     */
+    protected function getSchemaClass()
+    {
+        return Schema::class;
+    }
 }

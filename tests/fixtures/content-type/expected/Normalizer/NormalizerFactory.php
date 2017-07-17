@@ -8,7 +8,7 @@ class NormalizerFactory
     {
         $normalizers   = [];
         $normalizers[] = new SchemaNormalizer();
-        $normalizers[] = new ObjectPropertyNormalizer();
+        $normalizers[] = new SchemaobjectPropertyNormalizer();
 
         return $normalizers;
     }

@@ -26,33 +26,33 @@ trait OutputGeneratorTrait
      *
      * @return [string, null|Stmt\If_]
      */
-    protected function createResponseDenormalizationStatement($status, $schema, Context $context)
+    protected function createResponseDenormalizationStatement($status, $schema, Context $context, $reference)
     {
         $resolvedSchema = null;
-        $reference      = null;
+        $jsonReference  = null;
         $array          = false;
 
         if ($schema instanceof Reference) {
-            list($reference, $resolvedSchema) = $this->resolve($schema, Schema::class);
+            list($jsonReference, $resolvedSchema) = $this->resolve($schema, Schema::class);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            list($reference, $resolvedSchema) = $this->resolve($schema->getItems(), Schema::class);
+            list($jsonReference, $resolvedSchema) = $this->resolve($schema->getItems(), Schema::class);
             $array = true;
         }
 
         if ($resolvedSchema === null) {
-            return [null, null];
+            $jsonReference = $reference;
         }
 
-        $class = $context->getRegistry()->getClass($reference);
+        $class = $context->getRegistry()->getClass($jsonReference);
 
         // Happens when reference resolve to a none object
         if ($class === null) {
             return [null, null];
         }
 
-        $class = $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $class->getName();
+        $class = $context->getRegistry()->getSchema($jsonReference)->getNamespace() . "\\Model\\" . $class->getName();
 
         if ($array) {
             $class .= "[]";

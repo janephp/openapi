@@ -14,4 +14,12 @@ class ArrayGuesser extends BaseArrayGuesser
     {
         return (($object instanceof Schema) && $object->getType() === 'array');
     }
+
+    /**
+     * @return string
+     */
+    protected function getSchemaClass()
+    {
+        return Schema::class;
+    }
 }

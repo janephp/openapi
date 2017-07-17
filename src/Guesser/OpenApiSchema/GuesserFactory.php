@@ -19,7 +19,7 @@ class GuesserFactory
         $chainGuesser->addGuesser(new OpenApiGuesser());
         $chainGuesser->addGuesser(new SchemaGuesser($naming, $serializer));
         $chainGuesser->addGuesser(new AdditionalPropertiesGuesser());
-        $chainGuesser->addGuesser(new AllOfGuesser($serializer));
+        $chainGuesser->addGuesser(new AllOfGuesser($serializer, $naming));
         $chainGuesser->addGuesser(new ArrayGuesser());
         $chainGuesser->addGuesser(new ItemsGuesser());
         $chainGuesser->addGuesser(new SimpleTypeGuesser());

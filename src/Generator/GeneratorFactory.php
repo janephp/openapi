@@ -39,8 +39,7 @@ class GeneratorFactory
             new OperationIdNaming(),
             new OperationUrlNaming(),
         ]);
-        $client = new ClientGenerator($operationManager, $operation, $operationNaming);
 
-        return $client;
+        return new ClientGenerator($operationManager, $operation, $operationNaming);
     }
 }

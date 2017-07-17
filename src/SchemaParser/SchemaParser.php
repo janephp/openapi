@@ -5,6 +5,7 @@ namespace Joli\Jane\OpenApi\SchemaParser;
 use Joli\Jane\OpenApi\Exception\ParseFailureException;
 use Joli\Jane\OpenApi\Model\OpenApi;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class SchemaParser
 {
@@ -46,7 +47,7 @@ class SchemaParser
         $yamlException       = null;
 
         try {
-            $schema = $this->serializer->deserialize(
+            return $this->serializer->deserialize(
                 $openApiSpecContents,
                 $schemaClass,
                 self::CONTENT_TYPE_JSON,
@@ -58,30 +59,16 @@ class SchemaParser
             $jsonException = $exception;
         }
 
-        if (!$schema) {
-            try {
-                $schema = $this->serializer->deserialize(
-                    $openApiSpecContents,
-                    $schemaClass,
-                    self::CONTENT_TYPE_YAML,
-                    [
-                        'document-origin' => $openApiSpec
-                    ]
-                );
-            } catch (\Exception $exception) {
-                $yamlException = $exception;
-            }
+        $content = Yaml::parse($openApiSpecContents, Yaml::PARSE_OBJECT | Yaml::PARSE_OBJECT_FOR_MAP | Yaml::PARSE_DATETIME | Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE);
+        $openApiSpecContents = json_encode($content);
 
-            if (!$schema) {
-                throw new ParseFailureException(
-                    sprintf(self::EXCEPTION_MESSAGE, $openApiSpec),
-                    1,
-                    $jsonException,
-                    $yamlException
-                );
-            }
-        }
-
-        return $schema;
+        return $this->serializer->deserialize(
+            $openApiSpecContents,
+            $schemaClass,
+            self::CONTENT_TYPE_JSON,
+            [
+                'document-origin' => $openApiSpec
+            ]
+        );
     }
 }

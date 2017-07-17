@@ -19,7 +19,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
-    public function generateMethodParameter($parameter, Context $context)
+    public function generateMethodParameter($parameter, Context $context, $reference)
     {
         $name = Inflector::camelize($parameter->getName());
         $methodParameter = new Node\Param($name);
@@ -71,7 +71,7 @@ abstract class NonBodyParameterGenerator extends ParameterGenerator
      *
      * @param $parameter PathParameterSubSchema|HeaderParameterSubSchema|FormDataParameterSubSchema|QueryParameterSubSchema
      */
-    public function generateDocParameter($parameter, Context $context)
+    public function generateDocParameter($parameter, Context $context, $reference)
     {
         return sprintf('%s $%s %s', $this->convertParameterType($parameter->getType()), Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
     }

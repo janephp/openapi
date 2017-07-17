@@ -29,12 +29,18 @@ class Operation
      */
     private $method;
 
-    public function __construct(OpenApiOperation $operation, $path, $method, $basePath = "", $host = 'localhost')
+    /**
+     * @var string
+     */
+    private $reference;
+
+    public function __construct(OpenApiOperation $operation, $path, $method, $reference, $basePath = "", $host = 'localhost')
     {
         $this->operation = $operation;
         $this->path      = preg_replace('#^/+#', '/', $basePath . $path);
         $this->method    = $method;
         $this->host      = $host;
+        $this->reference = $reference;
     }
 
     /**
@@ -67,5 +73,13 @@ class Operation
     public function getHost()
     {
         return $this->host;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }

@@ -5,7 +5,6 @@ namespace Joli\Jane\OpenApi\Generator;
 use Joli\Jane\Generator\Context\Context;
 use Joli\Jane\OpenApi\Model\Response;
 use Joli\Jane\Runtime\Reference;
-use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Generator\Parameter\BodyParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\FormDataParameterGenerator;
 use Joli\Jane\OpenApi\Generator\Parameter\HeaderParameterGenerator;
@@ -101,7 +100,12 @@ class OperationGenerator
                 list(, $response) = $this->resolve($response, Response::class);
             }
 
-            list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement($status, $response->getSchema(), $context);
+            list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement(
+                $status,
+                $response->getSchema(),
+                $context,
+                $operation->getReference() . '/responses/' . $status
+            );
 
             if (null !== $outputType) {
                 if (!in_array($outputType, $outputTypes)) {

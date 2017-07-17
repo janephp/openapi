@@ -2,7 +2,7 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Model;
 
-class ObjectProperty
+class SchemaobjectProperty
 {
     /**
      * @var string

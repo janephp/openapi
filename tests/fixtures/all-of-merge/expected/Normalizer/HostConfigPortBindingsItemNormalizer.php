@@ -10,14 +10,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class ObjectPropertyNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class HostConfigPortBindingsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\ObjectProperty') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\HostConfigPortBindingsItem') {
             return false;
         }
 
@@ -26,7 +26,7 @@ class ObjectPropertyNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\ObjectProperty) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\HostConfigPortBindingsItem) {
             return true;
         }
 
@@ -38,9 +38,12 @@ class ObjectPropertyNormalizer implements DenormalizerInterface, NormalizerInter
         if (!is_object($data)) {
             throw new InvalidArgumentException();
         }
-        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\ObjectProperty();
-        if (property_exists($data, 'stringProperty')) {
-            $object->setStringProperty($data->{'stringProperty'});
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\HostConfigPortBindingsItem();
+        if (property_exists($data, 'HostIp')) {
+            $object->setHostIp($data->{'HostIp'});
+        }
+        if (property_exists($data, 'HostPort')) {
+            $object->setHostPort($data->{'HostPort'});
         }
 
         return $object;
@@ -49,8 +52,11 @@ class ObjectPropertyNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getStringProperty()) {
-            $data->{'stringProperty'} = $object->getStringProperty();
+        if (null !== $object->getHostIp()) {
+            $data->{'HostIp'} = $object->getHostIp();
+        }
+        if (null !== $object->getHostPort()) {
+            $data->{'HostPort'} = $object->getHostPort();
         }
 
         return $data;

@@ -31,11 +31,11 @@ class BodyParameterGenerator extends ParameterGenerator
      *
      * @param $parameter BodyParameter
      */
-    public function generateMethodParameter($parameter, Context $context)
+    public function generateMethodParameter($parameter, Context $context, $reference)
     {
         $name = Inflector::camelize($parameter->getName());
 
-        list($class, $array) = $this->getClass($parameter, $context);
+        list($class, $array) = $this->getClass($parameter, $context, $reference);
 
         if (null === $array || true === $array) {
             if ($class == "array") {
@@ -53,9 +53,9 @@ class BodyParameterGenerator extends ParameterGenerator
      *
      * @param $parameter BodyParameter
      */
-    public function generateDocParameter($parameter, Context $context)
+    public function generateDocParameter($parameter, Context $context, $reference)
     {
-        list($class, $array) = $this->getClass($parameter, $context);
+        list($class, $array) = $this->getClass($parameter, $context, $reference);
 
         if (null === $class) {
             return sprintf('%s $%s %s', 'mixed', Inflector::camelize($parameter->getName()), $parameter->getDescription() ?: '');
@@ -70,34 +70,38 @@ class BodyParameterGenerator extends ParameterGenerator
      *
      * @return array
      */
-    protected function getClass(BodyParameter $parameter, Context $context)
+    protected function getClass(BodyParameter $parameter, Context $context, $reference)
     {
         $resolvedSchema = null;
-        $reference      = null;
+        $jsonReference  = null;
         $array          = false;
         $schema         = $parameter->getSchema();
 
         if ($schema instanceof Reference) {
-            list($reference, $resolvedSchema) = $this->resolveSchema($schema, Schema::class);
+            list($jsonReference, $resolvedSchema) = $this->resolveSchema($schema, Schema::class);
         }
 
         if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            list($reference, $resolvedSchema) = $this->resolveSchema($schema->getItems(), Schema::class);
+            list($jsonReference, $resolvedSchema) = $this->resolveSchema($schema->getItems(), Schema::class);
             $array          = true;
         }
 
         if ($resolvedSchema === null) {
+            if ($context->getRegistry()->hasClass($reference)) {
+                return ["\\" . $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $context->getRegistry()->getClass($reference)->getName(), false];
+            }
+
             return [$schema->getType(), null];
         }
 
-        $class = $context->getRegistry()->getClass($reference);
+        $class = $context->getRegistry()->getClass($jsonReference);
 
         // Happens when reference resolve to a none object
         if ($class === null) {
             return [$schema->getType(), null];
         }
 
-        $class = "\\" . $context->getRegistry()->getSchema($reference)->getNamespace() . "\\Model\\" . $class->getName();
+        $class = "\\" . $context->getRegistry()->getSchema($jsonReference)->getNamespace() . "\\Model\\" . $class->getName();
 
         if ($array) {
             $class .= "[]";

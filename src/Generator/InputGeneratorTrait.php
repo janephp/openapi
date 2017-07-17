@@ -107,25 +107,25 @@ trait InputGeneratorTrait
         $methodParameters = [];
 
         if ($operation->getOperation()->getParameters()) {
-            foreach ($operation->getOperation()->getParameters() as $parameter) {
+            foreach ($operation->getOperation()->getParameters() as $key => $parameter) {
                 if ($parameter instanceof Reference) {
                     $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof PathParameterSubSchema) {
-                    $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter, $context);
-                    $documentationParams[] = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter, $context));
+                    $methodParameters[] = $this->pathParameterGenerator->generateMethodParameter($parameter, $context, $operation->getReference() . '/parameters/' . $key);
+                    $documentationParams[] = sprintf(' * @param %s', $this->pathParameterGenerator->generateDocParameter($parameter, $context, $operation->getReference() . '/parameters/' . $key));
                 }
             }
 
-            foreach ($operation->getOperation()->getParameters() as $parameter) {
+            foreach ($operation->getOperation()->getParameters() as $key => $parameter) {
                 if ($parameter instanceof Reference) {
                     $parameter = $this->resolveParameter($parameter);
                 }
 
                 if ($parameter instanceof BodyParameter) {
-                    $methodParameters[] = $this->bodyParameterGenerator->generateMethodParameter($parameter, $context);
-                    $documentationParams[] = sprintf(' * @param %s', $this->bodyParameterGenerator->generateDocParameter($parameter, $context));
+                    $methodParameters[] = $this->bodyParameterGenerator->generateMethodParameter($parameter, $context, $operation->getReference() . '/parameters/' . $key);
+                    $documentationParams[] = sprintf(' * @param %s', $this->bodyParameterGenerator->generateDocParameter($parameter, $context, $operation->getReference() . '/parameters/' . $key));
                 }
             }
         }
@@ -208,11 +208,13 @@ trait InputGeneratorTrait
     {
         $bodyParameter = null;
         $bodyVariable = new Expr\Variable('body');
+        $parameterKey = 0;
 
         if ($operation->getOperation()->getParameters()) {
-            foreach ($operation->getOperation()->getParameters() as $parameter) {
+            foreach ($operation->getOperation()->getParameters() as $key => $parameter) {
                 if ($parameter instanceof BodyParameter) {
                     $bodyParameter = $parameter;
+                    $parameterKey = $key;
                 }
             }
         }
@@ -224,30 +226,30 @@ trait InputGeneratorTrait
             ], $bodyVariable];
         }
 
-        // $body = $parameter
-        if (!($bodyParameter->getSchema() instanceof Reference)) {
-            return [[
-                new Expr\Assign($bodyVariable, new Expr\Variable(Inflector::camelize($bodyParameter->getName())))
-            ], $bodyVariable];
+        // $body = $this->serializer->serialize($parameter);
+        if ($bodyParameter->getSchema() instanceof Reference || $context->getRegistry()->hasClass($operation->getReference() . '/parameters/' . $parameterKey)) {
+            return [
+                [
+                    new Expr\Assign(
+                        $bodyVariable,
+                        new Expr\MethodCall(
+                            new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
+                            'serialize',
+                            [
+                                new Arg(new Expr\Variable(Inflector::camelize($bodyParameter->getName()))),
+                                new Arg(new Scalar\String_('json'))
+                            ]
+                        )
+                    )
+                ],
+                $bodyVariable
+            ];
         }
 
-        // $body = $this->serializer->serialize($parameter);
-        return [
-            [
-                new Expr\Assign(
-                    $bodyVariable,
-                    new Expr\MethodCall(
-                        new Expr\PropertyFetch(new Expr\Variable('this'), 'serializer'),
-                        'serialize',
-                        [
-                            new Arg(new Expr\Variable(Inflector::camelize($bodyParameter->getName()))),
-                            new Arg(new Scalar\String_('json'))
-                        ]
-                    )
-                )
-            ],
-            $bodyVariable
-        ];
+        // $body = $parameter
+        return [[
+            new Expr\Assign($bodyVariable, new Expr\Variable(Inflector::camelize($bodyParameter->getName())))
+        ], $bodyVariable];
     }
 
     /**

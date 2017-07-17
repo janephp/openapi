@@ -124,10 +124,10 @@ class JaneOpenApi
 
         foreach ($registry->getSchemas() as $schema) {
             foreach ($schema->getClasses() as $class) {
-                $properties = $this->chainGuesser->guessProperties($class->getObject(), $schema->getRootName(), $registry);
+                $properties = $this->chainGuesser->guessProperties($class->getObject(), $schema->getRootName(), $class->getReference(), $registry);
 
                 foreach ($properties as $property) {
-                    $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $registry, $schema));
+                    $property->setType($this->chainGuesser->guessType($property->getObject(), $property->getName(), $property->getReference(), $registry));
                 }
 
                 $class->setProperties($properties);
@@ -156,7 +156,7 @@ class JaneOpenApi
 
             $files = array_merge($files, $this->modelGenerator->generate($schema, $schema->getRootName(), $context));
             $files = array_merge($files, $this->normalizerGenerator->generate($schema, $schema->getRootName(), $context));
-            $clients = $this->clientGenerator->generate($schema->getParsed(), $schema->getNamespace(), $context);
+            $clients = $this->clientGenerator->generate($schema->getParsed(), $schema->getNamespace(), $context, $schema->getOrigin() . '#');
 
             foreach ($clients as $node) {
                 $files[] = new File($schema->getDirectory() . DIRECTORY_SEPARATOR . 'Resource' . DIRECTORY_SEPARATOR . $node->stmts[2]->name . '.php', $node, '');

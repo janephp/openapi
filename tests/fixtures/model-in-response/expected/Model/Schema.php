@@ -25,7 +25,7 @@ class Schema
      */
     protected $mapProperty;
     /**
-     * @var ObjectProperty
+     * @var SchemaobjectProperty
      */
     protected $objectProperty;
     /**
@@ -134,7 +134,7 @@ class Schema
     }
 
     /**
-     * @return ObjectProperty
+     * @return SchemaobjectProperty
      */
     public function getObjectProperty()
     {
@@ -142,11 +142,11 @@ class Schema
     }
 
     /**
-     * @param ObjectProperty $objectProperty
+     * @param SchemaobjectProperty $objectProperty
      *
      * @return self
      */
-    public function setObjectProperty(ObjectProperty $objectProperty = null)
+    public function setObjectProperty(SchemaobjectProperty $objectProperty = null)
     {
         $this->objectProperty = $objectProperty;
 
