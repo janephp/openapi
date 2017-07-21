@@ -39,7 +39,7 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
 
         $generatedData = [];
 
-        $this->assertEquals(count($expectedFinder), count($generatedFinder));
+        $this->assertEquals(count($expectedFinder), count($generatedFinder), 'Assert same files for ' . $testDirectory->getRealPath());
 
         foreach ($generatedFinder as $generatedFile) {
             $generatedData[$generatedFile->getRelativePathname()] = $generatedFile->getRealPath();
