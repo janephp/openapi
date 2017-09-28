@@ -1,4 +1,4 @@
-# Usage
+# Usage
 
 This documentation provides a full example of creating and using an API Client generated with this library.
 
