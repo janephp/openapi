@@ -24,7 +24,7 @@ For that, Jane OpenAPI offers a runtime library that you MUST depend on by requi
 composer require jane/openapi-runtime
 ```
 
-## Creating your schema
+## Creating your schema
 
 You may need to create an OpenAPI Specification if the API doesn't give you one. For that
 please refer to this documentation on how to create it: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
@@ -113,11 +113,11 @@ This API defines 3 endpoints:
 
 The `Foo` consists of an object having a property `bar` (typehint as a string).
 
-## Generating the code
+## Generating the code
 
 Once you have your swagger schema you can generate the API Client.
 
-### Configuration
+### Configuration
 
 First you will need to specify some configurations options for this library by
 creating a `.jane-openapi` file at the root of your repository which returns
@@ -260,7 +260,6 @@ deserialize json into value objects.
 The recommended way to create this service is to use the following code:
 
 ```php
-use Joli\Jane\Runtime\Encoder\RawEncoder;
 use My\API\Client\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -274,7 +273,6 @@ $serializer = new Serializer(
             new JsonEncode(),
             new JsonDecode()
         ),
-        new RawEncoder()
     ]
 );
 ```
@@ -289,7 +287,6 @@ However there is some things that you need to be aware of:
  * The `JsonDecode` decoder must be able to transform JSON objects into `\stdClass`.
  As this is the only way, in PHP, to distinguate between an empty collection `[]` and
  an empty object `{}`
- * The `RawEncoder` is used for deep serialization (like an object having a property on another object).
 
 ### Making calls
 
@@ -299,7 +296,6 @@ So your setup will look at something like this:
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
-use Joli\Jane\Runtime\Encoder\RawEncoder;
 use My\API\Client\Normalizer\NormalizerFactory;
 use My\API\Client\Resource\FooResource;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
@@ -316,7 +312,6 @@ $serializer = new Serializer(
             new JsonEncode(),
             new JsonDecode()
         ),
-        new RawEncoder()
     ]
 );
 
