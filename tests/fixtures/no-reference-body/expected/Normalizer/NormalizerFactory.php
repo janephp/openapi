@@ -14,7 +14,11 @@ class NormalizerFactory
     {
         $normalizers   = [];
         $normalizers[] = new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer();
-        $normalizers[] = new TestBodyNormalizer();
+        $normalizers[] = new FooNormalizer();
+        $normalizers[] = new BarNormalizer();
+        $normalizers[] = new TestGetBodyNormalizer();
+        $normalizers[] = new TestGetBodyBazNormalizer();
+        $normalizers[] = new TestPostBodyNormalizer();
 
         return $normalizers;
     }

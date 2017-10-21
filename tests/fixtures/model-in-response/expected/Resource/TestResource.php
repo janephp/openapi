@@ -52,7 +52,7 @@ class TestResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\TestIdResponse200|\Joli\Jane\OpenApi\Tests\Expected\Model\Error
+     * @return \Psr\Http\Message\ResponseInterface|\Joli\Jane\OpenApi\Tests\Expected\Model\TestIdGetResponse200|\Joli\Jane\OpenApi\Tests\Expected\Model\Error
      */
     public function getTestById($id, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
@@ -70,7 +70,7 @@ class TestResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TestIdResponse200', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TestIdGetResponse200', 'json');
             }
             if ('400' == $response->getStatusCode()) {
                 return $this->serializer->deserialize((string) $response->getBody(), 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Error', 'json');

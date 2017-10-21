@@ -8,29 +8,29 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Model;
 
-class TestResponse201
+class TestIdGetResponse200
 {
     /**
-     * @var string
+     * @var int
      */
-    protected $foo;
+    protected $id;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getFoo()
+    public function getId()
     {
-        return $this->foo;
+        return $this->id;
     }
 
     /**
-     * @param string $foo
+     * @param int $id
      *
      * @return self
      */
-    public function setFoo($foo = null)
+    public function setId($id = null)
     {
-        $this->foo = $foo;
+        $this->id = $id;
 
         return $this;
     }

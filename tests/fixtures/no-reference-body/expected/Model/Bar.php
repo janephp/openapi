@@ -8,29 +8,29 @@
 
 namespace Joli\Jane\OpenApi\Tests\Expected\Model;
 
-class TestBody
+class Bar
 {
     /**
      * @var string
      */
-    protected $foo;
+    protected $bar;
 
     /**
      * @return string
      */
-    public function getFoo()
+    public function getBar()
     {
-        return $this->foo;
+        return $this->bar;
     }
 
     /**
-     * @param string $foo
+     * @param string $bar
      *
      * @return self
      */
-    public function setFoo($foo = null)
+    public function setBar($bar = null)
     {
-        $this->foo = $foo;
+        $this->bar = $bar;
 
         return $this;
     }

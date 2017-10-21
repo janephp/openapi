@@ -16,14 +16,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class TestResponse201Normalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class TestGetBodyBazNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TestResponse201') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TestGetBodyBaz') {
             return false;
         }
 
@@ -32,7 +32,7 @@ class TestResponse201Normalizer implements DenormalizerInterface, NormalizerInte
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\TestResponse201) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\TestGetBodyBaz) {
             return true;
         }
 
@@ -44,9 +44,9 @@ class TestResponse201Normalizer implements DenormalizerInterface, NormalizerInte
         if (!is_object($data)) {
             throw new InvalidArgumentException();
         }
-        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\TestResponse201();
-        if (property_exists($data, 'foo')) {
-            $object->setFoo($data->{'foo'});
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\TestGetBodyBaz();
+        if (property_exists($data, 'baz')) {
+            $object->setBaz($data->{'baz'});
         }
 
         return $object;
@@ -55,8 +55,8 @@ class TestResponse201Normalizer implements DenormalizerInterface, NormalizerInte
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getFoo()) {
-            $data->{'foo'} = $object->getFoo();
+        if (null !== $object->getBaz()) {
+            $data->{'baz'} = $object->getBaz();
         }
 
         return $data;

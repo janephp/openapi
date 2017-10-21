@@ -14,13 +14,37 @@ use Joli\Jane\OpenApi\Runtime\Client\Resource;
 class DefaultResource extends Resource
 {
     /**
-     * @param \Joli\Jane\OpenApi\Tests\Expected\Model\TestBody $body
-     * @param array                                            $parameters List of parameters
-     * @param string                                           $fetch      Fetch mode (object or response)
+     * @param \Joli\Jane\OpenApi\Tests\Expected\Model\TestGetBody $body
+     * @param array                                               $parameters List of parameters
+     * @param string                                              $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function test(\Joli\Jane\OpenApi\Tests\Expected\Model\TestBody $body, $parameters = [], $fetch = self::FETCH_OBJECT)
+    public function getTest(\Joli\Jane\OpenApi\Tests\Expected\Model\TestGetBody $body, $parameters = [], $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url        = '/test';
+        $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
+        $body       = $this->serializer->serialize($body, 'json');
+        $request    = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise    = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+
+        return $response;
+    }
+
+    /**
+     * @param \Joli\Jane\OpenApi\Tests\Expected\Model\TestPostBody $body
+     * @param array                                                $parameters List of parameters
+     * @param string                                               $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function test(\Joli\Jane\OpenApi\Tests\Expected\Model\TestPostBody $body, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url        = '/test';

@@ -16,14 +16,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class TestIdResponse200Normalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class FooNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\TestIdResponse200') {
+        if ($type !== 'Joli\\Jane\\OpenApi\\Tests\\Expected\\Model\\Foo') {
             return false;
         }
 
@@ -32,7 +32,7 @@ class TestIdResponse200Normalizer implements DenormalizerInterface, NormalizerIn
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\TestIdResponse200) {
+        if ($data instanceof \Joli\Jane\OpenApi\Tests\Expected\Model\Foo) {
             return true;
         }
 
@@ -44,9 +44,9 @@ class TestIdResponse200Normalizer implements DenormalizerInterface, NormalizerIn
         if (!is_object($data)) {
             throw new InvalidArgumentException();
         }
-        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\TestIdResponse200();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\Foo();
+        if (property_exists($data, 'foo')) {
+            $object->setFoo($data->{'foo'});
         }
 
         return $object;
@@ -55,8 +55,8 @@ class TestIdResponse200Normalizer implements DenormalizerInterface, NormalizerIn
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getId()) {
-            $data->{'id'} = $object->getId();
+        if (null !== $object->getFoo()) {
+            $data->{'foo'} = $object->getFoo();
         }
 
         return $data;
