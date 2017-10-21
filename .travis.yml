@@ -1,9 +1,4 @@
-dist: trusty
-
 language: php
-
-sudo: false
-
 cache:
     directories:
         - ~/.composer/cache/files
