@@ -36,9 +36,13 @@ trait OutputGeneratorTrait
             list($jsonReference, $schema) = $this->resolve($schema, Schema::class);
         }
 
-        if ($schema instanceof Schema && $schema->getType() == "array" && $schema->getItems() instanceof Reference) {
-            list($jsonReference, $schema) = $this->resolve($schema->getItems(), Schema::class);
+        if ($schema instanceof Schema && $schema->getType() == "array") {
             $array = true;
+            $jsonReference .= '/items';
+
+            if ($schema->getItems() instanceof Reference) {
+                list($jsonReference, ) = $this->resolve($schema->getItems(), Schema::class);
+            }
         }
 
         $class = $context->getRegistry()->getClass($jsonReference);

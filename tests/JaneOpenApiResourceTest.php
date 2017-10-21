@@ -14,7 +14,7 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider resourceProvider
      */
-    public function testRessources(SplFileInfo $testDirectory)
+    public function testRessources($name, SplFileInfo $testDirectory)
     {
         // 1. Cleanup generated
         $filesystem = new Filesystem();
@@ -55,7 +55,7 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
                 $this->assertEquals(
                     file_get_contents($expectedPath),
                     file_get_contents($actualPath),
-                    "Expected " . $expectedPath . " got " . $actualPath
+                    "Expected " . $expectedPath . " got " . $actualPath . ' in ' . $name
                 );
             }
         }
@@ -70,7 +70,7 @@ class JaneOpenApiResourceTest extends \PHPUnit_Framework_TestCase
         $data = array();
 
         foreach ($finder as $directory) {
-            $data[] = [$directory];
+            $data[] = [$directory->getFilename(), $directory];
         }
 
         return $data;

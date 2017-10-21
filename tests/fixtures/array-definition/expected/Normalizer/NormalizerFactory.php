@@ -14,7 +14,7 @@ class NormalizerFactory
     {
         $normalizers   = [];
         $normalizers[] = new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer();
-        $normalizers[] = new TestResponse201Normalizer();
+        $normalizers[] = new BarItemNormalizer();
 
         return $normalizers;
     }

@@ -27,7 +27,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "jane/jane": "^3.0",
+        "jane/jane": "^3.1",
         "jane/runtime": "^2.1",
         "jane/openapi-runtime": "^2.0",
         "nikic/php-parser": "^3.0",

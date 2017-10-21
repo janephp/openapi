@@ -14,16 +14,7 @@ class NormalizerFactory
     {
         $normalizers   = [];
         $normalizers[] = new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer();
-        $normalizers[] = new SwarmSpecNormalizer();
-        $normalizers[] = new SwarmSpecOrchestrationNormalizer();
-        $normalizers[] = new SwarmSpecRaftNormalizer();
-        $normalizers[] = new SwarmSpecDispatcherNormalizer();
-        $normalizers[] = new SwarmSpecCAConfigNormalizer();
-        $normalizers[] = new SwarmSpecCAConfigExternalCAsItemNormalizer();
-        $normalizers[] = new SwarmSpecEncryptionConfigNormalizer();
-        $normalizers[] = new SwarmSpecTaskDefaultsNormalizer();
-        $normalizers[] = new SwarmSpecTaskDefaultsLogDriverNormalizer();
-        $normalizers[] = new SwarmInitBodyNormalizer();
+        $normalizers[] = new TestBodyNormalizer();
 
         return $normalizers;
     }

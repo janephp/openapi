@@ -95,24 +95,26 @@ class OperationGenerator
         $outputStatements = [];
         $outputTypes = ["\\Psr\\Http\\Message\\ResponseInterface"];
 
-        foreach ($operation->getOperation()->getResponses() as $status => $response) {
-            if ($response instanceof Reference) {
-                list(, $response) = $this->resolve($response, Response::class);
-            }
-
-            list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement(
-                $status,
-                $response->getSchema(),
-                $context,
-                $operation->getReference() . '/responses/' . $status
-            );
-
-            if (null !== $outputType) {
-                if (!in_array($outputType, $outputTypes)) {
-                    $outputTypes[] = $outputType;
+        if ($operation->getOperation()->getResponses()) {
+            foreach ($operation->getOperation()->getResponses() as $status => $response) {
+                if ($response instanceof Reference) {
+                    list(, $response) = $this->resolve($response, Response::class);
                 }
 
-                $outputStatements[] = $ifStatus;
+                list($outputType, $ifStatus) = $this->createResponseDenormalizationStatement(
+                    $status,
+                    $response->getSchema(),
+                    $context,
+                    $operation->getReference() . '/responses/' . $status
+                );
+
+                if (null !== $outputType) {
+                    if (!in_array($outputType, $outputTypes)) {
+                        $outputTypes[] = $outputType;
+                    }
+
+                    $outputStatements[] = $ifStatus;
+                }
             }
         }
 
