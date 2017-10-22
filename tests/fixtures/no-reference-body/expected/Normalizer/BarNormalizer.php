@@ -45,6 +45,9 @@ class BarNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
             throw new InvalidArgumentException();
         }
         $object = new \Joli\Jane\OpenApi\Tests\Expected\Model\Bar();
+        if (property_exists($data, 'foo')) {
+            $object->setFoo($data->{'foo'});
+        }
         if (property_exists($data, 'bar')) {
             $object->setBar($data->{'bar'});
         }
@@ -55,6 +58,9 @@ class BarNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
+        if (null !== $object->getFoo()) {
+            $data->{'foo'} = $object->getFoo();
+        }
         if (null !== $object->getBar()) {
             $data->{'bar'} = $object->getBar();
         }

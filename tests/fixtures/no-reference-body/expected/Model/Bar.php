@@ -13,7 +13,31 @@ class Bar
     /**
      * @var string
      */
+    protected $foo;
+    /**
+     * @var string
+     */
     protected $bar;
+
+    /**
+     * @return string
+     */
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+
+    /**
+     * @param string $foo
+     *
+     * @return self
+     */
+    public function setFoo($foo = null)
+    {
+        $this->foo = $foo;
+
+        return $this;
+    }
 
     /**
      * @return string

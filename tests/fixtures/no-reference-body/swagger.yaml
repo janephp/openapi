@@ -6,10 +6,12 @@ definitions:
       foo:
         type: "string"
   Bar:
-    type: "object"
-    properties:
-      bar:
-        type: "string"
+    allOf:
+      - $ref: "#/definitions/Foo"
+      - type: "object"
+        properties:
+          bar:
+            type: "string"
 paths:
   /test:
     get:
