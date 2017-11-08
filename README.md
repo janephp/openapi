@@ -43,7 +43,7 @@ return [
     'directory' => __DIR__ . '/src/Namespace/Prefix', // directory where the code will be output
     'date-format' => \DateTime::RFC3339, // format of the date that your use (you should not set it unless you have to deal with a non compliant specification)
     'reference' => true, // Add the JSON Reference specification to the generated library (so data on the API can use reference like described in https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
-]
+];
 ```
 
 ### Tutorial
