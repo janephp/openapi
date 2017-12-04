@@ -33,8 +33,8 @@
         "nikic/php-parser": "^3.0",
         "symfony/console": "^3.1",
         "doctrine/inflector": "^1.0",
-        "symfony/yaml": "^3.1",
-        "fitbug/symfony-yaml-serializer-encoder-decoder": "^0.1.1"
+        "symfony/serializer": "^3.2",
+        "symfony/yaml": "^3.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7",
