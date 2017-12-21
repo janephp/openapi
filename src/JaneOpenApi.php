@@ -27,6 +27,7 @@ use PhpCsFixer\Differ\NullDiffer;
 use PhpCsFixer\Error\ErrorsManager;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Runner;
+use PhpCsFixer\ToolInfo;
 use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;
 use PhpParser\PrettyPrinterAbstract;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
@@ -228,7 +229,7 @@ EOH
                 );
         }
         $resolverOptions = array('allow-risky' => true);
-        $resolver = new ConfigurationResolver($fixerConfig, $resolverOptions, $directory);
+        $resolver = new ConfigurationResolver($fixerConfig, $resolverOptions, $directory, new ToolInfo());
 
         $finder = new Finder();
         $finder->in($directory);

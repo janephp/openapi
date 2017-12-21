@@ -172,7 +172,7 @@ class Schema
      *
      * @return self
      */
-    public function setObjectRefProperty(Schema $objectRefProperty = null)
+    public function setObjectRefProperty(self $objectRefProperty = null)
     {
         $this->objectRefProperty = $objectRefProperty;
 
