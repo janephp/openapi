@@ -22,13 +22,13 @@ php vendor/bin/jane-openapi generate swagger.json Name\\Space src/Name/Space
 
 This will generate, in the `src/Name/Space`, a Resource, a Model and a Normalizer directory from the swagger.json file:
 
- * Resource directory will contain all differents resources of the API with their endpoints;
+ * Resource directory will contain all different resources of the API with their endpoints;
  * Model directory will contain all Model used in the API;
  * Normalizer directory will contain a normalizer service class for each of the model class generated.
 
 ### Using a config file
 
-Since 1.3 you can now use a config file for generating your library, this avoid remember the same options each time and track change over the
+Since 1.3 you can now use a config file for generating your library, this avoids to remember the same options each time and track change over the
 generation configuration.
 
 For that you need to create a `.jane-openapi` at the root of your repository (you can also use a different name but you
@@ -72,7 +72,7 @@ Here is a recommended workflow when dealing with the generated code:
  4. Check the generated code with a diff tool: `git diff` for example;
  5. If all is well commit modifications.
 
-An optional and recommanded practice is to separate the generated code in a specific directory
+An optional and recommended practice is to separate the generated code in a specific directory
 like creating a `generated` directory in your project and using jane inside. This allows other developers
 to be aware that this part of the project is generated and must not be updated manually.
 
